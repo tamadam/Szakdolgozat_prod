@@ -511,7 +511,10 @@
 
 </div>
 <!-- jquery color plugin: a háttér animalasahoz-->
-<script type="text/javascript" src="http://code.jquery.com/color/jquery.color-2.1.2.js"></script>
+<script
+  src="https://code.jquery.com/color/jquery.color-2.2.0.min.js"
+  integrity="sha256-aSe2ZC5QeunlL/w/7PsVKmV+fa0eDbmybn/ptsKHR6I="
+  crossorigin="anonymous"></script>
 <script>
 
 	var activeTeamBackgroundAnimation = false
@@ -783,7 +786,8 @@
     else
       var ws_path = ws_scheme + "://" + window.location.host + ":8001/"; // élesben
     */
-    var ws_path = ws_scheme + '://' + window.location.host + "/";
+    //var ws_path = ws_scheme + '://' + window.location.host + "/";
+    var ws_path = ws_scheme + "://" + window.location.host + ":8001/"; // élesben
 
     // websocket beállítás
     var notificationSocket = new WebSocket(ws_path)
