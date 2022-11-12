@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ["164.92.174.189",]
+ALLOWED_HOSTS = ["164.92.174.189", "tamadam.xyz", "www.tamadam.xyz"]
 
 ROOT_URLCONF = f'{config("PROJECT_NAME")}.urls'
 
