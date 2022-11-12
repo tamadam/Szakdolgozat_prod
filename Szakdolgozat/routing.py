@@ -31,10 +31,10 @@ application = ProtocolTypeRouter({
 	'websocket': AllowedHostsOriginValidator(
 		AuthMiddlewareStack( 
 			URLRouter([
-				path('kozosseg/<room_id>/', PublicChatRoomConsumer.as_asgi()), # public_chat_page.html-el van kapcsolatban, a ws-es rész (mar magyarra volt forditva mikor ez a ketto meg nem)
-				path('uzenetek/<room_id>/', PrivateChatRoomConsumer.as_asgi()), # private_chat_room.html-el van kapcsolatban -||-
-				path('csapat/<room_id>/', TeamConsumer.as_asgi()), #individual_team.html -||-
-				path('', NotificationConsumer.as_asgi()), 
+				path('kozosseg/<room_id>/', PublicChatRoomConsumer), # public_chat_page.html-el van kapcsolatban, a ws-es rész (mar magyarra volt forditva mikor ez a ketto meg nem)
+				path('uzenetek/<room_id>/', PrivateChatRoomConsumer), # private_chat_room.html-el van kapcsolatban -||-
+				path('csapat/<room_id>/', TeamConsumer), #individual_team.html -||-
+				path('', NotificationConsumer), 
 				]) 
 			)
 		),
