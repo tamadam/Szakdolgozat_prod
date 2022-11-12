@@ -1,0 +1,368 @@
+{% extends 'base_login_register.html' %}
+{% load static %}
+    
+<head>
+	{% block header %}
+		<title>A Szerepjáték - Bejelentkezés</title>
+	{% endblock%}
+</head>
+
+{% block content%}
+
+<style>
+
+
+
+#moving-background-container {
+	width: 110%;
+	height: 110%;
+	left: 0;
+	top: 0;
+	position: absolute;
+	background: url("{% static 'images/login-background-village.jpg' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+#login-page-content{
+    /* a mozgo hatterhez kellenek ezek */
+    width: 100%;
+	height: 100%;
+    z-index: 1;
+	position: relative;
+    /* --- */
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: "Kanit-Regular";
+    font-size: 1.2em;
+}
+
+#login-page-header{
+	display: flex;
+	justify-content: center;
+	align-items: center; 
+	height: 2%;
+	width: 100%;
+}
+
+#login-page-container {
+	display: flex;
+	justify-content: center;
+	align-items: center; 
+	height: 92%;
+	width: 100%;
+}
+
+#login-page-footer{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center; 
+	height: 6%;
+	width: 100%;	
+	background-color: rgba(0, 0, 0, 0.86);
+	color: white;
+}
+
+
+
+.footer-content{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	font-size: 1.8em;
+}
+
+
+#footer-image{
+	max-width: 80%;
+	max-height: 80%;
+}
+
+
+#login-page-footer a {
+	color: white;
+	text-decoration: none;
+}
+
+#login-page-footer a:hover {
+	color: #b8a529;
+	text-decoration: none;
+}
+
+#login-page-footer a:active {
+	color: #e31612;
+	text-decoration: none;
+}
+
+
+
+#login-form-and-error-container{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 25%;
+	height: 40%;
+
+    background-color: rgba(0,0,0,0.8);
+
+	border: 20px solid transparent;
+	border-image: url("{% static 'images/goldborder.png' %}") 20% round;
+    border-radius: 20px;
+    max-width: 600px;
+    min-width: 200px;
+
+}
+
+#login-form-container{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 90%;
+}
+
+#login-error-container{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 10%;
+}
+
+
+
+#login-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 60%;
+	height: 100%;
+	margin: 0;
+
+}
+
+#input-container{
+	display: flex;
+	flex-direction: column;
+	gap: 10%;
+	align-items: center;
+	justify-content: flex-end;
+	width: 100%;
+	height: 60%;
+}
+
+.input-field{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 24%;
+	width: 86%;
+}
+
+#error-container{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 26%;	
+}
+
+#submit-container{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 14%;
+}
+
+
+input {
+
+    font-family: "Kanit-Regular";
+    font-size: 1em;
+    color: black;
+    text-align: center;
+
+
+}
+
+::placeholder {
+	color: grey;
+}
+
+
+
+input[type=text], input[type=password] {
+	background-color: #f2f2f2;
+	border: 4px solid transparent;
+	border-radius: 0.4em;
+
+}
+
+
+input[type=submit] {
+	background: url("{% static 'images/button-back.png' %}");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 0.3em;
+
+	width: 60%;
+	border: none;
+	color: black;
+	font-family: "Kanit-Regular";
+	font-size: 1em;
+	font-weight: bold;
+
+
+
+
+}
+
+input[type=submit]:hover {
+	background: url("{% static 'images/button-back-red.png' %}");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	color: #fae455;
+	cursor: pointer;
+
+
+
+
+}
+
+
+input[type=submit]:active {
+	background: url("{% static 'images/button-back-onclick.png' %}");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	color: #b8a529;
+
+
+
+
+}
+
+
+
+input[type=text]:focus, input[type=password]:focus {
+	background-color: white;
+	outline: none;
+	border: 4px solid #b8a529;
+
+}
+
+
+#error-messages {
+	color: #e31612;
+	font-family: "Kanit-Bold";
+	font-size: 0.9em;
+	display: block;
+	vertical-align: middle;
+	user-select: none;
+
+}
+
+
+
+</style>
+<body>
+	<div id="moving-background-container">
+		<!-- Egérmozgásra mozgó háttérképet tartalmazó div -->	
+	</div>
+	<!-- Funkcionalitást tartalmazó div -->
+	<div id="login-page-content">
+		<div id="login-page-header"></div>
+
+		<div id="login-page-container">
+			<div id="login-form-and-error-container">
+				<div id="login-form-container">
+					<form method="POST" id="login-form">
+						<div id="input-container">
+							{%csrf_token%}
+							<input type="text" name="username" id="id_username" class="input-field">
+							<input type="password" name="password" id="id_password" class="input-field">
+						</div>
+						<div id="error-container">
+							<div id="error-messages">
+								{% for error_message in messages %}
+									{{error_message}}
+								{% endfor %}
+							</div>		
+						</div>
+						<div id="submit-container">
+							<input type="submit" value="Belépés" id="login_button" class="submit-field">							
+						</div>
+
+
+					</form>
+				</div>
+			</div>
+		</div>
+		<div id="login-page-footer">
+			<div class="footer-content" id="footer-text">Nincs fiókod?</div>
+			<div class="footer-content" id="footer-image-div">
+				<img src="{% static 'images/register-icon.png' %}" id="footer-image">
+			</div>
+			<div class="footer-content" id="footer-link">
+				<a href="{% url 'register' %}" id="redirect-register-button">Regisztráció</a>
+			</div>	
+		</div>
+	</div>
+	<div class="loader-container">
+		<!-- A fekete átmosást segítő div -->		
+	</div>
+
+<script>
+
+	$(window).on("load", function(){
+		$(".loader-container").fadeOut("slow")
+	})
+
+
+	moveBackgroundOnMouseMovement("#moving-background-container", "#login-page-content")
+
+
+	
+	$("#id_username").on("input", function(){
+		var errorField = document.getElementById("error-messages")
+		errorField.style.display = "none"
+	})
+	$("#id_password").on("input", function(){
+		var errorField = document.getElementById("error-messages")
+		errorField.style.display = "none"
+	})
+
+	// csrf token az elso input index
+	var inputFields = document.getElementsByTagName("input")
+	inputFields[1].placeholder='Karakter név';
+	inputFields[2].placeholder='Jelszó';
+
+
+
+
+
+
+	$("#login-form").submit(function() {
+	    clickSound.play()
+
+	    return true; // false hogyha cancel form
+	})
+
+</script>
+
+
+</body>
+
+{% endblock %}
+

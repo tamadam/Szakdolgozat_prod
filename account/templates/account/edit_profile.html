@@ -1,0 +1,558 @@
+{% extends 'base_new.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+@font-face {
+	font-family: 'Kanit-Regular';
+	src: local('Kanit-Regular'),
+	url("{% static 'fonts/Kanit-Regular.ttf' %}");
+}
+
+@font-face {
+	font-family: 'Kanit-Bold';
+	src: local('Kanit-Bold'),
+	url("{% static 'fonts/Kanit-Bold.ttf' %}");
+}
+
+@font-face {
+	font-family: 'Kanit-Light';
+	src: local('Kanit-Light'),
+	url("{% static 'fonts/Kanit-Light.ttf' %}");
+}
+
+#edit-profile-page{
+	width: 100%;
+	height: 100%;
+	background: url("{% static 'images/character-background.jpg' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-family: "Kanit-Regular";
+	font-size: 1.4em;
+	width: 1900px;
+	user-select: none;
+}
+
+#edit-profile-page-title{
+	width: 100%;
+	height: 14%;
+	min-width: 300px;
+	display: flex;
+	flex-direction: row;
+	text-align: center;
+	font-size: 1.6em;
+}
+
+
+#edit-profile-title-left{
+	width: 14%;
+	height: 100%;
+}
+
+#edit-profile-title-center{
+	width: 72%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+
+}
+
+#edit-profile-title-right{
+	width: 14%;
+}
+
+
+#main-page-button {
+	display: flex;
+	justify-content: center;
+	align-items: center; 
+	width: 100%;
+	height: 100%;
+
+}
+
+#main-page-button img{
+	width: 40%;
+	height: 40;
+	max-width: 100%;
+	max-height: 100%;
+
+}
+
+#edit-profile-title-main-text{
+	background: url("{% static 'images/button-back.png' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 10px;
+	min-width: 300px;
+	color: black;
+}
+
+.go-to-main-page:hover {
+	cursor: pointer;
+}
+
+
+
+.go-to-main-page:active {
+	content:url("{% static 'images/previous-button-purple.png' %}");
+}
+
+
+#profile-edit-form-container{
+	height: 60%;
+	width: 60%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+}
+
+#error-messages-container{
+	height: 26%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: red;
+
+}
+#error-messages-div{
+	width: 40%;
+	height: 80%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+
+}
+
+
+
+#error-messages-div span{
+	font-size: 1em;
+
+}
+
+
+#error-messages-div ul{
+	list-style-type:none;
+}
+
+
+
+#edit-profile-form{
+	width: 60%;
+	min-width: 400px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(183, 122, 155, 0.6);
+	background-image: linear-gradient(rgba(77, 96, 127, 0.6), rgba(183, 122, 155, 0.6), rgba(77, 96, 127, 0.6));
+	box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+
+}
+
+.edit-field{
+	width: 100%;
+	height: 15%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.label-value{
+	width: 40%;
+	text-align: center;
+	font-family: "Kanit-Bold";
+	color: #ffe550;
+	text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black; 
+
+	padding: 0.2em;
+	border: 4px solid rgba(217, 172, 195, 0.8);
+	border-right: none;
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+	font-size: 1em;
+	box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+}
+
+#form-header{
+	height: 12.5%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	font-family: "Kanit-Light";
+	font-size: 1.2em;
+}
+
+#form-header span{
+	text-align: center;
+}
+
+#form-footer{
+	height: 12.5%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.input-value{
+	width: 40%;
+
+}
+
+
+
+::placeholder{
+	color: black;
+}
+
+.loader-container {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: black;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	z-index: 10;
+	color: white;
+	font-family: "Kanit-Regular";
+	font-size: 1.8vh;
+
+}
+
+
+input[type="text"], input[type="email"], input[type="password"] {
+	padding: 0.2em;
+
+	border-top-right-radius: 6px;
+	border-bottom-right-radius: 6px;
+	border: 4px solid transparent;
+	outline: none;
+	text-align: center;
+	font-family: "Kanit-Regular";
+	font-size: 1em;
+	background-color: rgba(217, 172, 195, 0.8);
+
+	box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+}
+
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+	background-color: rgba(217, 172, 195, 1.0);
+}
+
+
+
+
+input:focus::placeholder{
+	color: transparent;
+}
+
+
+
+#save-edit-profile{
+	padding: 10px;
+	width: 20%;
+	border: none;
+	background: url("{% static 'images/button-back.png' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	font-family: "Kanit-Regular";
+	font-size: 1em;
+}
+
+#save-edit-profile:hover{
+	background: url("{% static 'images/button-back-red.png' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	color: #b8a529;
+	cursor: pointer;
+}
+
+#profile-image-upload-delete{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+}
+
+#profile-image-delete{
+	height: 50%;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+#profile-image-upload{
+	height: 50%;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+
+.switch-button{
+	font-size: 0.9em;
+	position: relative;
+	display: inline-block;
+	width: 5em;
+	height: 2em;
+}
+
+.switch-button input{
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+
+.slider{
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: lightgray; 
+	transition: 0.4s;
+	border-radius: 30px;
+
+}
+
+
+.slider:before{
+	position: absolute;
+	content: "";
+	height: 1.4em;
+	width: 1.4em;
+	border-radius: 20px;
+	left: 0.3em;
+	bottom: 0.3em;
+	background-color: white;
+	transition: 0.4s;
+}
+
+input:checked + .slider {
+  	background-color: rgba(77, 96, 127);
+}
+
+
+input:checked + .slider:before {
+	transform: translateX(3.0em);
+}
+
+
+#profile-image-delete-p1{
+	width: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	margin-right: 0.5em;
+	color: white;
+	text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black; 
+}
+
+#profile-image-delete-p2{
+	width: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	margin-left: 0.5em;
+}
+
+#profile-image-upload-p1{
+	width: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	margin-right: 0.5em;
+	color: white;
+	text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black; 
+}
+
+#profile-image-upload-p2{
+	width: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	margin-left: 0.5em;
+}
+
+
+
+</style>
+
+<div id="edit-profile-page">
+	<div id="edit-profile-page-title">
+		<div id="edit-profile-title-left">
+			<div id="main-page-button">
+				<img src="{% static 'images/previous-button.png' %}" alt="Vissza" class="go-to-main-page" onmouseover="changeColor(this)" onmouseout="resetColor(this)">
+			</div>
+		</div>
+		<div id="edit-profile-title-center">
+			<div id="edit-profile-title-main-text">
+				<span>Profil módosítás</span>
+			</div>
+		</div>
+		<div id="edit-profile-title-right"></div>
+	</div>
+
+	<div id="profile-edit-form-container">
+
+		<form method="POST" enctype="multipart/form-data" id="edit-profile-form">
+			{% csrf_token %}
+			<div id="form-header">
+				<span>Csak azt a mezőt írd át, amit módosítani akarsz!</span>
+			</div>
+			<div class="edit-field">
+				<label for="id_username" class="label-value" id="username-label">Karakter név</label>
+				<input type="text" name="username" value="{{username}}" maxlength="20" required id="id_username" class="input-value">
+			</div>
+			<div class="edit-field">
+				<label for="password1_id" class="label-value">Jelszó</label>
+				<input type="password" name="password1" value="" maxlength="40" id="password1_id" class="input-value" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;">
+			</div>
+			<div class="edit-field">
+				<label for="password2_id" class="label-value">Jelszó újra</label>
+				<input type="password" name="password2" value="" maxlength="40" id="password2_id" class="input-value" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;">
+			</div>
+			<div class="edit-field">
+				<label for="id_email" class="label-value">Email</label>
+				<input type="email" name="email" value="{{email}}" maxlength="128" required id="id_email" class="input-value">
+			</div>
+			<div class="edit-field">
+				<div id="profile-image-upload-delete">
+					<div id="profile-image-delete">
+						<div id="profile-image-delete-p1">
+							<span>Profilkép törlése</span>
+						</div>
+						<div id="profile-image-delete-p2">
+							<label class="switch-button">
+							<input type="checkbox" id="profile_image-clear_id" name="profile_image-clear">
+							<span class="slider"></span>
+							</label>	
+						</div>					
+					</div>
+					<div id="profile-image-upload">
+						<div id="profile-image-upload-p1">
+							<label for="id_profile_image">Profilkép feltöltése </label>
+						</div>
+						<div id="profile-image-upload-p2">	
+							<input type="file" name="profile_image" accept="image/*" id="id_profile_image" class="input-value">
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="form-footer">
+				<button type="submit" id="save-edit-profile">Mentés</button>
+			</div>
+		</form>	
+	</div>		
+
+	<div id="error-messages-container">
+		<div id="error-messages-div">
+
+			{% if form.errors %}
+				<span>Hiba! Kérlek figyelj az alábbiakra!</span>
+				{% for error in form.errors.values %}
+					<span class="error-messages">{{error}}</span>
+				{% endfor %}
+			{% endif %}
+			{{error_message}}
+		</div>
+	</div>
+	<div class="loader-container">
+	</div>
+</div>
+
+
+<script>
+	$(window).on("load", function(){
+
+	})
+
+	$("#profile_image-clear_id").change(function(){
+		$("#profile_image-clear_id").attr("disabled", true)
+		audio.play()
+		if ($(this).is(":checked")){
+
+			$("#profile-image-upload").css("visibility", "hidden")
+		}
+		else{
+
+			$("#profile-image-upload").css("visibility", "visible")
+		}
+
+		setTimeout(function(){
+			$("#profile_image-clear_id").removeAttr("disabled")
+		}, 400)
+	})
+
+	$("#save-edit-profile").click(function(){
+		audio.play()
+	})
+
+
+	const audio = new Audio()
+	audio.src = "{% static 'audios/button_click.mp3' %}"
+
+	function changeColor(imageElement){
+		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}")
+	}
+
+	function resetColor(imageElement){
+		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}")
+	}
+
+
+	$(".go-to-main-page").click(function(){
+    	audio.play()
+
+    	setTimeout(function(){
+	    	try {
+
+				var url = "{% url 'profile' user_id=request.user.id %}"
+				var win = window.location.replace(url) 
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+
+    	}, 200)
+    	$(".loader-container").fadeIn("fast")
+	})
+</script>
+
+{% endblock %}

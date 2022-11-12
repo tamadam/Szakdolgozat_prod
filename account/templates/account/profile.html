@@ -1,0 +1,1145 @@
+{% extends 'base_new.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+{% include 'private_chat/create_or_return_private_chat_room.html' %}
+{% include 'game/attack_choosen_player.html' %}
+
+<style>
+
+@font-face {
+	font-family: 'Kanit-Regular';
+	src: local('Kanit-Regular'),
+	url("{% static 'fonts/Kanit-Regular.ttf' %}");
+}
+
+@font-face {
+	font-family: 'Kanit-Bold';
+	src: local('Kanit-Bold'),
+	url("{% static 'fonts/Kanit-Bold.ttf' %}");
+}
+
+@font-face {
+	font-family: 'Kanit-Light';
+	src: local('Kanit-Light'),
+	url("{% static 'fonts/Kanit-Light.ttf' %}");
+}
+
+
+body {
+	font-family: 'Kanit-Regular';
+	font-size: 1.4em;
+}
+
+.loader-container {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 2;
+
+}
+
+#profile-content-page{
+	width: 100%;
+	height: 100%;
+	background: url("{% static 'images/character-background.jpg' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	max-width: 1900px;
+	user-select: none;
+
+
+}
+
+/* 3 DIV A RAJZOLT KÉP ALAPJÁN */
+
+/* ELSŐ DIV */
+#profile-title {
+
+	width: 100%;
+	height: 12%;
+	text-align: center;
+	display: flex;
+	flex-direction: row;
+
+
+}
+
+#profile-title-left,
+#profile-title-right {
+	display: flex;
+	width: 14%;
+}
+
+#profile-title-right{
+	justify-content: flex-end;
+}
+
+#profile-title-center{
+	display: flex;
+	width: 72%;
+	justify-content: center;
+	align-items: center; 
+
+
+}
+
+#profile-title-center span {
+	font-family: 'Kanit-Regular';
+	font-size: 2.4em;
+	color: black;
+	background-color: white;
+	background: url("{% static 'images/button-back.png' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	min-width: 300px;
+
+}
+
+#main-page-button {
+	display: flex;
+	justify-content: center;
+	align-items: center; 
+	width: 100%;
+	height: 100%;
+
+}
+
+#main-page-button img{
+	width: 36%;
+	height: 36;
+	max-width: 100%;
+	max-height: 100%;
+
+}
+
+
+
+
+
+#profile-title-main-text{
+	display: flex;
+	justify-content: center;
+	align-items: center; 
+	width: 100%;
+	height: 40%;	
+}
+
+
+.go-to-main-page:hover {
+	cursor: pointer;
+}
+
+
+.go-to-main-page:active {
+	content:url("{% static 'images/previous-button-purple.png' %}");
+}
+
+
+/* MÁSODIK DIV*/
+
+#profile-details {
+
+
+	width: 50%;
+	height: 72%;
+	margin: 0 auto;
+}
+
+
+#profile-container{
+	height: 100%;
+	width: 100%;
+	display: flex;
+	border: 10px solid transparent;
+
+  	border-image: url("{% static 'images/button-back.png' %}") 30 stretch;
+}
+
+#profile-container-left{
+	background-color: rgba(0,0,0,0.4);
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	border-width: 0 5px 0 0;
+	border-style: solid;
+  	border-image: url("{% static 'images/button-back.png' %}") 30 stretch;
+
+}
+
+
+#profile-container-left-profile-image{
+	height: 60%;
+	background-color: rgba(102, 122, 190, 0.8);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+  	position: relative;
+  	flex: 12;
+}
+
+
+#health-bar-container {
+    text-align: center;
+    background-color: black;
+    width: 100%;
+    /*margin: 0 auto;*/
+
+    flex: 1;
+
+
+}
+
+
+
+
+.health-bar {
+    background-color: green;
+    height: 100%;
+    width: 0%;
+
+}
+
+
+.health-bar-text {
+    font-size: 1em;
+    position: relative;
+    top: -100%;
+    color:white;
+    display: inline;
+}
+
+
+#profile-container-left-attributes{
+	height: 40%;
+	/*background-color: lightgreen;*/
+	display: flex;
+	flex-wrap: wrap;
+	border-width: 4.4px 0 0 0;
+	border-style: solid;
+  	border-image: url("{% static 'images/button-back.png' %}") 30 stretch;
+
+}
+
+#profile-container-left-attributes .character-info-item {
+	flex: 100%;
+	display: flex;
+	width: 100%;
+	align-items: center;
+	margin: 1% 2% 1% 2%;
+	padding: 0 2% 0 2%;
+
+	background-color: lightgrey;
+	background: url("{% static 'images/grey-sand.jpg' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+
+	border: 2px solid black;
+}
+
+
+
+.character-info-item-name{
+	flex: 3;
+
+}
+
+.character-info-item-value{
+	flex: 1;
+}
+
+.character-info-item-increase-button{
+	flex: 1;
+	text-align: right;
+	margin: 0 auto;
+	align-items: center;
+}
+
+
+.character-info-item-increase-button img{
+	max-width: 40%;
+	max-height: 40%;
+	vertical-align: middle;
+}
+
+
+.increase-attribute-button:hover {
+	cursor: pointer;
+}
+
+/*
+.increase-attribute-button:active {
+	content:url("{% static 'images/add-button-active.png' %}");
+}
+*/
+
+#profile-container-right{
+
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+
+}
+
+#profile-container-right-description{
+	flex: 2;
+
+	border-width: 0 0 4px 0;
+	border-style: solid;
+  	border-image: url("{% static 'images/button-back.png' %}") 30 stretch;
+	background-color: rgba(0,0,0,0.8);
+}
+
+
+
+
+#profile-container-right-team{
+	flex: 1;
+
+	background-color: lightcyan;
+
+	border-width: 0 0 4px 0;
+	border-style: solid;
+  	border-image: url("{% static 'images/button-back.png' %}") 30 stretch;
+
+  	display: flex;
+  	flex-direction: row;
+
+}
+
+#team-content{
+	flex: 2;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+
+#show-team-container{
+	padding: 10px;
+	background: url("{% static 'images/button-back.png' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	font-weight: bold;
+}
+
+#show-team-container:hover{
+	padding: 10px;
+	background: url("{% static 'images/button-back-red.png' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	color: #fae455;
+	cursor: pointer;
+}
+
+
+
+#team-icon {
+	flex: 1;
+	background: url("{% static 'images/team-icon.png' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+
+#team-content-no-team {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+
+}
+
+
+
+#profile-container-right-is-owner{
+	flex: 2;
+	background-color: rgba(0,0,0,0.8);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	color: #fae455;
+}
+
+#is-owner-related-buttons{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 70%;
+}
+
+#is-owner-related-buttons-first{
+	width: 100%;
+	height: 50%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+
+}
+
+
+#buttons-first-container{
+	height: 40%;
+	text-align: center;
+	display: flex;
+	justify-content: center; 
+	align-items: center; 
+	width: fit-content;
+}
+
+#buttons-first-container img{
+	max-width: 80%;
+	max-height: 80%;
+	vertical-align: middle;
+}
+
+#buttons-first-container span{
+	vertical-align: middle;
+}
+
+
+
+
+#no-owner-buttons-first-container{
+	height: 40%;
+	text-align: center;
+	display: flex;
+	justify-content: center; 
+	align-items: center; 
+	width: fit-content;
+}
+
+#no-owner-buttons-first-container:hover{
+	color: #f70044;
+	cursor: pointer;
+}
+
+#no-owner-buttons-first-container img{
+	max-width: 80%;
+	max-height: 80%;
+	vertical-align: middle;
+}
+
+#no-owner-buttons-first-container span{
+	vertical-align: middle;
+}
+
+
+
+#is-owner-related-buttons-second{
+
+	width: 100%;
+	height: 50%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+}
+
+
+#buttons-second-container{
+	height: 40%;
+	text-align: center;
+	display: flex;
+	justify-content: center; 
+	align-items: center; 
+	width: fit-content;
+}
+
+#buttons-second-container img{
+	max-width: 80%;
+	max-height: 80%;
+	vertical-align: middle;
+}
+
+#buttons-second-container span{
+	vertical-align: middle;
+}
+
+
+#no-owner-buttons-second-container{
+
+	height: 40%;
+	text-align: center;
+	display: flex;
+	justify-content: center; 
+	align-items: center; 
+	width: fit-content;
+}
+
+#no-owner-buttons-second-container:hover{
+	color: #f70044;
+	cursor: pointer;
+}
+
+#no-owner-buttons-second-container img{
+	max-width: 80%;
+	max-height: 80%;
+	vertical-align: middle;
+}
+
+#no-owner-buttons-second-container span{
+	vertical-align: middle;
+}
+
+
+
+#basic-info{	
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 30%;
+}
+
+#basic-info-last-login-container{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 50%;
+}
+
+
+#basic-info-date-joined-container{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 50%;
+}
+
+.info-first{
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	width: 50%;
+	height: 100%;
+}
+
+.info-second{
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	width: 40%;
+	height: 100%;
+}
+
+#description-text-area {
+	width: 100%;
+	height: 100%;
+	resize: none;
+	margin: 2px;
+	border: none;
+	outline: none;
+	background: none;
+
+
+	color: #fae455;
+	font-family: 'Kanit-Light';
+	font-size: 1em;
+
+	white-space: pre-wrap;
+
+
+}
+
+#description-text-area::placeholder {
+	color: #fae455;
+
+}
+
+
+
+
+/* HARMADIK DIV */
+
+#profile-stat {
+
+
+	width: 100%;
+	height: 16%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+}
+
+#stat1, #stat2, #stat3{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 25%;
+	height: 100%;
+}
+
+
+
+
+#stat1-content, #stat2-content, #stat3-content, #stat4-content {
+	display: flex;
+	justify-content: center;
+	align-items: center; 
+	height: 50%;	
+	width: 50%;
+
+
+}
+
+#stat1-content{
+	background-image: url("{% static 'images/stat1.png' %}");
+	background-position: center;
+	background-size: cover;
+}
+
+#stat2-content{
+	background-image: url("{% static 'images/stat2.png' %}");
+	background-position: center;
+	background-size: cover;
+}
+
+
+#stat3-content{
+	background-image: url("{% static 'images/stat3.png' %}");
+	background-position: center;
+	background-size: cover;
+}
+
+
+#stat4-content{
+	background-image: url("{% static 'images/stat1.png' %}");
+	background-position: center;
+	background-size: cover;
+}
+
+
+
+#stat1-content p, #stat2-content p, #stat3-content p, #stat4-content p{
+	opacity: 0;
+	transition: 0.8s;
+	font-size: 1.8em;
+	color:white;
+	transform: scale(0);
+
+}
+
+
+#stat1-content:hover, #stat2-content:hover, #stat3-content:hover, #stat4-content:hover {
+	box-shadow: 0 0 0 200px rgba(0, 0, 0, 0.9) inset;
+	cursor: pointer;
+}
+
+#stat1-content:hover p, #stat2-content:hover p, #stat3-content:hover p, #stat4-content:hover p{
+	opacity: 1;
+	transform: scale(1);
+}
+
+
+
+
+
+/* ------ */
+
+
+
+</style>
+
+
+<div id="profile-content-page">
+	<!-- ELSŐ DIV -->
+	<div id="profile-title">
+		<div id="profile-title-left">
+			<div id="main-page-button">
+				<img src="{% static 'images/previous-button.png' %}" alt="Vissza" class="go-to-main-page" onmouseover="changeColor(this)" onmouseout="resetColor(this)">
+			</div>
+		</div>
+		<div id="profile-title-center">
+			<div id="profile-title-main-text">
+				<span>{{username}}</span>
+			</div>
+		</div>
+		<div id="profile-title-right"></div>
+	</div>
+
+	<!-- MÁSODIK DIV -->
+	<div id="profile-details">
+		<div id="profile-container">
+			<div id="profile-container-left">
+				<div id="profile-container-left-profile-image">
+					<!-- a profilkép a háttér -->
+
+				</div>
+				<div id="health-bar-container">
+					<!--<div class="health-bar-text">{{level}}. szint</div>-->
+					<div class="health-bar">
+						<!-- színezett háttérel mutatja hány % -->
+					</div>
+					<p class="health-bar-text">{{level}}. szint</p>
+				</div>
+				<div id="profile-container-left-attributes">
+					<div class="character-info-item">
+						<div class="character-info-item-name">Erő</div>
+						<div class="character-info-item-value" id="strength-value">{{strength}}</div>
+						<div class="character-info-item-increase-button">
+							<img src="{% static 'images/add-button.png' %}" alt="Plusz" onmouseover="changeColorAdd(this)" onmouseout="resetColorAdd(this)" onclick="increaseAttribute('{{user_id}}', 'strength')" class="increase-attribute-button" id="add-strength">
+						</div>
+					</div>
+					<div class="character-info-item">
+						<div class="character-info-item-name">Ügyesség</div>
+						<div class="character-info-item-value" id="skill-value">{{skill}}</div>
+						<div class="character-info-item-increase-button">
+							<img src="{% static 'images/add-button.png' %}" alt="Plusz" onmouseover="changeColorAdd(this)" onmouseout="resetColorAdd(this)" onclick="increaseAttribute('{{user_id}}', 'skill')" class="increase-attribute-button" id="add-skill">
+						</div>
+					</div>
+					<div class="character-info-item">
+						<div class="character-info-item-name">Értelem</div>
+						<div class="character-info-item-value" id="intelligence-value">{{intelligence}}</div>
+						<div class="character-info-item-increase-button">
+							<img src="{% static 'images/add-button.png' %}" alt="Plusz" onmouseover="changeColorAdd(this)" onmouseout="resetColorAdd(this)" onclick="increaseAttribute('{{user_id}}', 'intelligence')" class="increase-attribute-button" id="add-intelligence">
+						</div>
+					</div>
+					<div class="character-info-item">
+						<div class="character-info-item-name">Kitartás</div>
+						<div class="character-info-item-value" id="health_point-value">{{health_point}}</div>
+						<div class="character-info-item-increase-button">
+							<img src="{% static 'images/add-button.png' %}" alt="Plusz" onmouseover="changeColorAdd(this)" onmouseout="resetColorAdd(this)" onclick="increaseAttribute('{{user_id}}', 'health_point')" class="increase-attribute-button" id="add-health_point">
+						</div>
+					</div>
+					<div class="character-info-item">
+						<div class="character-info-item-name">Szerencse</div>
+						<div class="character-info-item-value" id="fortune-value">{{fortune}}</div>
+						<div class="character-info-item-increase-button">
+							<img src="{% static 'images/add-button.png' %}" alt="Plusz" onmouseover="changeColorAdd(this)" onmouseout="resetColorAdd(this)" onclick="increaseAttribute('{{user_id}}', 'fortune')" class="increase-attribute-button" id="add-fortune">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="profile-container-right">
+				<div id="profile-container-right-description">
+					<textarea id="description-text-area" maxlength="150"></textarea>
+
+				</div>
+				<div id="profile-container-right-team">
+					<div id="team-content">
+						{% if team == None %}
+							<!-- ha nincs csapata -->
+							<div id="team-content-no-team">
+								<span>Jelenleg nincs csapata</span>
+							</div>
+						{% else %}
+							<!-- ha van csapata -->
+							<div id="team-name">
+								<span>{{team}}</span>
+							</div>
+							<div id="team-member-count">
+								<span>Csapattagok száma: {{team_member_count}}</span>
+							</div>
+							<div id="show-team-container">
+								<div id="show-team-button">Csapat megtekintése</div>
+							</div>
+						{% endif %}
+					</div>
+					<div id="team-icon">
+						<!-- Csapat ikon CSS-ben háttérként beállítva -->
+					</div>
+				</div>
+				<div id="profile-container-right-is-owner">
+					<div id="is-owner-related-buttons">
+						{% if is_owner %}
+							<div id="is-owner-related-buttons-first">
+								<div id="buttons-first-container">
+									<img src="{% static 'images/profile-edit-icon.png' %}" alt="szerk-ikon">
+									<span>Profil szerkesztése</span>			
+								</div>
+							</div>
+							<div id="is-owner-related-buttons-second">
+								<div id="buttons-second-container">
+									<img src="{% static 'images/coin.png' %}" alt="arany-ikon">
+									<span>
+										Arany: <span id="gold-value">{{gold}}</span>
+									</span>
+								</div>
+							</div>
+						{% else %}
+							<div id="is-owner-related-buttons-first">
+								<div id="no-owner-buttons-first-container">
+									<img src="{% static 'images/attack.png' %}" alt="tamadas-ikon">
+									<span>Támadás</span>			
+								</div>
+							</div>
+							<div id="is-owner-related-buttons-second">
+								<div id="no-owner-buttons-second-container">
+									<img src="{% static 'images/message.png' %}" alt="uzenet-ikon">
+									<span> Üzenet küldése </span>
+								</div>
+							</div>
+						{% endif %}
+					</div>
+					<div id="basic-info">
+						{% if not is_owner %}
+							<div id="basic-info-last-login-container">
+								<div class="info-first">Legutóbb elérhető</div>
+								<div class="info-second">{{last_login}}</div>
+							</div>
+						{% endif %}
+						<div id="basic-info-date-joined-container">
+							<div class="info-first">Csatlakozott</div>
+							<div class="info-second">{{date_joined}}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- HARMADIK DIV -->
+	<div id="profile-stat">
+		<div id="stat1">
+			<div id="stat1-content">
+				<!--<img src="{% static 'images/attack.png' %}" alt="tamadas-ikon">-->
+				<p>{{fights_count}}</p>
+			</div>
+		</div>
+		<div id="stat2">
+			<div id="stat2-content">
+				<p>{{fights_won_count}}</p>
+			</div>
+		</div>
+		<div id="stat3">
+			<div id="stat3-content">
+				<p>{{fights_lost_count}}</p>
+			</div>
+		</div>
+		<!--
+		<div id="stat4">
+			<div id="stat4-content">
+				<p>{{fights_count}}</p>
+			</div>
+		</div>
+		-->
+
+	</div>
+
+
+</div>	
+
+<div class="loader-container">
+</div>
+
+
+<script>
+	const audio = new Audio()
+	audio.src = "{% static 'audios/button_click.mp3' %}"
+	var outOfGoldSetter = false
+
+	$(window).on("load", function(){
+		$("#profile-container-left-profile-image").css("background-image", "url({{profile_image}}")
+
+		/* ---- PROGRESS BAR SETUP ---- */
+		var currentXP = "{{current_xp}}"
+		var nextLevelXP = "{{next_level_xp}}"
+		var currentPercent = (currentXP / nextLevelXP) * 100
+		console.log(currentPercent)
+		$(".health-bar").css("width", currentPercent +"%")
+		
+		/* ---------------------------- */
+
+		/* ------ TEXTAREA CHECK ------ */
+
+		// ha nem a saját oldalát nézi, ne tudjon írni a descriptionbe
+		{% if not is_owner %}
+			$("#description-text-area").prop("disabled", true)	
+		{% endif %}
+
+		//ha van description, jelenítse meg, ha nincs akkor ha a tulaj nézi, placeholder, ha nem üres string
+		{% if description %}
+			var encodedDescription = $("<p/>").html(`{{description}}`).text(); // &gt-t kapnank ha a user > hasznalja meg hasonlokat, ezt csereljük ki
+			$("#description-text-area").val(encodedDescription)				   // `` kell a többsoros string miatt
+		{% else %}
+			{% if is_owner %}
+				$("#description-text-area").attr("placeholder", "Adj meg leírást...")	
+			{% else %}
+				$("#description-text-area").val("")	
+			{% endif %}
+		{% endif %}
+
+	
+		/* ---------------------------- */
+
+
+		/* Ha nem a tulaj nézi a profilt, ne tudja növelni az attribítumokat */
+		{% if not is_owner %}
+			$(".character-info-item-increase-button").css("display", "none")	
+		{% endif %}
+
+		{% if is_owner %}
+			{% if gold < 4 %}
+				setOutOfGoldState()
+			{% endif %}	
+		{% endif %}
+
+
+
+
+		$(".loader-container").fadeOut("slow")
+
+
+	})
+
+
+	$("#buttons-first-container").on("mouseover", function(){
+		$("#buttons-first-container img").attr("src","{% static 'images/profile-edit-icon-hover.png' %}");
+		$("#buttons-first-container").css("color","#f70044");
+		$("#buttons-first-container").css("cursor", "pointer")
+	})
+
+
+	$("#buttons-first-container").on("mouseout", function(){
+		$("#buttons-first-container img").attr("src","{% static 'images/profile-edit-icon.png' %}");
+		$("#buttons-first-container").css("color","#fae455");
+	})
+
+
+	$("#buttons-first-container").click( function() {
+    	audio.play()
+
+    	setTimeout(function(){
+	    	try {
+
+				var url = "{% url 'account:edit' user_id=user_id %}"
+				var win = window.location.replace(url) 
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+
+    	}, 220)
+    	$(".loader-container").fadeIn("fast")
+	})
+
+
+	$("#show-team-container").click(function(){
+    	audio.play()
+
+    	setTimeout(function(){
+	    	try {
+
+				var url = "{% url 'team:individual_team_view' team_id=7347328438423 %}".replace("7347328438423", "{{team.id}}");
+				var win = window.open(url, "_self")
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+
+    	}, 200)
+    	$(".loader-container").fadeIn("fast")
+	})
+
+	/*
+	// megakadalyozzuk a new line-t : todo: kicserelni ezt hogy lehessen new line; solved
+    $("#description-text-area").keypress(function(event) {
+        if (event.keyCode == 13) {
+            event.preventDefault();
+        }
+    });
+    */
+
+
+	// a textareabol kilépést követően mentjük a leírást
+	$("#description-text-area").focusout(function(){
+
+
+
+		var textAreaContent = $("#description-text-area").val()
+
+
+
+		info_packet = {
+			"csrfmiddlewaretoken": "{{csrf_token}}",
+			"user_id": "{{user_id}}",	
+			"description": textAreaContent,
+		}
+		
+		$.ajax({
+			dataType: "json",
+			url: "{% url 'account:save_description' %}",
+			data: info_packet,
+			success: function(data) {
+				console.log('SUCCESS - ' + data.message)
+
+			},
+			error: function(data) {
+				console.log('ERROR')
+			},
+		}) 
+	})
+
+
+	$(".go-to-main-page").click(function(){
+    	audio.play()
+
+    	setTimeout(function(){
+	    	try {
+
+				var url = "{% url 'home_page' %}"
+				var win = window.location.replace(url) 
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+
+    	}, 200)
+    	$(".loader-container").fadeIn("fast")
+	})
+
+
+
+
+	function changeColor(imageElement){
+		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}")
+	}
+
+	function resetColor(imageElement){
+		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}")
+	}
+
+
+	function changeColorAdd(imageElement){
+		if(!outOfGoldSetter){
+			imageElement.setAttribute("src", "{% static 'images/add-button-hover.png' %}")
+		}
+	}
+
+	function resetColorAdd(imageElement){
+		if(!outOfGoldSetter){
+			imageElement.setAttribute("src", "{% static 'images/add-button.png' %}")
+		}
+	}
+
+
+
+
+
+	function setIncreasedAttribute(attributeType, newAttributeValue, newGoldValue) {
+		console.log(attributeType)
+		if (attributeType == "strength"){
+			document.getElementById("strength-value").innerHTML = newAttributeValue
+		}
+		if (attributeType == "skill"){
+			document.getElementById("skill-value").innerHTML = newAttributeValue
+		}
+		if (attributeType == "intelligence"){
+			document.getElementById("intelligence-value").innerHTML = newAttributeValue
+		}
+		if (attributeType == "health_point"){
+			document.getElementById("health_point-value").innerHTML = newAttributeValue
+		}
+		if (attributeType == "fortune"){
+			document.getElementById("fortune-value").innerHTML = newAttributeValue
+
+		}
+
+		document.getElementById("gold-value").innerHTML = newGoldValue
+	}
+
+
+
+	function increaseAttribute(userID, attributeType){
+		if(!outOfGoldSetter){
+	  		audio.currentTime = 0;
+			audio.play()
+
+			info_packet = {
+				"csrfmiddlewaretoken": "{{csrf_token}}",
+				"user_id": userID,
+				"attribute_type": attributeType,
+			}
+			$.ajax({
+				type: "POST",
+				dataType: "json",
+				url: "{% url 'account:increase_attribute_value' %}",
+				data: info_packet,
+				success: function(data) {
+					console.log('SUCCESS')
+					if (data.message == "Success"){
+						setIncreasedAttribute(data.attr_type, data.new_attr_value, data.new_gold_value)
+						var newGoldValue = data.new_gold_value
+						if(newGoldValue < 4){
+							setOutOfGoldState()
+						}
+					}
+					else if (data.message == "Out of gold"){
+						console.log("nincs eleg aranyad")
+						setOutOfGoldState()
+
+					}
+					else{
+						alert('Something went wrong')
+					}
+				},
+				error: function(data) {
+					console.log('ERROR')
+				},
+			})
+		}
+	}
+
+
+	function setOutOfGoldState(){
+		outOfGoldSetter = true
+		$(".increase-attribute-button").attr("src", "{% static 'images/add-button-inactive.png' %}")
+		$(".increase-attribute-button").removeClass("increase-attribute-button")
+	}
+
+
+	$("#no-owner-buttons-first-container").click(function(){
+		audio.play()
+		setTimeout(function(){
+			attackChoosenPlayer("{{user_id}}") // include-olva van ez a függvény
+		},200)
+    	$(".loader-container").fadeIn("fast")
+	})
+
+	$("#no-owner-buttons-second-container").click(function(){
+		audio.play()
+		setTimeout(function(){
+			createOrReturnPrivateChat("{{user_id}}") // include-olva van ez a függvény
+		},200)
+    	$(".loader-container").fadeIn("fast")
+
+	})
+
+
+</script>
+
+{% endblock %}

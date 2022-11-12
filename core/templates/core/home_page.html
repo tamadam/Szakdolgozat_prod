@@ -1,0 +1,938 @@
+{% extends 'base_new.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+
+
+@font-face {
+	font-family: 'Kanit-Regular';
+	src: local('Kanit-Regular'),
+	url("{% static 'fonts/Kanit-Regular.ttf' %}");
+}
+
+@font-face {
+	font-family: 'Kanit-Bold';
+	src: local('Kanit-Bold'),
+	url("{% static 'fonts/Kanit-Bold.ttf' %}");
+}
+
+@font-face {
+	font-family: 'Kanit-Light';
+	src: local('Kanit-Light'),
+	url("{% static 'fonts/Kanit-Light.ttf' %}");
+}
+
+#home-page-content{
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	background: url("{% static 'images/home-page-background.jpg' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	user-select: none;
+	width: 1900px;
+	min-width: 800px;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+/*
+	display: grid;
+	grid-template-rows: repeat(10, 1fr);
+
+	*/
+
+}
+
+
+
+#main-menu-title{
+	height: 20%;
+	width: 100%;
+}
+
+#main-menu-body{
+	width: 100%;
+	height: 60%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+}
+
+#main-menu-footer{
+	height: 20%;
+	width: 100%;
+}
+
+
+#main-menu-container-left{
+	height: 100%;
+	width: 30%;
+
+}
+
+#main-menu-container-center{
+	height: 100%;
+	width: 40%;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr) repeat(2, 0);
+	grid-template-rows: repeat(3, 1fr) repeat(2, 0);
+	grid-gap: 0.2em;
+	font-family: "Kanit-Regular";
+	font-size: 1.4em;
+
+}
+
+#main-menu-container-right{
+	height: 100%;
+	width: 30%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+
+}
+
+#chat-icons-side{
+	display: flex;
+	flex-direction: column;
+	width: 20%;
+	height: 40%;
+}
+
+#private-chat-icon{
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
+	margin-bottom: 0.4em;
+	background-color: rgba(173, 216, 230, 0.8);
+	border-top-left-radius: 30%;
+	border-bottom-left-radius: 10%;
+}
+
+
+#private-chat-icon:hover{
+	cursor: pointer;
+	background-color: rgba(173, 216, 230, 1.0);
+	box-shadow: rgba(148, 194, 209, 0.8) 0em 0.4em 2em;
+}
+
+
+.chat-icon-title{
+	width: 20%;
+	height: 80%;
+	display: flex;
+	align-items: top;
+	justify-content: flex-start;
+	margin-right: 0.1em;
+
+
+}
+
+#private-message-counter{
+
+	background-color: lightgrey;
+	text-align: center;
+	width: 100%;
+	height: fit-content;
+	font-family: "Kanit-Regular";
+	font-size: 1em;
+	color: black;
+
+
+}
+
+
+
+.chat-icon-content{
+	width: 80%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+}
+
+.chat-menu-img{
+	max-width: 90%;
+	max-height: 90%;
+	padding: 0.2em;
+	border-top-left-radius: 30%;
+	border-bottom-left-radius: 30%;
+
+}
+
+#public-chat-icon{
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
+	margin-bottom: 0.4em;
+	background-color: rgba(173, 216, 230, 0.8);
+	border-top-left-radius: 10%;
+	border-bottom-left-radius: 30%;
+}
+
+#public-chat-icon:hover{
+	cursor: pointer;
+	background-color: rgba(173, 216, 230, 1.0);
+	box-shadow: rgba(148, 194, 209, 0.8) 0em 0.4em 2em;
+}
+
+
+
+.public-chat-icon-content{
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.public-chat-menu-img{
+	max-width: 80%;
+	max-height: 80%;
+}
+
+
+.menu1 {
+	grid-area: 1 / 1 / 3 / 2;
+	background-color: rgba(230, 88, 80, 0.8);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+
+}
+
+.menu1:hover{
+	background-color: rgba(230, 88, 80, 1.0);
+	cursor: pointer;
+	box-shadow: rgba(216, 76, 70, 0.8) 0em 0.4em 2em;
+}
+
+.menu2 {
+	grid-area: 1 / 2 / 2 / 3;
+	background-color: rgba(126, 210, 62, 0.8);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+
+}
+
+.menu2:hover{
+	background-color: rgba(126, 210, 62, 1.0);
+	cursor: pointer;
+	box-shadow: rgba(110, 190, 50, 0.8) 0em -0.4em 2em;
+}
+
+.menu3 {
+	grid-area: 1 / 3 / 3 / 4;
+	background-color: rgba(180, 110, 208, 0.8);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+
+}
+
+.menu3:hover{
+	background-color: rgba(180, 110, 208, 1.0);
+	cursor: pointer;
+	box-shadow: rgba(162, 96, 190, 0.8) 0em 0.4em 2em;
+}
+
+.menu4 {
+	grid-area: 2 / 2 / 3 / 3;
+	background-color: rgba(250, 216, 118, 0.8);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.menu4:hover{
+	background-color: rgba(250, 216, 118, 1.0);
+	cursor: pointer;
+	box-shadow: rgba(214, 182, 90, 0.8) 0em 0.4em 2em;
+}
+
+.menu5 {
+	grid-area: 3 / 1 / 4 / 3;
+	background-color: rgba(120, 185, 250, 0.8);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+}
+
+.menu5:hover{
+	background-color: rgba(120, 185, 250, 1.0);
+	cursor: pointer;
+	box-shadow: rgba(106, 170, 234, 0.8) 0em 0.4em 2em; /* sotetebb szineket allitok border shadownak */
+}
+
+.menu6 {
+	grid-area: 3 / 3 / 4 / 4;
+	background-color: rgba(40, 38, 36, 0.8);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+}
+
+.menu6:hover{
+	background-color: rgba(40, 38, 36, 1.0);
+	cursor: pointer;
+	box-shadow: rgba(0, 0, 0, 0.8) 0em 0.4em 2em;
+}
+
+
+.menu-title{
+	width: 80%;
+	height: 20%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	margin-top: 0.2em;
+}
+
+.menu-title-span{
+	background: url("{% static 'images/button-back.png' %}");	
+	background-position: center;
+	background-size: cover;
+	width: 100%;
+	text-align: center;
+	font-size: 1em;
+
+}
+
+.menu4 .menu-title{
+	margin-top: 0em;
+	margin-bottom: 0.2em;
+}
+
+.menu-content{
+	height: 100%;
+	width: 90%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.menu-img{
+	max-width: 90%;
+	max-height: 90%;
+	border-radius: 50%;
+	border: 4px solid black;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(255,255,255, 0.9);
+}
+
+
+.big-menu-content{
+	height: 80%;
+	width: 90%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+
+.big-menu-img{
+	height: 70%;
+	width: 90%;
+	max-width: 100%;
+	max-height: 100%;
+	border-radius: 20%;
+	border: 4px solid black;
+	background-color: rgba(255,255,255, 0.9);
+}
+
+
+.start-menu-title{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 72%;
+	font-size: 1.6em;
+	font-family: "Kanit-Regular";
+	text-shadow: 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black; 
+	color: #ffe07d;
+}
+
+.start-menu-content{
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	height: 100%;
+	width: 28%;
+
+	margin-right: 0.4em;
+}
+
+.start-menu-img{
+	height: 56%;
+	width: 70%;
+	max-width: 70%;
+	max-height: 56%;
+}
+
+.exit-menu-img{
+	max-height: 52%;
+	max-width: 52%;
+}
+
+.loader-container {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 10;
+	color: white;
+	font-family: "Kanit-Regular";
+	font-size: 1.4em;
+
+}
+
+
+</style>
+
+
+
+<div id="home-page-content">
+	<div id="main-menu-title"></div>
+	<div id="main-menu-body">
+		<div id="main-menu-container-left"></div>
+		<div id="main-menu-container-center">
+			<div class="menu menu1">
+				<div class="menu-title">
+					<span class="menu-title-span">Karakter</span>
+				</div>
+				<div class="big-menu-content">
+					{% if character_type == 'scout' %}
+						<img src="{% static 'images/archer.png' %}" alt="karakter" class="big-menu-img">
+					{% elif character_type == 'warrior' %}
+						<img src="{% static 'images/swordsman.png' %}" alt="karakter" class="big-menu-img">
+					{% elif character_type == 'mage' %}
+						<img src="{% static 'images/wizard.png' %}" alt="karakter" class="big-menu-img">
+					{% else %}
+						<img src="{% static 'images/swordsman.png' %}" alt="karakter" class="big-menu-img">
+					{% endif %}
+				</div>				
+			</div>
+			<div class="menu menu2">
+				<div class="menu-title">
+					<span class="menu-title-span">Aréna</span>
+				</div>
+				<div class="menu-content">
+					<img src="{% static 'images/hat.png' %}" alt="arena" class="menu-img">
+				</div>
+
+			</div>
+			<div class="menu menu3">
+				<div class="menu-title">
+					<span class="menu-title-span">Hősök csarnoka</span>
+				</div>
+				<div class="big-menu-content">
+					<img src="{% static 'images/customer.png' %}" alt="hosok-csarnoka" class="big-menu-img">
+				</div>	
+			</div>
+			<div class="menu menu4">
+				<div class="menu-content">
+					<img src="{% static 'images/goal.png' %}" alt="csapat" class="menu-img">
+				</div>
+				<div class="menu-title">
+					<span class="menu-title-span">Csapat</span>
+				</div>
+			</div>
+			<div class="menu menu5">
+				<div class="start-menu-title">
+					<span class="start-menu-title-span">Játék kezdése</span>
+				</div>
+				<div class="start-menu-content">
+					<img src="{% static 'images/start.png' %}" alt="start-ikon" class="start-menu-img">
+				</div>
+			</div>
+			<div class="menu menu6">
+				<div class="menu-content">
+					<img src="{% static 'images/exit.png' %}" alt="kilepes" class="exit-menu-img">
+				</div>
+			</div>
+
+		</div>	
+		<div id="main-menu-container-right">
+			<div id="chat-icons-side">
+				<div id="private-chat-icon">
+					<div class="chat-icon-content">
+						<img src="{% static 'images/mail.png' %}" alt="privat-chat" class="chat-menu-img">
+					</div>
+					<div class="chat-icon-title">
+						<span id="private-message-counter">0</span>
+					</div>
+				</div>
+				<div id="public-chat-icon">
+					<div class="chat-icon-content public-chat-icon-content">
+						<img src="{% static 'images/community.png' %}" alt="kozossegi-chat" class="public-chat-menu-img">
+					</div>
+				</div>
+			</div>
+		</div>	
+	</div>
+
+	<div id="main-menu-footer"></div>
+	<div class="loader-container">
+	</div>
+
+</div>
+<!-- jquery color plugin: a háttér animalasahoz-->
+<script type="text/javascript" src="http://code.jquery.com/color/jquery.color-2.1.2.js"></script>
+<script>
+
+	var activeTeamBackgroundAnimation = false
+	var activePrivateChatBackgroundAnimation = false
+	var activePublicChatBackgroundAnimation = false
+
+
+	jQuery.easing.def = "linear";
+
+	function animateTeamMenuBackground(firstRun){
+
+		if (activeTeamBackgroundAnimation){
+			if (firstRun){
+				$(".menu4").css("opacity", 1.0)	
+			}
+			//$(".menu4").css("backgroundColor", "rgba(250, 216, 118, 0.4)")
+			$(".menu4").animate({
+				//"backgroundColor": "rgba(250, 216, 118, 1.0)"
+				opacity: 0.4
+			}, 900, function(){
+				$(this).animate({
+					//"backgroundColor": "rgba(250, 216, 118, 0.4)"
+					opacity: 1.0
+				}, 900, function(){
+					setTimeout(animateTeamMenuBackground(false), 400)
+				})
+			})
+		}
+
+
+	}
+
+
+	function animatePrivateChatBackground(firstRun){
+
+		if (activePrivateChatBackgroundAnimation){
+			if (firstRun){
+				$("#private-chat-icon").css("opacity", 1.0)	
+			}
+			$("#private-chat-icon").animate({
+				opacity: 0.4
+			}, 900, function(){
+				$(this).animate({
+					opacity: 1.0
+				}, 900, function(){
+					setTimeout(animatePrivateChatBackground(false), 400)
+				})
+			})
+		}
+
+
+	}
+
+
+	function animatePublicChatBackground(firstRun){
+
+		if (activePublicChatBackgroundAnimation){
+			if (firstRun){
+				$("#public-chat-icon").css("opacity", 1.0)	
+			}
+			$("#public-chat-icon").animate({
+				opacity: 0.4
+			}, 900, function(){
+				$(this).animate({
+					opacity: 1.0
+				}, 900, function(){
+					setTimeout(animatePublicChatBackground(false), 400)
+				})
+			})
+		}
+
+
+	}
+
+	function cancelAnimateTeamMenuBackground(){
+		activeTeamBackgroundAnimation = false
+		setTimeout(function(){
+			$(".menu4").css("opacity", 1.0)	
+		}, 500)
+	}
+
+
+	function cancelAnimatePrivateChatBackground(){
+		activePrivateChatBackgroundAnimation = false
+		setTimeout(function(){
+			$("#private-chat-icon").css("opacity", 1.0)	
+		}, 500)
+	}
+
+
+
+	function cancelAnimatePublicChatBackground(){
+		activePublicChatBackgroundAnimation = false
+		setTimeout(function(){
+			$("#public-chat-icon").css("opacity", 1.0)	
+		}, 500)
+	}
+
+
+	$(window).on("load", function(){
+		setTimeout(function(){
+			$(".loader-container").fadeOut("slow")
+		}, 400)
+	})
+
+
+	const audio = new Audio()
+	audio.src = "{% static 'audios/button_click.mp3' %}"
+
+
+
+
+	$(".menu1").click(function(){
+		audio.play()
+
+		setTimeout(function(){
+			try {
+
+				var url = "{% url 'profile' user_id=request.user.id %}"
+				var win = window.location.replace(url) 
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+		}, 200)
+		$(".loader-container").fadeIn("fast")
+	})
+
+
+
+	$(".menu2").click(function(){
+		audio.play()
+
+		setTimeout(function(){
+			try {
+
+				var url = "{% url 'game:arena' %}"
+				var win = window.location.replace(url) 
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+		}, 200)
+		$(".loader-container").fadeIn("fast")
+	})
+
+
+	$(".menu3").click(function(){
+		audio.play()
+
+		setTimeout(function(){
+			try {
+
+				var url = "{% url 'search' %}"
+				var win = window.location.replace(url) 
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+		}, 200)
+		$(".loader-container").fadeIn("fast")
+	})
+
+
+
+	$(".menu4").click(function(){
+		audio.play()
+
+		setTimeout(function(){
+			try {
+
+				var url = "{% url 'team:user_team_view' %}"
+				var win = window.location.replace(url) 
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+		}, 200)
+		$(".loader-container").fadeIn("fast")
+	})
+
+	$(".menu5").click(function(){
+		audio.play()
+
+		setTimeout(function(){
+			try {
+
+				var url = "{% url 'game:game_choice' %}"
+				var win = window.location.replace(url) 
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+		}, 200)
+		$(".loader-container").fadeIn("fast")
+	})
+
+
+	$(".menu6").click(function(){
+		audio.play()
+
+		setTimeout(function(){
+			try {
+
+				var url = "{% url 'logout' %}"
+				var win = window.location.replace(url) 
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+		}, 200)
+		$(".loader-container").fadeIn("fast")
+	})
+
+
+	$("#private-chat-icon").click(function(){
+		audio.play()
+
+		setTimeout(function(){
+			try {
+
+				var url = "{% url 'private_chat:private_chat_room' %}"
+				var win = window.location.replace(url) 
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+		}, 200)
+		$(".loader-container").fadeIn("fast")
+	})
+
+
+	$("#public-chat-icon").click(function(){
+		audio.play()
+
+		setTimeout(function(){
+			try {
+
+				var url = "{% url 'public_chat' %}"
+				var win = window.location.replace(url) 
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+		}, 200)
+		$(".loader-container").fadeIn("fast")
+	})
+
+
+</script>
+
+
+ <script>
+    // WEBSOCKET BEÁLLÍTÁS FOLYAMATA KEZDETE //
+
+    var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+
+    /* nincs debug_mode view de ezt viewban meg lehet csinalni sztem templatetagssel
+    if ("{{ debug_mode }}")
+      var ws_path = ws_scheme + "://" + window.location.host + "/"; // fejlesztéshez
+    else
+      var ws_path = ws_scheme + "://" + window.location.host + ":8001/"; // élesben
+    */
+    var ws_path = ws_scheme + '://' + window.location.host + "/";
+
+    // websocket beállítás
+    var notificationSocket = new WebSocket(ws_path)
+
+
+    // websocket megnyitása
+    notificationSocket.onopen = function(event) {
+      console.log("notificationSocket: Connection successfully created");
+      getUnreadPrivateChatRoomMessagesCount()
+      getUnreadPublicChatRoomMessagesCount()
+      getUnreadTeamMessagesCount()
+    };
+
+    // bejövő üzeneket kezelése a consumertől
+    notificationSocket.onmessage = function(event) {
+      console.log("Data received from the server: ", event.data);
+      var data = JSON.parse(event.data)
+
+
+      if(data.message_type == 20){
+        console.log("got message_type 20")
+        setNumOfPrivateChatNotifications(data.num)
+      }
+      else if(data.message_type == 21){
+        console.log("got message_type 21")
+        setNumOfPublicChatNotifications(data.num)
+      }
+      else if(data.message_type == 22){
+        console.log("got message_type 22")
+        setTeamChatNotifications(data.num)
+      }
+
+    };
+
+
+    // hibaüzenetek kiírása
+    notificationSocket.onerror = function(event) {
+      console.log("Error: ", event.message);
+    };
+
+
+    // websocket bezárása
+    notificationSocket.onclose = function(event) {
+      if (event.wasClean){
+        console.log("Connection closed");
+      }
+      else {
+        console.log("Connection died.");
+      }
+    };
+
+    function setTeamChatNotifications(numOfNotifications) {
+      console.log("setting num of team chat notification")
+      console.log("num of team chat notifications: " + numOfNotifications)
+      var notificationCounter = document.getElementById("team-chat-notification-counter")
+      if (numOfNotifications > 0){
+      	if(!activeTeamBackgroundAnimation){
+			activeTeamBackgroundAnimation = true
+			animateTeamMenuBackground(true)
+      	}
+      }
+      else{
+		cancelAnimateTeamMenuBackground()
+      }
+    }
+
+
+
+
+
+    // public chat notifications
+    function setNumOfPublicChatNotifications(numOfNotifications){
+      console.log("setting num of public chat notification")
+      console.log("num of public chat notifications: " + numOfNotifications)
+
+      if (numOfNotifications > 0){
+      	if(!activePublicChatBackgroundAnimation){
+			activePublicChatBackgroundAnimation = true
+			animatePublicChatBackground(true)
+      	}
+      }
+      else{
+		cancelAnimatePublicChatBackground()
+      }
+    }
+
+
+    // private chat notifications
+    function setNumOfPrivateChatNotifications(numOfNotifications){
+      console.log("setting num of private chat notification")
+      console.log("num of private chat notifications: " + numOfNotifications)
+
+      
+      if (numOfNotifications > 0){
+      	if (numOfNotifications > 9){
+      		numOfNotifications = "9+"
+      	}
+        $("#private-message-counter").html(numOfNotifications)
+        $("#private-message-counter").css("backgroundColor", "red")
+        $("#private-message-counter").css("fontFamily", "Kanit-Bold")
+        $("#private-message-counter").css("color", "white")
+
+      	if(!activePrivateChatBackgroundAnimation){
+			activePrivateChatBackgroundAnimation = true
+			animatePrivateChatBackground(true)
+      	}
+      }
+      else{
+        $("#private-message-counter").html(numOfNotifications)
+        $("#private-message-counter").css("backgroundColor", "lightgrey")
+        $("#private-message-counter").css("fontFamily", "Kanit-Regular")
+        $("#private-message-counter").css("color", "black")
+		cancelAnimatePrivateChatBackground()
+      }
+      
+    }
+
+    function getUnreadTeamMessagesCount(){
+      if("{{request.user.is_authenticated}}"){
+        notificationSocket.send(JSON.stringify({
+            "command": "get_unread_team_messages_count",
+        }));
+      }
+    } 
+
+
+
+    function getUnreadPublicChatRoomMessagesCount(){
+      if("{{request.user.is_authenticated}}"){
+        notificationSocket.send(JSON.stringify({
+            "command": "get_unread_public_chat_room_messages_count",
+        }));
+      }
+    } 
+
+
+
+    function getUnreadPrivateChatRoomMessagesCount(){
+      if("{{request.user.is_authenticated}}"){
+        notificationSocket.send(JSON.stringify({
+            "command": "get_unread_private_chat_room_messages_count",
+        }));
+      }
+    }
+
+    setInterval(getUnreadTeamMessagesCount, 1800)
+    setInterval(getUnreadPublicChatRoomMessagesCount, 1800)
+    setInterval(getUnreadPrivateChatRoomMessagesCount, 1800)
+ </script>
+
+
+{% endblock %}

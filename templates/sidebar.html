@@ -1,0 +1,282 @@
+<!-- 
+      ##TODO##
+  Side navigation from w3schools
+-->
+{% load static %}
+{% load user_info_tags %}
+
+<style>
+  /* The sidebar menu */
+.sidenav {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 15%; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: black;
+  background-image: url("{% static 'images/sand-background.jpg' %}");
+
+  display: block;
+  width: 50%;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: yellow;
+  opacity: 0.5;
+
+}
+
+.sidebar-nav li {
+  list-style-type: none;
+}
+
+
+
+
+/* Style page content */
+.main {
+  display: block;
+    height: 100%;
+    width: 75%;
+    left: 25%;
+    position: absolute;
+
+}
+
+#side_bar_profile_image {
+  width: 60px;
+  height: 60px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
+
+<div class="sidenav">
+  <ul class="sidebar-nav">  
+    <li id="user-info-li"><a href="{% url 'profile' user_id=request.user.id %}"><img src="{% static 'images/blank_profile_image.png' %}" id="side_bar_profile_image"></a>
+    <span id="gold-count"></span></li>
+    <li><a href="{% url 'home_page' %}">Fogadó</a></li>
+    <li><a href="{% url 'game:arena' %}">Aréna</a></li>
+    <!--<li><a href="#">Fegyverbolt</a></li>-->
+    <!--<li><a href="#">Varázsbolt</a></li>-->
+    <li><a href="{% url 'profile' user_id=request.user.id %}">Karakter</a></li>
+    <li><a href="{% url 'public_chat' %}">Beszélgetés</a><div id="public-chat-notification-counter"></div></li>
+    <li><a href="{% url 'search' %}">Hősök csarnoka</a></li>
+    <li><a href="{% url 'team:user_team_view' %}">Csapat</a><div id="team-chat-notification-counter"></div></li>
+    <li><a href="{% url 'private_chat:private_chat_room' %}">Levelek</a><div id="private-chat-notification-counter"></div></li>
+    <li><a href="{% url 'logout' %}">Logout</a></li>
+  </ul>
+</div>
+
+<!-- Page content 
+<div class="main">
+  ...
+</div>-->
+
+
+<script>
+$( document ).ready(function() {
+    var profileImagePath = "{% get_user_profile_picture request.user %}" // megkapjuk a profile imaget
+
+    //console.log(profileImagePath)
+    loadProfilePicture(profileImagePath, "side_bar_profile_image") //  betöltjük az igazi képet, alapból a default van beállítva | side_bar_profile_image az ID az img-nek
+
+    var goldCount = "{% get_user_gold_count request.user %}"
+    document.getElementById("gold-count").innerHTML = "Arany: " + goldCount
+
+
+});
+
+
+  function setProfilePicture(imageSource, elementId) {
+    // beállítja az igazi profilképet
+    let image = document.getElementById(elementId)
+    image.src = imageSource
+  }
+
+
+  function loadProfilePicture(imageSource, profileImageId){
+    // profilkép betöltését indítja el
+    var profileImageLoader = new Image()
+    profileImageLoader.src = imageSource
+
+    if (!profileImageLoader.complete){
+      profileImageLoader.onload = function(){
+        // beállítja az alapértelmezett profilképet
+        setProfilePicture(profileImageLoader.src, profileImageId)
+        profileImageLoader.onload = function(){
+          // pass
+        }
+      }
+    }
+    else{
+      setProfilePicture(profileImageLoader.src, profileImageId)
+      profileImageLoader.onload = function() {
+        // pass
+      }
+      }
+    }
+ </script>
+
+ <script>
+    // WEBSOCKET BEÁLLÍTÁS FOLYAMATA KEZDETE //
+
+    var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+
+    /* nincs debug_mode view de ezt viewban meg lehet csinalni sztem templatetagssel
+    if ("{{ debug_mode }}")
+      var ws_path = ws_scheme + "://" + window.location.host + "/"; // fejlesztéshez
+    else
+      var ws_path = ws_scheme + "://" + window.location.host + ":8001/"; // élesben
+    */
+    var ws_path = ws_scheme + '://' + window.location.host + "/";
+
+    // websocket beállítás
+    var notificationSocket = new WebSocket(ws_path)
+
+
+    // websocket megnyitása
+    notificationSocket.onopen = function(event) {
+      console.log("notificationSocket: Connection successfully created");
+      getUnreadPrivateChatRoomMessagesCount()
+      getUnreadPublicChatRoomMessagesCount()
+      getUnreadTeamMessagesCount()
+    };
+
+    // bejövő üzeneket kezelése a consumertől
+    notificationSocket.onmessage = function(event) {
+      console.log("Data received from the server: ", event.data);
+      var data = JSON.parse(event.data)
+
+
+      if(data.message_type == 20){
+        console.log("got message_type 20")
+        setNumOfPrivateChatNotifications(data.num)
+      }
+      else if(data.message_type == 21){
+        console.log("got message_type 21")
+        setNumOfPublicChatNotifications(data.num)
+      }
+      else if(data.message_type == 22){
+        console.log("got message_type 22")
+        setTeamChatNotifications(data.num)
+      }
+
+    };
+
+
+    // hibaüzenetek kiírása
+    notificationSocket.onerror = function(event) {
+      console.log("Error: ", event.message);
+    };
+
+
+    // websocket bezárása
+    notificationSocket.onclose = function(event) {
+      if (event.wasClean){
+        console.log("Connection closed");
+      }
+      else {
+        console.log("Connection died.");
+      }
+    };
+
+    function setTeamChatNotifications(numOfNotifications) {
+      console.log("setting num of team chat notification")
+      console.log("num of team chat notifications: " + numOfNotifications)
+      var notificationCounter = document.getElementById("team-chat-notification-counter")
+      if (numOfNotifications > 0){
+        notificationCounter.innerHTML = '+'
+        notificationCounter.style.display = "block"
+        notificationCounter.style.background = "red"
+      }
+      else{
+        notificationCounter.style.display = "none"
+        notificationCounter.style.background = "transparent"
+      }
+    }
+
+
+
+
+    // public chat notifications
+    function setNumOfPublicChatNotifications(numOfNotifications){
+      console.log("setting num of public chat notification")
+      console.log("num of public chat notifications: " + numOfNotifications)
+      var notificationCounter = document.getElementById("public-chat-notification-counter")
+      if (numOfNotifications > 0){
+        notificationCounter.innerHTML = '+'
+        notificationCounter.style.display = "block"
+        notificationCounter.style.background = "red"
+      }
+      else{
+        notificationCounter.style.display = "none"
+        notificationCounter.style.background = "transparent"
+      }
+    }
+
+
+    // private chat notifications
+    function setNumOfPrivateChatNotifications(numOfNotifications){
+      console.log("setting num of private chat notification")
+      console.log("num of private chat notifications: " + numOfNotifications)
+      var notificationCounter = document.getElementById("private-chat-notification-counter")
+      if (numOfNotifications > 0){
+        notificationCounter.innerHTML = numOfNotifications
+        notificationCounter.style.display = "block"
+        notificationCounter.style.background = "red"
+      }
+      else{
+        notificationCounter.style.display = "none"
+        notificationCounter.style.background = "transparent"
+      }
+    }
+
+    function getUnreadTeamMessagesCount(){
+      if("{{request.user.is_authenticated}}"){
+        notificationSocket.send(JSON.stringify({
+            "command": "get_unread_team_messages_count",
+        }));
+      }
+    } 
+
+
+
+    function getUnreadPublicChatRoomMessagesCount(){
+      if("{{request.user.is_authenticated}}"){
+        notificationSocket.send(JSON.stringify({
+            "command": "get_unread_public_chat_room_messages_count",
+        }));
+      }
+    } 
+
+
+
+    function getUnreadPrivateChatRoomMessagesCount(){
+      if("{{request.user.is_authenticated}}"){
+        notificationSocket.send(JSON.stringify({
+            "command": "get_unread_private_chat_room_messages_count",
+        }));
+      }
+    }
+
+    setInterval(getUnreadTeamMessagesCount, 1800)
+    setInterval(getUnreadPublicChatRoomMessagesCount, 1800)
+    setInterval(getUnreadPrivateChatRoomMessagesCount, 1800)
+ </script>
+

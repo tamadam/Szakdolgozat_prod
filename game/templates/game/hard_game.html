@@ -1,0 +1,1006 @@
+{% extends 'base_new.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+@font-face {
+	font-family: 'Kanit-Regular';
+	src: local('Kanit-Regular'),
+	url("{% static 'fonts/Kanit-Regular.ttf' %}");
+}
+
+@font-face {
+	font-family: 'Kanit-Bold';
+	src: local('Kanit-Bold'),
+	url("{% static 'fonts/Kanit-Bold.ttf' %}");
+}
+
+@font-face {
+	font-family: 'Kanit-Light';
+	src: local('Kanit-Light'),
+	url("{% static 'fonts/Kanit-Light.ttf' %}");
+}
+
+
+#third-game-content{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	background-color: lightblue;
+	background: url("{% static 'images/naturebomb.jpg' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	user-select: none;
+	font-family: "Kanit-Regular";
+	overflow: hidden;
+	width: 1900px;
+}
+
+#third-game-header{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 14%;
+	width: 100%;
+
+}
+
+#third-game-container{
+	display: flex;
+	align-items: center;
+	justify-content: center;	
+	height: 72%;
+	width: 100%;
+}
+
+
+#third-game-footer{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 14%;
+	width: 100%;
+}
+
+
+#minesweeper-container-left{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20%;
+	height: 100%;
+}
+
+#minesweeper-container{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40%;
+	height: 100%;
+}
+
+
+#minesweeper-container-right{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20%;
+	height: 100%;
+}
+
+#data-container{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: fit-content;
+	padding: 1em;
+	background-color: rgba(0, 0, 0, 0.6);
+	border-radius: 60px;
+}
+
+#minesweeper-field{
+
+	display: grid;
+	grid-template-columns: repeat(10, minmax(0, 1fr));
+	grid-template-rows: repeat(10, minmax(0, 1fr));
+
+	/* a rácsos szerkezetet a háttérrel és a gappel hozom létre */
+
+
+	/* 	grid-gap: 0.1rem;
+	background-color: black;
+	border: 0.1rem solid black;*/
+	width: 60vh;
+	height: 60vh;
+	background-color: rgba(189, 195, 199, 0.8);
+	box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+	grid-gap: 0.2vh;
+	padding: 0.4em;
+	border-radius: 10px;
+
+}
+
+/* az adott mező */
+.field {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(255, 255, 255, 0.6);
+	cursor: pointer;
+	font-family: "Kanit-Bold";
+
+}
+
+
+.field-clicked {
+	background-color: #cccccc;
+}
+
+.field-clicked-flag {
+	background-color: #dad9d9;
+}
+
+#field-image{
+	max-width: 90%;
+	max-height: 90%;
+}
+
+/* --- title */
+#third-game-title-left{
+	width: 14%;
+}
+
+#third-game-title-center{
+	width: 72%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	font-family: "Kanit-Regular";
+	font-size: 1.4em;
+	color: #fae455;
+
+}
+
+#third-game-title-center-h1{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1em;
+	background-color: rgba(0, 0, 0, 0.6);
+	height: 20%;
+	color: #fae455;
+
+}
+
+#third-game-title-right{
+	width: 14%;
+}
+
+
+#main-page-button {
+	display: flex;
+	justify-content: center;
+	align-items: center; 
+	width: 100%;
+	height: 100%;
+
+}
+
+#main-page-button img{
+	width: 40%;
+	height: 40;
+	max-width: 100%;
+	max-height: 100%;
+
+}
+
+.go-to-main-page:hover {
+	cursor: pointer;
+}
+
+
+
+.go-to-main-page:active {
+	content:url("{% static 'images/previous-button-purple.png' %}");
+}
+
+.loader-container {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 10;
+	color: white;
+	font-family: "Kanit-Regular";
+	font-size: 1.4em;
+
+}
+
+#timer-container{
+	font-family: "Kanit-Regular";
+	font-size: 1.4em;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	color: #fae455;
+	padding: 1em;
+	width: 100%;
+	height: 20%;
+
+}
+
+#timer{
+	border-radius: 10px;
+	padding: 0.4em;
+	width: 20%;
+	text-align: center;
+
+}
+
+#flag-bomb-data-container{
+	width: 100%;
+	height: 20%;
+	padding: 1em;
+	display: flex;
+	gap: 1em;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-family: "Kanit-Regular";
+	font-size: 1.4em;
+	color: #fae455;
+}
+
+.result-container {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(239, 239, 240, 0.4);
+	display: none;
+	justify-content: center;
+	align-items: center;
+	z-index: 9;
+	color: white;
+	font-family: "Kanit-Regular";
+	font-size: 1.2em;
+
+}
+
+#result-message-container{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 14%;
+	height: 20%;
+	background-color: rgba(0, 0, 0, 0.9);
+	border-radius: 20px;
+	color: white;
+	font-family: "Kanit-Regular";
+	font-size: 1.2em;
+	padding: 0.4em;
+
+
+}
+
+#result-message{
+	width: 100%;
+	height: 78%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+#res-message{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 50%;
+}
+
+#got-stat{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 20%;	
+}
+
+
+#got-stat-image{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-end;
+	height: 80%;
+	width: 100%;
+}
+
+#stat-image img{
+	max-width: 90%;
+	max-height: 90%;
+}
+
+#got-stat-text{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 20%;
+	width: 100%;
+	font-size: 1em;
+}
+
+
+
+
+#result-button{
+	font-size: 0.8em;
+	width: 55%;
+	height: 22%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: white;
+	background: url("{% static 'images/button-back.png' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	color: black;
+
+}
+
+
+#result-button:hover{
+	background: url("{% static 'images/button-back-red.png' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	color: #fae455;
+	cursor: pointer;
+}
+
+
+#bombs {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	height: 50%;
+	width: 90%;
+
+}
+
+#flags {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	height: 50%;
+	width: 90%;
+}
+
+#bomb-image{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20%;
+}
+
+
+
+#bombs-count{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20%;
+}
+
+#flag-image{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20%;
+}
+
+
+
+#flags-count{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20%;
+}
+
+.stat-img{
+	max-width: 100%;
+	max-height: 100%;
+}
+
+#restart-button-container{
+	height: 100%;
+	width: 20%;
+	display: none;
+	align-items: center;
+	justify-content: center;
+}
+
+#reload-arrow-button{
+	max-height: 50%;
+	max-width: 50%;
+}
+
+#reload-arrow-button:hover{
+	cursor: pointer;
+}
+
+</style>
+
+<div id="third-game-content">
+	<div id="third-game-header">
+		<div id="third-game-title-left">
+			<div id="main-page-button">
+				<img src="{% static 'images/previous-button.png' %}" alt="Vissza" class="go-to-main-page" onmouseover="changeColor(this)" onmouseout="resetColor(this)">
+			</div>
+		</div>
+		<div id="third-game-title-center">
+			<div id="third-game-title-center-h1">
+				<h1>Vigyázz! Aknamező!</h1>
+			</div>
+		</div>
+		<div id="third-game-title-right">	
+		</div>
+	</div>
+	<div id="third-game-container">
+		<div id="minesweeper-container-left"></div>
+		<div id="minesweeper-container">
+			<div id="minesweeper-field">
+				<!-- Dinamikusan legenerált mező -->
+			</div>
+		</div>
+		<div id="minesweeper-container-right">
+			<div id="data-container">
+				<div id="flag-bomb-data-container">
+					<div id="bombs">
+						<div id="bomb-image">
+							<img src="{% static 'images/mineswepper-images/bomb.png' %}" alt="bomba" class="stat-img">
+						</div>
+						<div id="bombs-count">{{game_field_size}}</div>
+					</div>
+					<div id="flags">
+						<div id="flag-image">
+							<img src="{% static 'images/mineswepper-images/bomb-flag.png' %}" alt="zaszlo" class="stat-img">
+						</div>
+						<div id="flags-count">{{game_field_size}}</div>
+					</div>
+				</div>
+				<div id="timer-container">
+					<span id="timer-title">Hátralévő idő</span>
+					<span id="timer">{{minutes}}:{{seconds}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="third-game-footer">
+		<div id="restart-button-container">
+			<img src="{% static 'images/reload-arrow.png' %}" alt="ujraindit" id="reload-arrow-button" onmouseover="changeRestartColor(this)" onmouseout="resetRestartColor(this)">
+		</div>
+	</div>
+	<div class="result-container">
+		<div id="result-message-container">
+			<div id="result-message">
+				<div id="got-stat">
+					<div id="got-stat-image">
+						<div id="stat-image">
+							<img src="{% static 'images/coin.png' %}" alt="arany" id="gold-image">
+						</div>
+					</div>
+					<div id="got-stat-text">
+						<span id="gold-span">...</span>
+					</div>
+				</div>
+				<div id="res-message">...</div>
+				<div id="got-stat">
+
+					<div id="got-stat-image">
+						<div id="stat-image">
+							<img src="{% static 'images/experience.png' %}" alt="xp" id="xp-image">
+						</div>
+					</div>
+					<div id="got-stat-text">
+						<span id="xp-span">...</span>
+					</div>
+				</div>
+			</div>
+			<div id="result-button">Rendben</div>
+		</div>
+	</div>
+	<div class="loader-container">
+
+	</div>
+</div>
+
+
+
+
+
+<script>
+
+
+
+	$(window).on("load", function(){
+		$(".loader-container").fadeOut("slow")
+
+
+	})
+
+
+	$("#result-button").click(function(){
+		audio.play()
+		$(".result-container").css("display", "none")
+		animateGoBackButton()
+		setInterval(animateGoBackButton, 1250)
+	})
+
+	function animateGoBackButton(){
+
+		$("#main-page-button").animate({
+			opacity: "1.0"
+		}, 600, function(){
+			$(this).animate({
+				opacity: "0.4"
+			}, 600)
+		})
+	}
+
+
+
+	const audio = new Audio()
+	audio.src = "{% static 'audios/button_click.mp3' %}"
+
+	const clickFieldBombGame = new Audio()
+	clickFieldBombGame.src = "{% static 'audios/clickfieldbomb.mp3' %}"
+
+
+
+
+	function changeRestartColor(imageElement){
+		imageElement.setAttribute("src", "{% static 'images/reload-arrow-red.png' %}")
+	}
+
+	function resetRestartColor(imageElement){
+		imageElement.setAttribute("src", "{% static 'images/reload-arrow.png' %}")
+	}
+
+	$("#reload-arrow-button").on("click", function(){
+		audio.play()
+		setTimeout(function(){
+			location.reload()
+		}, 200)
+	})
+
+
+
+	function changeColor(imageElement){
+		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}")
+	}
+
+	function resetColor(imageElement){
+		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}")
+	}
+
+
+	$(".go-to-main-page").click(function(){
+    	audio.play()
+
+    	setTimeout(function(){
+	    	try {
+
+				var url = "{% url 'game:game_choice' %}"
+				var win = window.location.replace(url) 
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+
+    	}, 200)
+    	$(".loader-container").fadeIn("fast")
+	})
+
+
+
+
+	// a game
+
+	const colors = [
+		{name: "blue", code: "#0000ff"},
+		{name: "green", code: "#00aa00"},
+		{name: "red", code: "#ff0000"},
+		{name: "darkblue", code: "#000088"},
+		{name: "brown", code: "#880000"},
+		{name: "lightblue", code: "#00aaaa"},
+		{name: "grey", code: "#888888"},
+		{name: "black", code: "#000000"},
+	]
+
+	var gameFieldSize = 10 // ez a sorok és oszlopok száma, nem a bombáké, a tábla állandó méretű
+	var gameBoard = []
+	var fieldsContainer = null
+
+	var numberOfBombFields = 10
+	var arrayOfBombFields = []
+
+	var disableGameField = false
+
+
+	var fieldsClicked = 0
+	var foundBombsCount = 0
+
+	var flagRemains = null
+
+	var timerInterval = null
+	var minutes = null
+	var seconds = null
+
+	var animateStarted = null
+	var animateRedBackgroundInterval = null
+
+	function initializeGame(){
+		setInitialValues()
+		createGameField()
+		setBombFields()
+		setTimeout(function(){
+			generateTime()
+		}, 1000)
+
+		timerInterval = setInterval(generateTime, 1000)
+	}
+
+	function setInitialValues(){
+		minutes = {{minutes}}
+		seconds = {{seconds}}
+
+		numberOfBombFields = {{game_field_size}}
+		flagRemains = numberOfBombFields
+	}
+
+	function createGameField(){
+		fieldsContainer = document.getElementById("minesweeper-field")
+		for(let i = 0; i < gameFieldSize; i++){
+			var currentRow = []
+			for(let j = 0; j < gameFieldSize; j++){
+				var piece = document.createElement("div")
+				piece.classList.add("field")
+				piece.addEventListener("click", handleClickOnField)
+				piece.addEventListener("contextmenu", function(event){
+					event.preventDefault()
+					return handleRightClickOnField(this)
+				}, false)
+				piece.id = i + "-" + j
+
+				fieldsContainer.appendChild(piece)
+				currentRow.push(piece)
+			}
+			gameBoard.push(currentRow)
+		}
+		console.log(gameBoard)
+	}
+
+
+	function setBombFields(){
+		
+		var size = numberOfBombFields
+		for(let i = 0; i < numberOfBombFields; i++){
+			var xRandom = Math.floor(Math.random() * gameFieldSize)
+			var yRandom = Math.floor(Math.random() * gameFieldSize)
+			var randomID = xRandom + "-" + yRandom
+
+			if(!arrayOfBombFields.includes(randomID)){
+				arrayOfBombFields.push(randomID)
+			}
+			else{
+				i--
+			}
+		}
+	}
+
+	function handleRightClickOnField(element){
+
+
+		//hogyha aktív a játék, még nem kattintott mező és nincs rajta zászló, akkor teszünk rá
+		if (!disableGameField && !element.classList.contains("field-clicked") && !element.classList.contains("field-clicked-flag")){
+			//console.log("rightclick")
+			//console.log(element)
+			if(flagRemains > 0){
+				clickFieldBombGame.currentTime = 0
+				clickFieldBombGame.play()
+				element.classList.add("field-clicked-flag")
+				var imageElement = document.createElement("img")
+				imageElement.src = "{% static 'images/mineswepper-images/bomb-flag.png' %}"
+				imageElement.id = "field-image"
+
+				element.appendChild(imageElement)
+
+				flagRemains--			
+			}
+
+			
+		}
+		//hogyha aktív a játék, még nem kattintott mező és van rajta zászló, akkor töröljük
+		else if (!disableGameField && !element.classList.contains("field-clicked") && element.classList.contains("field-clicked-flag")){
+			clickFieldBombGame.currentTime = 0
+			clickFieldBombGame.play()
+			$(element).children("img").remove()
+			element.classList.remove("field-clicked-flag")
+			flagRemains++
+		}
+
+		$("#flags-count").html(flagRemains)
+
+		return false
+	}
+
+
+	function handleClickOnField(){
+		//console.log("clicked " + this.id)
+		if(!disableGameField && !this.classList.contains("field-clicked")){ // a field-clickedet itt a sound effect miatt nezem, amugy nem lenne rá szükség mert később szintén ellenőrizzük
+			//hogyha rajta van a zászló, ne lehessen kattintani
+			if(!(this.classList.contains("field-clicked-flag"))){
+				clickFieldBombGame.currentTime = 0
+				clickFieldBombGame.play()
+				if(arrayOfBombFields.includes(this.id)){
+					endMineSweeperGame(false, this)
+				}
+				else{
+					var coordinate = this.id.split("-")
+					var rowCoordinate = parseInt(coordinate[0])
+					var colCoordinate = parseInt(coordinate[1])
+					checkAdjacentFields(rowCoordinate, colCoordinate)
+				}
+			}
+		}
+	}
+
+	function checkAdjacentFields(rowCoordinate, colCoordinate){
+		if(!(rowCoordinate < 0 || rowCoordinate >= gameFieldSize || colCoordinate < 0 || colCoordinate >= gameFieldSize)){
+			if(!(gameBoard[rowCoordinate][colCoordinate].classList.contains("field-clicked"))){
+				gameBoard[rowCoordinate][colCoordinate].classList.add("field-clicked")
+				if($(gameBoard[rowCoordinate][colCoordinate]).children("img").length){
+					$(gameBoard[rowCoordinate][colCoordinate]).children("img").remove()
+					gameBoard[rowCoordinate][colCoordinate].classList.remove("field-clicked-flag")
+				}
+
+				fieldsClicked += 1
+
+				var numberOfAdjacentBombs = 0
+
+				// felső sor
+				numberOfAdjacentBombs += checkField(rowCoordinate - 1, colCoordinate - 1)
+				numberOfAdjacentBombs += checkField(rowCoordinate - 1, colCoordinate)
+				numberOfAdjacentBombs += checkField(rowCoordinate - 1, colCoordinate + 1)
+
+				// bal és jobb oldali 
+				numberOfAdjacentBombs += checkField(rowCoordinate, colCoordinate - 1)
+				numberOfAdjacentBombs += checkField(rowCoordinate, colCoordinate + 1)
+
+				// alsó sor
+				numberOfAdjacentBombs += checkField(rowCoordinate + 1, colCoordinate - 1)
+				numberOfAdjacentBombs += checkField(rowCoordinate + 1, colCoordinate)
+				numberOfAdjacentBombs += checkField(rowCoordinate + 1, colCoordinate + 1)
+
+				if (numberOfAdjacentBombs > 0){
+					gameBoard[rowCoordinate][colCoordinate].innerHTML = numberOfAdjacentBombs
+					gameBoard[rowCoordinate][colCoordinate].style.color = colors[numberOfAdjacentBombs-1].code
+				}
+				else{
+					// rekurzív hívás
+					// felső sor
+					checkAdjacentFields(rowCoordinate - 1, colCoordinate - 1)
+					checkAdjacentFields(rowCoordinate - 1, colCoordinate)
+					checkAdjacentFields(rowCoordinate - 1, colCoordinate + 1)
+
+					// bal és jobb oldali 
+					checkAdjacentFields(rowCoordinate, colCoordinate - 1)
+					checkAdjacentFields(rowCoordinate, colCoordinate + 1)
+
+					// alsó sor
+					checkAdjacentFields(rowCoordinate + 1, colCoordinate - 1)
+					checkAdjacentFields(rowCoordinate + 1, colCoordinate)
+					checkAdjacentFields(rowCoordinate + 1, colCoordinate + 1)
+				}
+
+				if (fieldsClicked == gameFieldSize * gameFieldSize - numberOfBombFields){
+					endMineSweeperGame(true, null)
+				}
+			}
+		}
+	}
+
+
+	function checkField(rowCoordinate, colCoordinate){
+		if(!(rowCoordinate < 0 || rowCoordinate >= gameFieldSize || colCoordinate < 0 || colCoordinate >= gameFieldSize)){
+			if(arrayOfBombFields.includes(rowCoordinate + "-" + colCoordinate)){
+				return 1
+			}
+		}
+
+		return 0
+
+	}
+
+
+	function endMineSweeperGame(isWin, clickedField){
+		disableGameField = true
+		clearInterval(timerInterval)
+		showBombs()
+		if (animateStarted){
+			clearInterval(animateRedBackgroundInterval)
+			$("#timer-text").css("backgroundColor", "rgba(255, 0, 0, 1.0)")
+		}
+
+		if(isWin){
+			console.log("VEGE - GYOZELEM")
+			addGoldAndIncreaseXpOnWin("third")
+
+		}
+		else{
+			$(clickedField).css("backgroundColor", "red")
+			console.log("VEGE - VERESEG")
+			$("#xp-span").html("0")
+			$("#gold-span").html("0")
+			$("#res-message").html("Vesztettél!")
+		}
+
+		//console.log("Megtalált bombák száma: " + foundBombsCount)
+		$(".result-container").css("display", "flex")
+		$("#restart-button-container").css("display", "flex")
+	}
+
+	function showBombs(){
+		for(let i = 0; i < gameFieldSize; i++){
+			for(let j = 0; j < gameFieldSize; j++){
+				var fieldPiece = gameBoard[i][j]
+				if(arrayOfBombFields.includes(fieldPiece.id)){
+					var imageElement = document.createElement("img")
+
+					if($(fieldPiece).children("img").length){
+						$(fieldPiece).children("img").remove()
+						imageElement.src = "{% static 'images/mineswepper-images/bomb-found.png' %}"
+						imageElement.id = "field-image"
+						foundBombsCount++
+					}
+					else{
+						imageElement.src = "{% static 'images/mineswepper-images/bomb.png' %}"
+						imageElement.id = "field-image"
+					}
+
+					fieldPiece.appendChild(imageElement)
+				}
+			}
+		}
+	}
+
+
+	initializeGame()
+
+
+
+	function generateTime(){
+		if(minutes == 0 && seconds == 0){
+			document.getElementById("timer").innerHTML = "0:00"
+			return endMineSweeperGame(false, null)
+		}	
+		if (seconds == -1){
+			if (minutes >= 1){
+				minutes -= 1
+				seconds = 59
+			}
+			else{
+				return endMineSweeperGame(false, null)
+			}
+		}
+
+		var formatSeconds = ""
+		if (seconds < 10){
+			formatSeconds = "0" + seconds
+		}
+		else{
+			formatSeconds = "" + seconds
+		}
+
+
+		var result = minutes + ":" + formatSeconds
+
+		if (minutes == 0 && seconds <= 10){
+			if (!animateStarted){
+				animateStarted = true
+				startTimerDangerAnimation()
+			}
+
+		}
+
+		seconds -= 1
+
+
+
+		document.getElementById("timer").innerHTML = result
+	}
+
+
+	function startTimerDangerAnimation(){
+		$("#timer").css("backgroundColor", "rgba(255, 0, 0, 1.0)")
+		$("#timer").css("color", "white")
+
+		animateRedBackground()
+		animateRedBackgroundInterval = setInterval(animateRedBackground, 1400)
+	}
+
+	function animateRedBackground(){
+		$("#timer").animate({
+			backgroundColor: "rgba(255, 0, 0, 0.2)"
+		}, 600, function(){
+			$(this).animate({
+				backgroundColor: "rgba(255, 0, 0, 1.0)"
+			}, 600)
+		})
+		
+	}
+
+
+	//--------
+
+	var userID = "{{user_id}}"
+
+
+	function addGoldAndIncreaseXpOnWin(gameType){
+		console.log("increase")
+		info_packet = {
+			"user_id": "{{user_id}}",
+			"game_type": gameType,
+			"game_level_bombs": numberOfBombFields,
+		}
+		$.ajax({
+
+			dataType: "json",
+			url: "{% url 'game:finished_game' %}",
+			data: info_packet,
+
+			success: function(data) {
+				setStatValues(data)
+			},
+			error: function(data) {
+				console.log('ERROR')
+			},
+		})
+	}
+
+	function setStatValues(data){
+		$("#xp-span").html(data.got_xp)
+		$("#gold-span").html(data.got_gold)
+		$("#res-message").html("Győztél!")
+	}
+</script>
+
+{% endblock %}

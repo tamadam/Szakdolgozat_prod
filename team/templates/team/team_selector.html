@@ -1,0 +1,198 @@
+{% extends 'base_new.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+<style>
+
+#team-selector-page{
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+#team-selector-header{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 20%;
+	width: 100%;
+
+}
+
+
+#team-selector-body{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 60%;
+	width: 100%;
+
+}
+
+
+
+#team-selector-footer{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 20%;
+	width: 100%;
+
+}
+
+/* --- title */
+#team-selector-title-left{
+	width: 14%;
+}
+
+#team-selector-title-center{
+	width: 72%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+
+}
+
+#team-selector-title-right{
+	width: 14%;
+}
+
+
+#main-page-button {
+	display: flex;
+	justify-content: center;
+	align-items: center; 
+	width: 100%;
+	height: 100%;
+
+}
+
+#main-page-button img{
+	width: 40%;
+	height: 40;
+	max-width: 100%;
+	max-height: 100%;
+
+}
+
+.go-to-main-page:hover {
+	cursor: pointer;
+}
+
+
+
+.go-to-main-page:active {
+	content:url("{% static 'images/previous-button-purple.png' %}");
+}
+
+.loader-container {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 10;
+	color: white;
+	font-family: "Kanit-Regular";
+	font-size: 1.8vh;
+
+}
+</style>
+
+<div id="team-selector-page">
+	<div id="team-selector-header">
+		<div id="team-selector-title-left">
+			<div id="main-page-button">
+				<img src="{% static 'images/previous-button.png' %}" alt="Vissza" class="go-to-main-page" onmouseover="changeColor(this)" onmouseout="resetColor(this)">
+			</div>
+		</div>
+		<div id="team-selector-title-center">
+			<div id="team-selector-title">
+				<h1>Csapat</h1>
+			</div>
+		</div>
+		<div id="team-selector-title-right">	
+		</div>
+
+	</div>
+	<div id="team-selector-body">
+		<form method="POST">
+			{%csrf_token%}
+			{{form.as_p}}
+				<button type="submit" value="Add team">Csapat létrehozása</button>
+		</form>
+
+
+		<button onclick="join()">Csatlakozas csapathoz</button>	
+	</div>
+	<div id="team-selector-footer">
+		Footer
+	</div>
+	<div class="loader-container">
+	</div>
+</div>
+
+
+<script>
+	
+	$(window).on("load", function(){
+		$(".loader-container").fadeOut("slow")
+
+	})
+
+
+	function join(){
+		var url = "{% url 'search' %}?csapat=1"
+		var win = window.location.replace(url)
+		win.focus()
+	}
+
+
+
+	const audio = new Audio()
+	audio.src = "{% static 'audios/button_click.mp3' %}"
+
+	function changeColor(imageElement){
+		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}")
+	}
+
+	function resetColor(imageElement){
+		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}")
+	}
+
+
+	$(".go-to-main-page").click(function(){
+    	audio.play()
+
+    	setTimeout(function(){
+	    	try {
+
+				var url = "{% url 'home_page' %}"
+				var win = window.location.replace(url) 
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+
+    	}, 200)
+    	$(".loader-container").fadeIn("fast")
+	})
+
+
+</script>
+
+
+{% endblock %}

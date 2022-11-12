@@ -1,0 +1,23 @@
+<script type="text/javascript">
+	
+	function attackChoosenPlayer(userID){ //id akit támadunk
+		console.log("ATTACK CHOOSEN PLAYER")
+    	setTimeout(function(){
+	    	try {
+
+				var url = "{% url 'game:arena' %}?ellenfel_id=" + userID 
+				var win = window.location.replace(url)
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+
+    	}, 200)
+
+	}
+
+
+
+
+</script>

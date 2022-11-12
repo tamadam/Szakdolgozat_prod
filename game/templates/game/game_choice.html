@@ -1,0 +1,1038 @@
+{% extends 'base_new.html' %}
+
+{% load static %}
+
+{% block content %}
+<style>
+@font-face {
+	font-family: 'Kanit-Regular';
+	src: local('Kanit-Regular'),
+	url("{% static 'fonts/Kanit-Regular.ttf' %}");
+}
+
+@font-face {
+	font-family: 'Kanit-Bold';
+	src: local('Kanit-Bold'),
+	url("{% static 'fonts/Kanit-Bold.ttf' %}");
+}
+
+@font-face {
+	font-family: 'Kanit-Light';
+	src: local('Kanit-Light'),
+	url("{% static 'fonts/Kanit-Light.ttf' %}");
+}
+
+#game-hub-content{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	background: url("{% static 'images/gates.jpg' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	font-family: "Kanit-Regular";
+	font-size: 1.2em;
+	user-select: none;
+	max-width: 1900px;
+
+}
+
+#game-hub-header{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 14%;
+}
+
+#game-hub-container{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 72%;
+}
+
+#game-types{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	width: 90%;
+	height: 100%;
+}
+
+.game-option{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 33.3%;
+	height: 100%;
+}
+
+.game-details-container{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 80%;
+	height: 100%;
+}
+
+.detail-1, .detail-2, .detail-3{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	gap: 1em;
+}
+
+.detail-1 {
+	height: 40%;
+
+}
+
+.detail-2 {
+	height: 50%;
+
+}
+
+.detail-3 {
+	height: 10%;
+}
+
+.game-picture{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 70%;
+	max-height: 70%;
+	border-radius: 50%;
+	border: 4px solid #c3ad1f;
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0,  0.22) 0px 10px 10px;
+	cursor: pointer;
+}
+
+
+.game-picture:hover{
+	box-shadow: rgba(168, 150, 36, 0.25) 0px 14px 28px, rgba(168, 150, 36, 0.22) 0px 10px 10px;
+	opacity: 0.9;
+	/*
+	box-shadow: rgba(22, 202, 78, 0.25) 0px 14px 28px, rgba(22, 202, 78, 0.22) 0px 10px 10px;
+	border: 4px solid #17ca4e;
+	*/
+
+}
+
+
+.game-title{
+	background: url("{% static 'images/button-back.png' %}");	
+	background-position: center;
+	background-size: cover;
+	width: 40%;
+	text-align: center;
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0,  0.22) 0px 10px 10px;
+	border-radius: 14px;
+	font-size: 1.2em;
+	padding: 0.1em;
+	font-family: "Kanit-Regular";
+	cursor: pointer;
+
+}
+
+.level-choice{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 80%;
+	height: 100%;
+
+
+}
+
+.level-choice ul{
+	background-color: rgba(212, 186, 36, 0.6);
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0,  0.22) 0px 10px 10px;
+
+	width: 76%;
+	height: 80%;
+	padding: 1.4em;
+
+	display: flex;
+	flex-direction: column;
+	gap: 1.4vh;
+	align-items: center;
+	justify-content: center;
+	border-radius: 20px;
+
+}
+
+.level-choice-li{
+	list-style-type: none;
+	box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+	transition: transform 0.5s;
+	width: 100%;
+	height: 25%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	border-radius: 20px;
+	background-color: rgba(250, 228, 86, 0.6);
+
+}
+
+.li-hover:hover{
+	cursor: pointer;
+	transform: scale(1.1);
+	z-index: 90;
+	background-color: #f1eeda;
+	box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+
+}
+
+
+.level-placeholder{
+	width: 20%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+
+}
+
+
+.level-text{
+	width: 60%;
+	text-align: center;
+
+}
+
+.check-picture-div{
+	width: 20%;
+	display: flex;
+	align-items: center;
+}
+
+.check-picture{
+	visibility: hidden;
+	max-width: 66%;
+	max-height: 66%;
+}
+
+.level-submit-button{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 80%;
+	height: 100%;
+
+}
+
+.submit-button{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 60%;
+	height: 66%;
+	background-color: white;
+	background: url("{% static 'images/button-back.png' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	font-family: "Kanit-Regular";
+	font-size: 1.2em;
+}
+
+.submit-button:hover{
+	cursor: pointer;
+	background: url("{% static 'images/button-back-red.png' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	color: #fae455;
+
+}
+
+
+#detail-2-first-game, #detail-2-second-game, #detail-2-third-game{
+	visibility: hidden;
+}
+
+#detail-3-first-game, #detail-3-second-game, #detail-3-third-game{
+	visibility: hidden;
+}
+
+
+
+#game-hub-footer{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 14%;
+}
+
+
+.clicked-level{
+	background-color: white;
+}
+
+.loader-container {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 10;
+	color: white;
+	font-family: "Kanit-Regular";
+	font-size: 1.4em;
+
+}
+
+
+/* --- title */
+#game-hub-title-left{
+	width: 14%;
+}
+
+#game-hub-title-center{
+	width: 72%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	font-family: "Kanit-Regular";
+	font-size: 1.2em;
+	color: #fae455;
+
+}
+
+#game-hub-title-right{
+	width: 14%;
+}
+
+
+#main-page-button {
+	display: flex;
+	justify-content: center;
+	align-items: center; 
+	width: 100%;
+	height: 100%;
+
+}
+
+#main-page-button img{
+	width: 40%;
+	height: 40;
+	max-width: 100%;
+	max-height: 100%;
+
+}
+
+.go-to-main-page:hover {
+	cursor: pointer;
+}
+
+
+
+.go-to-main-page:active {
+	content:url("{% static 'images/previous-button-purple.png' %}");
+}
+
+
+</style>
+<div id="game-hub-content">
+	<div id="game-hub-header">
+		<div id="game-hub-title-left">
+			<div id="main-page-button">
+				<img src="{% static 'images/previous-button.png' %}" alt="Vissza" class="go-to-main-page" onmouseover="changeColor(this)" onmouseout="resetColor(this)">
+			</div>
+		</div>
+		<div id="game-hub-title-center">
+
+			<h1>Válassz egy játékot!</h1>
+
+		</div>
+		<div id="game-hub-title-right">	
+		</div>
+	</div>
+	<div id="game-hub-container">
+		<div id="game-types">
+			<div id="first-game-choice" class="game-option">
+				<div class="game-details-container">
+					<div class="detail-1" id="detail-1-first-game">
+						<div class="game-title" id="game-title-first-game">Memória próba</div>
+						<img src="{% static 'images/game1.png' %}" alt="memoria-jatek" class="game-picture" id="game-picture-first-game">
+					</div>
+					<div class="detail-2" id="detail-2-first-game">
+						<div class="level-choice" id="level-choice-first-game">
+							<ul>
+								<li class="level-choice-li li-hover" id="level0-first-game"><span class="level-placeholder"></span><span class="level-text">Bemutató</span><div class="check-picture-div"><img src="{% static 'images/checked.png' %}" alt="pipa" class="check-picture"></div></li>
+								<li class="level-choice-li li-hover" id="level1-first-game"><span class="level-placeholder"></span><span class="level-text">Könnyű</span><div class="check-picture-div"><img src="{% static 'images/checked.png' %}" alt="pipa" class="check-picture"></div></li>
+								<li class="level-choice-li li-hover" id="level2-first-game"><span class="level-placeholder"></span><span class="level-text">Közepes</span><div class="check-picture-div"><img src="{% static 'images/checked.png' %}" alt="pipa" class="check-picture"></div></li>
+								<li class="level-choice-li li-hover" id="level3-first-game"><span class="level-placeholder"></span><span class="level-text">Nehéz</span><div class="check-picture-div"><img src="{% static 'images/checked.png' %}" alt="pipa" class="check-picture"></div></li>
+							</ul>
+						</div>
+					</div>
+					<div class="detail-3" id="detail-3-first-game">
+						<div class="level-submit-button">
+							<div class="submit-button" id="submit-button-first-game">Indítás</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="second-game-choice" class="game-option">
+				<div class="game-details-container">
+					<div class="detail-1" id="detail-1-second-game">
+						<div class="game-title" id="game-title-second-game">Puzzle Mester</div>
+						<img src="{% static 'images/game2.png' %}" alt="puzzle-jatek" class="game-picture" id="game-picture-second-game">
+					</div>
+					<div class="detail-2" id="detail-2-second-game">
+						<div class="level-choice" id="level-choice-second-game">
+							<ul>
+								<li class="level-choice-li li-hover" id="level1-second-game"><span class="level-placeholder"></span><span class="level-text">Bemutató</span><div class="check-picture-div"><img src="{% static 'images/checked.png' %}" alt="pipa" class="check-picture"></div></li>
+								<li class="level-choice-li li-hover" id="level2-second-game"><span class="level-placeholder"></span><span class="level-text">Könnyű</span><div class="check-picture-div"><img src="{% static 'images/checked.png' %}" alt="pipa" class="check-picture"></div></li>
+								<li class="level-choice-li li-hover" id="level3-second-game"><span class="level-placeholder"></span><span class="level-text">Közepes</span><div class="check-picture-div"><img src="{% static 'images/checked.png' %}" alt="pipa" class="check-picture"></div></li>
+								<li class="level-choice-li li-hover" id="level4-second-game"><span class="level-placeholder"></span><span class="level-text">Nehéz</span><div class="check-picture-div"><img src="{% static 'images/checked.png' %}" alt="pipa" class="check-picture"></div></li>
+							</ul>
+						</div>
+					</div>
+					<div class="detail-3" id="detail-3-second-game">
+						<div class="level-submit-button">
+							<div class="submit-button" id="submit-button-second-game">Indítás</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="third-game-choice" class="game-option">
+				<div class="game-details-container">
+					<div class="detail-1" id="detail-1-third-game">
+						<div class="game-title" id="game-title-third-game">Aknakereső</div>
+						<img src="{% static 'images/game3.png' %}" alt="aknakereso-jatek" class="game-picture" id="game-picture-third-game">
+					</div>
+					<div class="detail-2" id="detail-2-third-game">
+						<div class="level-choice" id="level-choice-third-game">
+							<ul>
+								<li class="level-choice-li li-hover" id="level0-third-game"><span class="level-placeholder"></span><span class="level-text">Bemutató</span><div class="check-picture-div"><img src="{% static 'images/checked.png' %}" alt="pipa" class="check-picture"></div></li>
+								<li class="level-choice-li li-hover" id="level1-third-game"><span class="level-placeholder"></span><span class="level-text">Könnyű</span><div class="check-picture-div"><img src="{% static 'images/checked.png' %}" alt="pipa" class="check-picture"></div></li>
+								<li class="level-choice-li li-hover" id="level2-third-game"><span class="level-placeholder"></span><span class="level-text">Közepes</span><div class="check-picture-div"><img src="{% static 'images/checked.png' %}" alt="pipa" class="check-picture"></div></li>
+								<li class="level-choice-li li-hover" id="level3-third-game"><span class="level-placeholder"></span><span class="level-text">Nehéz</span><div class="check-picture-div"><img src="{% static 'images/checked.png' %}" alt="pipa" class="check-picture"></div></li>
+							</ul>
+						</div>
+					</div>
+					<div class="detail-3" id="detail-3-third-game">
+						<div class="level-submit-button">
+							<div class="submit-button" id="submit-button-third-game">Indítás</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>	
+	</div>
+	<div id="game-hub-footer">
+		<!--footer-->
+	</div>
+	<div class="loader-container">
+
+	</div>
+</div>
+
+
+<script>
+	$(window).on("load", function(){
+		$(".loader-container").fadeOut("slow")
+
+
+	})
+
+	const audio = new Audio()
+	audio.src = "{% static 'audios/button_click.mp3' %}"
+	const onHover = new Audio()
+	onHover.src = "{% static 'audios/hover2.mp3' %}"
+
+	function changeColor(imageElement){
+		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}")
+	}
+
+	function resetColor(imageElement){
+		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}")
+	}
+
+
+	$(".go-to-main-page").click(function(){
+    	audio.play()
+
+    	setTimeout(function(){
+	    	try {
+
+				var url = "{% url 'home_page' %}"
+				var win = window.location.replace(url) 
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+
+    	}, 200)
+    	$(".loader-container").fadeIn("fast")
+	})
+
+
+
+
+
+
+
+
+
+	var firstGameLevel = null
+	var secondGameLevel = null
+	var thirdGameLevel = null
+
+	$(".level-choice-li").on("mouseenter", function(){
+		onHover.currentTime = 0
+		onHover.play()
+	})
+
+
+	$("#game-picture-first-game").on("click", function(){
+		setClickedItemGreen(1)
+	})
+
+	$("#game-title-first-game").on("click", function(){
+		setClickedItemGreen(1)
+	})
+
+	$("#game-picture-second-game").on("click", function(){
+		setClickedItemGreen(2)
+	})
+
+	$("#game-title-second-game").on("click", function(){
+		setClickedItemGreen(2)
+	})
+
+	$("#game-picture-third-game").on("click", function(){
+		setClickedItemGreen(3)
+	})
+
+	$("#game-title-third-game").on("click", function(){
+		setClickedItemGreen(3)
+	})
+
+
+	$("#level0-first-game").on("click", function(){
+		setLevelFirstGame(0)
+	})
+
+	$("#level1-first-game").on("click", function(){
+		setLevelFirstGame(1)
+	})
+	$("#level2-first-game").on("click", function(){
+		setLevelFirstGame(2)
+	})
+	$("#level3-first-game").on("click", function(){
+		setLevelFirstGame(3)
+	})
+
+
+	$("#level1-second-game").on("click", function(){
+		setLevelSecondGame(1)
+	})
+	$("#level2-second-game").on("click", function(){
+		setLevelSecondGame(2)
+	})
+	$("#level3-second-game").on("click", function(){
+		setLevelSecondGame(3)
+	})
+	$("#level4-second-game").on("click", function(){
+		setLevelSecondGame(4)
+	})
+
+
+	$("#level0-third-game").on("click", function(){
+		setLevelThirdGame(0)
+	})
+
+	$("#level1-third-game").on("click", function(){
+		setLevelThirdGame(1)
+	})
+	$("#level2-third-game").on("click", function(){
+		setLevelThirdGame(2)
+	})
+	$("#level3-third-game").on("click", function(){
+		setLevelThirdGame(3)
+	})
+
+	$("#submit-button-first-game").on("click", function(){
+		console.log("start first game")
+		audio.play()
+    	$(".loader-container").fadeIn("fast")
+		setTimeout(function(){
+			//lehetséges értékek: 4-5-6: a pálya méretét jelölik (pl.: 4x4) 2: 2x2
+			if(firstGameLevel == 1){
+				startFirstGame(4)
+			}
+			else if(firstGameLevel == 2){
+				startFirstGame(5)
+			}
+			else if(firstGameLevel == 3){
+				startFirstGame(6)
+			}
+			else if(firstGameLevel == 0){
+				startFirstGame(2)
+			}
+			else{
+				startFirstGame(4)
+			}
+		}, 200)
+
+	})
+
+
+	$("#submit-button-second-game").on("click", function(){
+		console.log("start second game")
+		audio.play()
+    	$(".loader-container").fadeIn("fast")
+		setTimeout(function(){
+			//lehetséges értékek: 2-3-4-5: a pálya méretét jelölik (pl.: 3x3)
+
+			if(secondGameLevel == 1){
+				startSecondGame(2)
+			}
+			else if(secondGameLevel == 2){
+				startSecondGame(3)
+			}
+			else if(secondGameLevel == 3){
+				startSecondGame(4)
+			}
+			else if(secondGameLevel == 4){
+				startSecondGame(5)
+			}
+			else{
+				startSecondGame(2)
+			}
+		}, 200)
+
+	})
+
+
+	$("#submit-button-third-game").on("click", function(){
+		console.log("start third game")
+		audio.play()
+    	$(".loader-container").fadeIn("fast")
+		setTimeout(function(){
+			//lehetséges értékek: 2-10-20-30: a bombák számát jelölik (10 bomba van)
+
+			if(thirdGameLevel == 1){
+				startThirdGame(10)
+			}
+			else if(thirdGameLevel == 2){
+				startThirdGame(20)
+			}
+			else if(thirdGameLevel == 3){
+				startThirdGame(30)
+			}
+			else if(thirdGameLevel == 0){
+				startThirdGame(2)
+			}
+			else{
+				startThirdGame(10)
+			}
+		}, 200)
+
+	})
+
+
+
+
+
+	function setLevelThirdGame(difficulty){
+		//console.log(difficulty)
+		audio.currentTime = 0
+		audio.play()
+		thirdGameLevel = difficulty
+		if(difficulty == 1){
+			$("#level0-third-game img").css("visibility", "hidden")
+
+			$("#level2-third-game img").css("visibility", "hidden")
+			//$("#level2-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level3-third-game img").css("visibility", "hidden")
+			//$("#level3-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level1-third-game img").css("visibility", "visible")
+
+			$("#level0-third-game").removeClass("clicked-level")
+
+			$("#level2-third-game").removeClass("clicked-level")
+			$("#level3-third-game").removeClass("clicked-level")
+			$("#level1-third-game").addClass("clicked-level")
+		}
+		else if(difficulty == 2){
+			$("#level0-third-game img").css("visibility", "hidden")
+
+			$("#level1-third-game img").css("visibility", "hidden")
+			//$("#level1-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level3-third-game img").css("visibility", "hidden")
+			//$("#level3-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level2-third-game img").css("visibility", "visible")
+
+			$("#level0-third-game").removeClass("clicked-level")
+
+			$("#level1-third-game").removeClass("clicked-level")
+			$("#level3-third-game").removeClass("clicked-level")
+			$("#level2-third-game").addClass("clicked-level")
+
+
+
+		}
+		else if(difficulty == 0){
+			$("#level1-third-game img").css("visibility", "hidden")
+
+			$("#level2-third-game img").css("visibility", "hidden")
+			//$("#level1-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level3-third-game img").css("visibility", "hidden")
+			//$("#level3-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level0-third-game img").css("visibility", "visible")
+
+			$("#level1-third-game").removeClass("clicked-level")
+
+			$("#level2-third-game").removeClass("clicked-level")
+			$("#level3-third-game").removeClass("clicked-level")
+			$("#level0-third-game").addClass("clicked-level")
+		}
+		else{
+			$("#level0-third-game img").css("visibility", "hidden")
+
+			$("#level1-third-game img").css("visibility", "hidden")
+			//$("#level1-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level2-third-game img").css("visibility", "hidden")
+			//$("#level2-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level3-third-game img").css("visibility", "visible")
+
+			$("#level0-third-game").removeClass("clicked-level")
+
+			$("#level1-third-game").removeClass("clicked-level")
+			$("#level2-third-game").removeClass("clicked-level")
+			$("#level3-third-game").addClass("clicked-level")
+
+
+		}
+
+
+
+		$("#detail-3-third-game").css("visibility", "visible")	
+	}
+
+
+
+	function setLevelSecondGame(difficulty){
+		//console.log(difficulty)
+		audio.currentTime = 0
+		audio.play()
+		secondGameLevel = difficulty
+		if(difficulty == 1){
+			$("#level2-second-game img").css("visibility", "hidden")
+			$("#level3-second-game img").css("visibility", "hidden")
+			$("#level4-second-game img").css("visibility", "hidden")
+
+			$("#level1-second-game img").css("visibility", "visible")
+
+
+			$("#level2-second-game").removeClass("clicked-level")
+			$("#level3-second-game").removeClass("clicked-level")
+			$("#level4-second-game").removeClass("clicked-level")
+
+			$("#level1-second-game").addClass("clicked-level")
+		}
+		else if(difficulty == 2){
+			$("#level1-second-game img").css("visibility", "hidden")
+			//$("#level1-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level3-second-game img").css("visibility", "hidden")
+			$("#level4-second-game img").css("visibility", "hidden")
+
+			//$("#level3-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level2-second-game img").css("visibility", "visible")
+
+
+			$("#level1-second-game").removeClass("clicked-level")
+			$("#level3-second-game").removeClass("clicked-level")
+			$("#level4-second-game").removeClass("clicked-level")
+
+			$("#level2-second-game").addClass("clicked-level")
+
+
+
+		}
+		else if(difficulty == 3){
+			$("#level1-second-game img").css("visibility", "hidden")
+			//$("#level1-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level2-second-game img").css("visibility", "hidden")
+			$("#level4-second-game img").css("visibility", "hidden")
+
+			//$("#level2-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level3-second-game img").css("visibility", "visible")
+
+			$("#level1-second-game").removeClass("clicked-level")
+			$("#level2-second-game").removeClass("clicked-level")
+			$("#level4-second-game").removeClass("clicked-level")
+
+			$("#level3-second-game").addClass("clicked-level")
+
+
+		}
+		else{
+			$("#level1-second-game img").css("visibility", "hidden")
+			//$("#level1-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level2-second-game img").css("visibility", "hidden")
+			$("#level3-second-game img").css("visibility", "hidden")
+
+			//$("#level2-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level4-second-game img").css("visibility", "visible")
+
+			$("#level1-second-game").removeClass("clicked-level")
+			$("#level2-second-game").removeClass("clicked-level")
+			$("#level3-second-game").removeClass("clicked-level")
+
+			$("#level4-second-game").addClass("clicked-level")
+		}
+
+
+
+		$("#detail-3-second-game").css("visibility", "visible")
+	}
+
+	//nehezseg valasztas, + gomb megjelenitese
+	function setLevelFirstGame(difficulty){
+		audio.currentTime = 0
+		audio.play()
+		//console.log(difficulty)
+		firstGameLevel = difficulty
+		if(difficulty == 1){
+			$("#level0-first-game img").css("visibility", "hidden")
+
+			$("#level2-first-game img").css("visibility", "hidden")
+			//$("#level2-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level3-first-game img").css("visibility", "hidden")
+			//$("#level3-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level1-first-game img").css("visibility", "visible")
+
+			$("#level0-first-game").removeClass("clicked-level")
+			$("#level2-first-game").removeClass("clicked-level")
+			$("#level3-first-game").removeClass("clicked-level")
+			$("#level1-first-game").addClass("clicked-level")
+		}
+		else if(difficulty == 2){
+			$("#level0-first-game img").css("visibility", "hidden")
+
+			$("#level1-first-game img").css("visibility", "hidden")
+			//$("#level1-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level3-first-game img").css("visibility", "hidden")
+			//$("#level3-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level2-first-game img").css("visibility", "visible")
+
+			$("#level0-first-game").removeClass("clicked-level")
+			$("#level1-first-game").removeClass("clicked-level")
+			$("#level3-first-game").removeClass("clicked-level")
+			$("#level2-first-game").addClass("clicked-level")
+
+
+
+		}
+		else if(difficulty == 0){
+			$("#level1-first-game img").css("visibility", "hidden")
+
+			$("#level2-first-game img").css("visibility", "hidden")
+			//$("#level1-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level3-first-game img").css("visibility", "hidden")
+			//$("#level3-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level0-first-game img").css("visibility", "visible")
+
+			$("#level1-first-game").removeClass("clicked-level")
+			$("#level2-first-game").removeClass("clicked-level")
+			$("#level3-first-game").removeClass("clicked-level")
+			$("#level0-first-game").addClass("clicked-level")
+		}
+		else{
+			$("#level0-first-game img").css("visibility", "hidden")
+
+			$("#level1-first-game img").css("visibility", "hidden")
+			//$("#level1-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level2-first-game img").css("visibility", "hidden")
+			//$("#level2-first-game").css("background-color", "rgba(250, 228, 86, 0.6)")
+			$("#level3-first-game img").css("visibility", "visible")
+			$("#level0-first-game").removeClass("clicked-level")
+
+			$("#level1-first-game").removeClass("clicked-level")
+			$("#level2-first-game").removeClass("clicked-level")
+			$("#level3-first-game").addClass("clicked-level")
+
+
+		}
+
+
+
+		$("#detail-3-first-game").css("visibility", "visible")
+
+
+
+	}
+
+
+	function setClickedItemGreen(itemNumber){
+			$("#level0-first-game img").css("visibility", "hidden")
+			$("#level0-first-game").removeClass("clicked-level")
+			$("#level1-first-game img").css("visibility", "hidden")
+			$("#level1-first-game").removeClass("clicked-level")
+			$("#level2-first-game img").css("visibility", "hidden")
+			$("#level2-first-game").removeClass("clicked-level")
+			$("#level3-first-game img").css("visibility", "hidden")
+			$("#level3-first-game").removeClass("clicked-level")
+
+			$("#level1-second-game img").css("visibility", "hidden")
+			$("#level1-second-game").removeClass("clicked-level")
+			$("#level2-second-game img").css("visibility", "hidden")
+			$("#level2-second-game").removeClass("clicked-level")
+			$("#level3-second-game img").css("visibility", "hidden")
+			$("#level3-second-game").removeClass("clicked-level")
+			$("#level4-second-game img").css("visibility", "hidden")
+			$("#level4-second-game").removeClass("clicked-level")
+
+			$("#level0-third-game img").css("visibility", "hidden")
+			$("#level0-third-game").removeClass("clicked-level")
+			$("#level1-third-game img").css("visibility", "hidden")
+			$("#level1-third-game").removeClass("clicked-level")
+			$("#level2-third-game img").css("visibility", "hidden")
+			$("#level2-third-game").removeClass("clicked-level")
+			$("#level3-third-game img").css("visibility", "hidden")
+			$("#level3-third-game").removeClass("clicked-level")
+
+			firstGameLevel = null
+			secondGameLevel = null
+			thirdGameLevel = null
+			$("#game-title-first-game").css("color", "black")
+			$("#game-title-second-game").css("color", "black")
+			$("#game-title-third-game").css("color", "black")
+
+
+
+		if(itemNumber == 1){
+			$("#game-title-first-game").css("background-image", "url('{% static 'images/button-back-red.png' %}')") 
+			$("#game-title-first-game").css("color", "#fae455")
+			$("#game-picture-first-game").css("box-shadow", "rgba(210, 0, 30, 0.25) 0px 14px 28px, rgba(210, 0, 30, 0.22) 0px 10px 10px")
+			
+			$("#game-picture-first-game").css("border", "4px solid #d2001f")
+
+
+			$("#detail-2-second-game").css({visibility: "hidden"})
+			$("#detail-2-third-game").css({visibility: "hidden"})
+			$("#detail-3-second-game").css({visibility: "hidden"})
+			$("#detail-3-third-game").css({visibility: "hidden"})
+
+			$("#detail-2-first-game").css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}, 400)
+		}
+		else if(itemNumber == 2){
+			$("#game-title-second-game").css("background-image", "url('{% static 'images/button-back-red.png' %}')")
+			$("#game-title-second-game").css("color", "#fae455")
+			$("#game-picture-second-game").css("box-shadow", "rgba(210, 0, 30, 0.25) 0px 14px 28px, rgba(210, 0, 30, 0.22) 0px 10px 10px")
+			
+			$("#game-picture-second-game").css("border", "4px solid #d2001f")
+
+			$("#detail-2-first-game").css({visibility: "hidden"})
+			$("#detail-2-third-game").css({visibility: "hidden"})
+			$("#detail-3-first-game").css({visibility: "hidden"})
+			$("#detail-3-third-game").css({visibility: "hidden"})
+			$("#detail-2-second-game").css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}, 400)
+
+		}
+		else{
+			$("#game-title-third-game").css("background-image", "url('{% static 'images/button-back-red.png' %}')")
+			$("#game-title-third-game").css("color", "#fae455")
+			$("#game-picture-third-game").css("box-shadow", "rgba(210, 0, 30, 0.25) 0px 14px 28px, rgba(210, 0, 30, 0.22) 0px 10px 10px")
+			
+			$("#game-picture-third-game").css("border", "4px solid #d2001f")
+
+			$("#detail-2-first-game").css({visibility: "hidden"})
+			$("#detail-2-second-game").css({visibility: "hidden"})
+			$("#detail-3-first-game").css({visibility: "hidden"})
+			$("#detail-3-second-game").css({visibility: "hidden"})
+			$("#detail-2-third-game").css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}, 400)
+
+		}
+
+
+		setColorFromGreen(itemNumber)
+
+		audio.currentTime = 0
+		audio.play()
+
+	}
+
+
+	function setColorFromGreen(itemNumber){
+		if(itemNumber == 1){
+			$("#game-title-second-game").css("background-image", "url('{% static 'images/button-back.png' %}')")
+			$("#game-picture-second-game").css("box-shadow", "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px")
+			
+			$("#game-picture-second-game").css("border", "4px solid #c3ad1f")
+			$("#game-title-third-game").css("background-image", "url('{% static 'images/button-back.png' %}')")
+			$("#game-picture-third-game").css("box-shadow", "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px")
+			
+			$("#game-picture-third-game").css("border", "4px solid #c3ad1f")
+		}
+		else if(itemNumber == 2){
+			$("#game-title-first-game").css("background-image", "url('{% static 'images/button-back.png' %}')")
+			$("#game-picture-first-game").css("box-shadow", "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px")
+			
+			$("#game-picture-first-game").css("border", "4px solid #c3ad1f")
+			$("#game-title-third-game").css("background-image", "url('{% static 'images/button-back.png' %}')")
+			$("#game-picture-third-game").css("box-shadow", "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px")
+			
+			$("#game-picture-third-game").css("border", "4px solid #c3ad1f")
+		}
+		else{
+			$("#game-title-first-game").css("background-image", "url('{% static 'images/button-back.png' %}')")
+			$("#game-picture-first-game").css("box-shadow", "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px")
+			
+			$("#game-picture-first-game").css("border", "4px solid #c3ad1f")
+			$("#game-title-second-game").css("background-image", "url('{% static 'images/button-back.png' %}')")
+			$("#game-picture-second-game").css("box-shadow", "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px")
+			
+			$("#game-picture-second-game").css("border", "4px solid #c3ad1f")
+		}
+	}
+
+
+
+	function startFirstGame(gameFieldSize){
+		var url = "{% url 'game:easy_game' %}?jatek_tabla_meret=" + gameFieldSize 
+		var win = window.location.replace(url) 
+		win.focus()
+	}
+
+	function startSecondGame(gameFieldSize){
+		var url = "{% url 'game:medium_game' %}?jatek_tabla_meret=" + gameFieldSize 
+		var win = window.location.replace(url) 
+		win.focus()
+	}
+
+	function startThirdGame(numberOfBombs){
+		var url = "{% url 'game:hard_game' %}?bombak_szama=" + numberOfBombs 
+		var win = window.location.replace(url) 
+		win.focus()	
+	}
+</script>
+
+
+{% endblock %}

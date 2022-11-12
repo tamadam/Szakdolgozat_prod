@@ -1,0 +1,865 @@
+{% extends 'base_new.html' %}
+
+{% load static %}
+
+{% block content %}
+<style>
+@font-face {
+	font-family: 'Kanit-Regular';
+	src: local('Kanit-Regular'),
+	url("{% static 'fonts/Kanit-Regular.ttf' %}");
+}
+
+@font-face {
+	font-family: 'Kanit-Bold';
+	src: local('Kanit-Bold'),
+	url("{% static 'fonts/Kanit-Bold.ttf' %}");
+}
+
+@font-face {
+	font-family: 'Kanit-Light';
+	src: local('Kanit-Light'),
+	url("{% static 'fonts/Kanit-Light.ttf' %}");
+}
+
+
+.easy-game-content{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 1900px;
+	overflow: hidden;
+	background-color: white;
+	background: url("{% static 'images/purple-texture.jpg' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	user-select: none;
+
+
+}
+
+#easy-game-header{
+	width: 100%;
+	height: 14%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#easy-game-container{
+	width: 100%;
+	height: 78%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+#easy-game-footer{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 8%;
+}
+
+#game-container,
+#game-container-left,
+#game-container-right,
+.card-container,
+.single-card{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#game-container-left{
+	width: 30%;
+	height: 80%;
+}
+
+#game-container{
+	width: 40%;
+	height: 80%;
+	background-color: aqua;
+	display: grid;
+	grid-gap: 1em;
+	align-items: center;
+	padding: 1em;
+	border-radius: 20px;
+	box-shadow: aqua 0px 4px 16px;
+}
+
+#game-container-right{
+	width: 30%;
+	height: 80%;
+}
+
+.card-container{
+	height: 100%;
+	width: 100%;
+	cursor: pointer;
+	position: relative;
+}
+
+.single-card{
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	position: absolute;
+	transition: transform 0.4s linear;
+	backface-visibility: hidden;
+	pointer-events: none;
+	user-select: none;
+}
+
+.card-back{
+	background-color: #dfc9ed;
+	transform: rotateY(-180deg);
+	border-radius: 10px;
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.card-back img{
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.card-front{
+	background-color: lightseagreen;
+	border-radius: 10px;
+	background: url("{% static 'images/memory-images/card-background-purple.jpg' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.flip .card-back{
+	transform: rotateY(0);
+}
+
+.flip .card-front{
+	transform: rotateY(180deg);
+}
+
+#timer-container{
+	font-family: "Kanit-Regular";
+	font-size: 1.4em;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	color: #fae455;
+	padding: 1em;
+	width: 100%;
+	user-select: none;
+}
+
+#timer{
+	border-radius: 10px;
+	padding: 0.4em;
+	width: 20%;
+	text-align: center;
+
+}
+
+
+/* --- title */
+#easy-game-title-left{
+	width: 14%;
+}
+
+#easy-game-title-center{
+	width: 72%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	font-family: "Kanit-Regular";
+	font-size: 1.4em;
+	color: #fae455;
+
+}
+
+#easy-game-title-right{
+	width: 14%;
+}
+
+
+#main-page-button {
+	display: flex;
+	justify-content: center;
+	align-items: center; 
+	width: 100%;
+	height: 100%;
+
+}
+
+#main-page-button img{
+	width: 40%;
+	height: 40;
+	max-width: 100%;
+	max-height: 100%;
+
+}
+
+.go-to-main-page:hover {
+	cursor: pointer;
+}
+
+
+
+.go-to-main-page:active {
+	content:url("{% static 'images/previous-button-purple.png' %}");
+}
+
+.loader-container {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 10;
+	color: white;
+	font-family: "Kanit-Regular";
+	font-size: 1.4em;
+
+}
+
+.result-container {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(239, 239, 240, 0.4);
+	display: none;
+	justify-content: center;
+	align-items: center;
+	z-index: 9;
+	color: white;
+	font-family: "Kanit-Regular";
+	font-size: 1.2em;
+
+}
+
+#result-message-container{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 14%;
+	height: 20%;
+	background-color: rgba(0, 0, 0, 0.9);
+	border-radius: 20px;
+	color: white;
+	font-family: "Kanit-Regular";
+	font-size: 1.2em;
+	padding: 0.4em;
+
+
+}
+
+#result-message{
+	width: 100%;
+	height: 78%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+#res-message{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 50%;
+}
+
+#got-stat{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 20%;	
+}
+
+
+#got-stat-image{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-end;
+	height: 80%;
+	width: 100%;
+}
+
+#stat-image img{
+	max-width: 90%;
+	max-height: 90%;
+}
+
+#got-stat-text{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 20%;
+	width: 100%;
+	font-size: 1em;
+}
+
+
+
+
+#result-button{
+	font-size: 1em;
+	width: 40%;
+	height: 22%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: white;
+	background: url("{% static 'images/button-back.png' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	color: black;
+
+}
+
+
+#result-button:hover{
+	background: url("{% static 'images/button-back-red.png' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	color: #fae455;
+	cursor: pointer;
+}
+
+#restart-button-container{
+	height: 100%;
+	width: 20%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	visibility: hidden;
+}
+
+#reload-arrow-button{
+	max-height: 70%;
+	max-width: 70%;
+}
+
+#reload-arrow-button:hover{
+	cursor: pointer;
+}
+
+</style>
+
+
+<div class="easy-game-content">
+	<div id="easy-game-header">
+		<div id="easy-game-title-left">
+			<div id="main-page-button">
+				<img src="{% static 'images/previous-button.png' %}" alt="Vissza" class="go-to-main-page" onmouseover="changeColor(this)" onmouseout="resetColor(this)">
+			</div>
+		</div>
+		<div id="easy-game-title-center">
+
+			<h1>Memória próba</h1>
+
+		</div>
+		<div id="easy-game-title-right">	
+		</div>
+	</div>
+	<div id="easy-game-container">
+		<div id="game-container-left">
+			<!-- csak placeholder hogy a rendes containert középen tartsa -->
+		</div>
+		<div id="game-container">
+			<!-- a program dinamikusan legenerálja ide az adott itemeket -->
+		</div>
+		<div id="game-container-right">
+			<div id="timer-container">
+				<span id="timer-title">Hátralévő idő</span>
+				<span id="timer">{{minutes}}:{{seconds}}</span>
+			</div>
+		</div>
+	</div>
+	<div id="easy-game-footer">
+		<div id="restart-button-container">
+			<img src="{% static 'images/reload-arrow.png' %}" alt="ujraindit" id="reload-arrow-button" onmouseover="changeRestartColor(this)" onmouseout="resetRestartColor(this)">
+		</div>
+	</div>
+	<div class="result-container">
+		<div id="result-message-container">
+			<div id="result-message">
+				<div id="got-stat">
+					<div id="got-stat-image">
+						<div id="stat-image">
+							<img src="{% static 'images/coin.png' %}" alt="arany" id="gold-image">
+						</div>
+					</div>
+					<div id="got-stat-text">
+						<span id="gold-span">...</span>
+					</div>
+				</div>
+				<div id="res-message">...</div>
+				<div id="got-stat">
+
+					<div id="got-stat-image">
+						<div id="stat-image">
+							<img src="{% static 'images/experience.png' %}" alt="xp" id="xp-image">
+						</div>
+					</div>
+					<div id="got-stat-text">
+						<span id="xp-span">...</span>
+					</div>
+				</div>
+			</div>
+			<div id="result-button">Rendben</div>
+		</div>
+	</div>
+	<div class="loader-container">
+
+	</div>
+</div>
+
+
+
+
+
+
+
+<script>
+
+
+	$(window).on("load", function(){
+		$(".loader-container").fadeOut("slow")
+
+
+	})
+
+
+	$("#result-button").click(function(){
+		audio.play()
+		$(".result-container").css("display", "none")
+		animateGoBackButton()
+		setInterval(animateGoBackButton, 1250)
+	})
+
+	function animateGoBackButton(){
+
+		$("#main-page-button").animate({
+			opacity: "1.0"
+		}, 600, function(){
+			$(this).animate({
+				opacity: "0.4"
+			}, 600)
+		})
+	}
+
+
+	const audio = new Audio()
+	audio.src = "{% static 'audios/button_click.mp3' %}"
+
+	const cardUpFirstCard = new Audio()
+	cardUpFirstCard.src = "{% static 'audios/cardup.mp3' %}"
+
+	const cardUpSecondCard = new Audio()
+	cardUpSecondCard.src = "{% static 'audios/cardup.mp3' %}"
+
+	const cardDown = new Audio()
+	cardDown.src = "{% static 'audios/carddown.mp3' %}"
+
+
+	function changeRestartColor(imageElement){
+		imageElement.setAttribute("src", "{% static 'images/reload-arrow-red.png' %}")
+	}
+
+	function resetRestartColor(imageElement){
+		imageElement.setAttribute("src", "{% static 'images/reload-arrow.png' %}")
+	}
+
+	$("#reload-arrow-button").on("click", function(){
+		audio.play()
+		setTimeout(function(){
+			location.reload()
+		}, 200)
+	})
+
+
+	function changeColor(imageElement){
+		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}")
+	}
+
+	function resetColor(imageElement){
+		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}")
+	}
+
+
+	$(".go-to-main-page").click(function(){
+    	audio.play()
+
+    	setTimeout(function(){
+	    	try {
+
+				var url = "{% url 'game:game_choice' %}"
+				var win = window.location.replace(url) 
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+
+    	}, 200)
+    	$(".loader-container").fadeIn("fast")
+	})
+
+
+
+	/* Memória kártya játék */
+
+	// játékhoz kapcsolódó változók
+	var gameContainer = document.getElementById("game-container")
+	var firstCard = false
+	var secondCard = false
+	var disableGameField = false
+	var matches = 0
+	var gameFieldSize = null
+	var gameFieldSizeSubstract = null
+	var endGameMatches = null
+
+
+	// időzítő változói
+	var minutes = {{minutes}}
+	var seconds = {{seconds}}
+
+	var timerInterval = null
+
+	var animateStarted = false
+	var animateRedBackgroundInterval = null
+
+	var gameLevel = 1 // az ajax call-nál kell, hogy a picit nehezebbekért több xp és gold járjon
+	// 1: 4x4 | 2: 5x4 | 3:6x6 --> 0: 2x2
+
+
+	const items = [
+		{ name: "archer", image: "{% static 'images/memory-images/archer.png' %}" },
+		{ name: "swordsman", image: "{% static 'images/memory-images/swordsman.png' %}" },
+		{ name: "wizard", image: "{% static 'images/memory-images/wizard.png' %}" },
+		{ name: "bow", image: "{% static 'images/memory-images/bow.png' %}" },
+		{ name: "sword", image: "{% static 'images/memory-images/sword.png' %}"},
+		{ name: "wand", image: "{% static 'images/memory-images/wand.png' %}" },
+		{ name: "cup", image: "{% static 'images/memory-images/cup.png' %}" },
+		{ name: "dragon", image: "{% static 'images/memory-images/dragon.png' %}" },
+		{ name: "empire", image: "{% static 'images/memory-images/empire.png' %}" },
+		{ name: "flag", image: "{% static 'images/memory-images/flag.png' %}" },
+		{ name: "gold", image: "{% static 'images/memory-images/gold.png' %}" },
+		{ name: "horse", image: "{% static 'images/memory-images/horse.png' %}" },
+		{ name: "knight", image: "{% static 'images/memory-images/knight.png' %}" },
+		{ name: "map", image: "{% static 'images/memory-images/map.png' %}" },
+		{ name: "medieval", image: "{% static 'images/memory-images/medieval.png' %}"},
+		{ name: "knighthorse", image: "{% static 'images/memory-images/knighthorse.png' %}" },
+		{ name: "crown", image: "{% static 'images/memory-images/crown.png' %}" },
+		{ name: "beer", image: "{% static 'images/memory-images/beer.png' %}" },
+	]
+
+	initializeGame()
+
+	function initializeGame(){
+		gameFieldSize = {{game_field_size}}
+		gameFieldSizeSubstract = 0
+		endGameMatches = (gameFieldSize * gameFieldSize) / 2
+
+		if (gameFieldSize == 5){
+			gameFieldSizeSubstract = 1
+			endGameMatches = (gameFieldSize * (gameFieldSize - 1)) / 2
+			gameLevel = 2
+		}
+		if (gameFieldSize == 6){
+			gameLevel = 3
+		}
+		
+		if(gameFieldSize == 2){
+			gameLevel = 0
+		}
+
+		var cards = getRandomItems(gameFieldSize)
+		generateGameField(cards, gameFieldSize)
+		generateTime()
+		timerInterval = setInterval(generateTime, 1000)
+	}
+
+
+	function getRandomItems(size){
+		var tmpArray = [...items]
+		var cardsArray = []
+		size = (size * (size - gameFieldSizeSubstract)) / 2 //endgamematches ?
+
+		for (let i = 0; i < size; i++){
+			var indexRandom = Math.floor(Math.random() * tmpArray.length)
+			cardsArray.push(tmpArray[indexRandom])
+			tmpArray.splice(indexRandom, 1)
+		}
+
+		return cardsArray
+	}
+
+
+	function generateGameField(cardsArray, size){
+		cardsArray = [...cardsArray, ...cardsArray]
+		cardsArray.sort(() => Math.random() - 0.5) // átnezni
+		gameContainer.innerHTML = ""
+
+		for (let i = 0; i < size * (size - gameFieldSizeSubstract); i++){
+			var cardContainer = document.createElement("div")
+			cardContainer.classList.add("card-container")
+			cardContainer.addEventListener("click", cardFlip)
+
+
+			var cardFront = document.createElement("div")
+			cardFront.classList.add("single-card")
+			cardFront.classList.add("card-front")
+
+			var cardBack = document.createElement("div")
+			cardBack.classList.add("single-card")
+			cardBack.classList.add("card-back")
+
+			var cardImage = document.createElement("img")
+			cardImage.src = cardsArray[i].image
+
+
+			cardBack.appendChild(cardImage)
+			cardContainer.appendChild(cardFront)
+			cardContainer.appendChild(cardBack)
+
+			gameContainer.appendChild(cardContainer)
+		}
+
+		gameContainer.style.gridTemplateColumns = `repeat(${size}, 1fr)`
+
+		if (gameFieldSize == 5){
+			gameContainer.style.backgroundColor = "#fae455"
+			gameContainer.style.boxShadow = "#fae455 0px 4px 16px"
+		}
+
+		else if (gameFieldSize == 6){
+			gameContainer.style.backgroundColor = "#e61c1c"
+			gameContainer.style.boxShadow = "#e61c1c 0px 4px 16px"
+		}
+
+	}
+
+
+
+	function cardFlip(event){
+		var choosenCard = event.target
+
+		if (choosenCard !== firstCard && !disableGameField){
+			choosenCard.classList.add("flip")
+
+			if(!firstCard){
+				cardUpFirstCard.currentTime = 0
+				cardUpFirstCard.play()
+				
+				firstCard = choosenCard
+				return
+			}
+			cardUpSecondCard.currentTime = 0
+			cardUpSecondCard.play()
+
+			secondCard = choosenCard
+
+			disableGameField = true
+
+			var firstCardImage = firstCard.querySelector("img").src
+			var secondCardImage = secondCard.querySelector("img").src
+
+			compareCardImages(firstCardImage, secondCardImage)
+		}
+	}
+
+	var compareTimeOut = null //a játék végén előfordul, hogy pont az utolsó másodpercben fordítja fel a két kártyát, ilyenkor
+								// emiatt a timeout miatt visszafordulnak, ezt kell meggátolni 
+
+	function compareCardImages(firstImage, secondImage){
+		if(firstImage === secondImage){
+			matches++
+			if (matches == endGameMatches){
+				return finishGame(true)
+			}
+
+			firstCard.removeEventListener("click", cardFlip)
+			secondCard.removeEventListener("click", cardFlip)
+			firstCard = false
+			secondCard = false
+			disableGameField = false
+		}
+		else{
+			compareTimeOut = setTimeout(function(){
+				cardDown.play()
+				firstCard.classList.remove("flip")
+				secondCard.classList.remove("flip")
+				firstCard = false
+				secondCard = false
+				disableGameField = false
+			}, 1000)
+		}
+	}
+
+
+
+
+	function generateTime(){
+		if(minutes == 0 && seconds == 0){
+			document.getElementById("timer").innerHTML = "0:00"
+			return finishGame(false)
+		}	
+		if (seconds == -1){
+			if (minutes >= 1){
+				minutes -= 1
+				seconds = 59
+
+			}
+			else{
+				// korábbi megoldás, fentebb már ellenőrizzük
+				return finishGame(false)
+			}
+		}
+
+		var formatSeconds = ""
+		if (seconds < 10){
+			formatSeconds = "0" + seconds
+		}
+		else{
+			formatSeconds = "" + seconds
+		}
+
+
+		var result = minutes + ":" + formatSeconds
+
+		if (minutes == 0 && seconds <= 10){
+			if (!animateStarted){
+				animateStarted = true
+				startTimerDangerAnimation()
+			}
+
+		}
+
+		seconds -= 1
+
+
+
+		document.getElementById("timer").innerHTML = result
+	}
+
+
+	function startTimerDangerAnimation(){
+		$("#timer").css("backgroundColor", "rgba(255, 0, 0, 1.0)")
+		$("#timer").css("color", "white")
+
+		animateRedBackground()
+		animateRedBackgroundInterval = setInterval(animateRedBackground, 1400)
+	}
+
+	function animateRedBackground(){
+		$("#timer").animate({
+			backgroundColor: "rgba(255, 0, 0, 0.2)"
+		}, 600, function(){
+			$(this).animate({
+				backgroundColor: "rgba(255, 0, 0, 1.0)"
+			}, 600)
+		})
+		
+	}
+
+
+
+
+
+	function finishGame(isWin){
+		clearInterval(timerInterval)
+		clearTimeout(compareTimeOut)
+		if (animateStarted){
+			clearInterval(animateRedBackgroundInterval)
+			$("#timer").css("backgroundColor", "rgba(255, 0, 0, 1.0)")
+		}
+
+		disableGameField = true
+
+		
+		if (isWin){
+			console.log("VEGE-GYOZELEM")
+			addGoldAndIncreaseXpOnWin("easy")
+		}
+		else{
+			cardUpFirstCard.currentTime = 0
+			cardUpFirstCard.play()
+			var allCards = document.getElementsByClassName("card-container")
+			for (let j = 0; j < allCards.length; j++){
+				allCards[j].classList.add("flip")
+			}
+			console.log("VEGE-VERESEG")
+			$("#xp-span").html("0")
+			$("#gold-span").html("0")
+			$("#res-message").html("Vesztettél!")
+		}
+
+		setTimeout(function(){
+			$(".result-container").css("display", "flex")
+			$("#restart-button-container").css("visibility", "visible")
+		}, 400)
+
+
+	}
+
+	/* ------------------------------- */
+
+	var userID = "{{user_id}}"
+
+
+	function addGoldAndIncreaseXpOnWin(gameType){
+		console.log("increase")
+		info_packet = {
+			"csrfmiddlewaretoken": "{{csrf_token}}",
+			"user_id": "{{user_id}}",
+			"game_type": gameType,
+			"game_level": gameLevel,
+		}
+		$.ajax({
+
+			dataType: "json",
+			url: "{% url 'game:finished_game' %}",
+			data: info_packet,
+
+			success: function(data) {
+				setStatValues(data)
+			},
+			error: function(data) {
+				console.log('ERROR')
+			},
+		})
+	}
+
+
+	function setStatValues(data){
+		$("#xp-span").html(data.got_xp)
+		$("#gold-span").html(data.got_gold)
+		$("#res-message").html("Győztél!")
+	}
+</script>
+
+{% endblock %}

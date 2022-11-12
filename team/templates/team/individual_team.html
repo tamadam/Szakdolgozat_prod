@@ -1,0 +1,1821 @@
+{% extends 'base_new.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<style type="text/css">
+
+@font-face {
+	font-family: 'Kanit-Regular';
+	src: local('Kanit-Regular'),
+	url("{% static 'fonts/Kanit-Regular.ttf' %}");
+}
+
+@font-face {
+	font-family: 'Kanit-Bold';
+	src: local('Kanit-Bold'),
+	url("{% static 'fonts/Kanit-Bold.ttf' %}");
+}
+
+@font-face {
+	font-family: 'Kanit-Light';
+	src: local('Kanit-Light'),
+	url("{% static 'fonts/Kanit-Light.ttf' %}");
+}
+
+/* SCROLLBAR BEÁLLÍTÁSOK */
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background-color: darkgrey;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+
+
+#team-content-page{
+	width: 100%;
+	height: 100%;
+	background: url("{% static 'images/team-background-house.jpg' %}");	
+
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+
+	background-color: white;
+	font-family: "Kanit-Regular";
+	font-size: 1.2em;
+	display: flex;
+	flex-direction: column;
+	max-width: 1900px;
+	color: #e3cc4a;
+	user-select: none;
+
+
+}
+
+#team-header{
+	height: 20%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#team-body{
+	height: 60%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+#team-footer{
+	height: 20%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#team-name-title{
+	background: url("{% static 'images/button-back.png' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 10px;
+	min-width: 300px;
+	color: black;
+}
+
+
+#team-messages{
+	height: 100%;
+	max-height: 600px;
+	width: 50%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+	margin-right: 2em;
+
+}
+
+#team-messages-cover{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	z-index: 3;
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 10px;
+}
+
+#body-details{
+	height: 100%;
+	width: 40%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+
+
+#team-chat-container{
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 100%;
+}
+
+.chat-messages {
+	display: flex;
+	flex-direction: column-reverse;
+	overflow-x: hidden;
+	overflow-y: auto;
+	font-size: 1em;
+	/*background-color: rgba(33, 80, 58, 0.6);*/
+	background-color: rgba(112, 139, 186, 0.6);
+	background-image: linear-gradient(to right, rgba(112, 139, 186, 0.6), rgba(95, 61, 49, 0.6));
+	height: 88%;
+	max-height: 600px;
+
+}
+
+.send-new-message-container{
+	display: flex;
+	flex-direction: row; /* publicnal kimaradt */
+	width: 100%;
+	height: 10%;
+
+}
+
+.send-new-message-textarea{
+	width: 95%;
+	flex-basis: auto; 
+	resize: none;
+	outline: none;
+	padding: 0.2em;
+	font-size: 1em;
+	font-family: "Kanit-Light";
+	border: 4px solid transparent;
+}
+
+.send-new-message-textarea:focus{
+	border: 4px solid #8e939a;
+}
+
+#send-new-message-button{
+	width: 5%;
+	padding: 10px;
+	background-color: #e6f8fc;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+}
+
+#send-new-message-button:hover{
+	opacity: 0.4;
+	cursor: pointer;
+}
+
+#send-new-message-button img{
+	max-width: 100%;
+	max-height: 100%;
+
+}
+
+#error-message-div{
+	height: 2%;
+	color: red;
+}
+
+#error-message-text{
+	visibility: hidden;
+}
+
+
+/* ezek a create chat message elementhez jönnek */
+.username-field-right{
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	width: 95%;
+	font-weight: bold;
+	color: black;
+
+}
+
+.username-field-right:hover{
+	cursor: pointer;
+}
+
+.profile-image{
+	width: 2em;
+	height: 2em;
+	border-radius: 50%;
+
+
+}
+
+
+
+.profile-image:hover{
+	cursor: pointer;
+
+
+}
+
+.profile-image-owner-icon{
+	width: 2em;
+	height: 2em;
+	border-radius: 50%;
+}
+
+
+
+.message-text {
+
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	flex: 1;
+
+    /* tordeli a hosszu sorokat*/
+    white-space: normal;
+    -ms-word-break: break-all;
+    word-break: break-all;	
+
+
+}
+
+.new-chat-message-container:hover{
+	background-color: #5c7399;
+	background-image: linear-gradient(to right, rgba(112, 139, 186), rgba(95, 61, 49));
+}
+
+
+.new-chat-message-container:hover .tooltip-span{
+	visibility: visible;
+
+}
+
+
+.tooltip-span{
+	visibility: hidden;
+	margin: 2%;
+	color: black;
+
+}
+
+/* --- title */
+#team-title-left{
+	width: 14%;
+}
+
+#team-title-center{
+	width: 72%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+
+}
+
+#team-title-right{
+	width: 14%;
+}
+
+
+#main-page-button {
+	display: flex;
+	justify-content: center;
+	align-items: center; 
+	width: 100%;
+	height: 100%;
+
+}
+
+#main-page-button img{
+	width: 40%;
+	height: 40;
+	max-width: 100%;
+	max-height: 100%;
+
+}
+
+.go-to-main-page:hover {
+	cursor: pointer;
+}
+
+
+
+.go-to-main-page:active {
+	content:url("{% static 'images/previous-button-purple.png' %}");
+}
+
+/* -- */
+.loader-container {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 10;
+	color: white;
+	font-family: "Kanit-Regular";
+	font-size: 1.4em;
+
+}
+
+#body-details-title{
+	height: 20%;
+	width: 60%;
+	padding: 10px;
+	border-width: 2px;
+	border-style: solid;
+  	border-image: url("{% static 'images/button-back.png' %}") 30 stretch;
+	background-color: rgba(0,0,0,0.8);
+	display: flex;
+	flex-direction: column;
+
+}
+
+
+#description-text{
+	height: 80%;
+	font-size: 1em;
+	font-family: "Kanit-Light";
+	text-align: center;
+
+}
+
+#members-container{
+	overflow-x: hidden;
+	overflow-y: auto;
+	height: 45%;
+	width: 60%;
+	margin-top: 2%;
+}
+
+
+
+#pending-requests-container{
+	display: none;
+	flex-direction: column;
+	overflow-x: hidden;
+	overflow-y: auto;
+	height: 45%;
+	width: 60%;
+	margin-top: 2%;
+}
+
+
+#pending-requests{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	height: 100%;
+	width: 100%;
+	font-size: 1.2em;
+}
+
+
+#join-or-leave-section{
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 60%;
+	height: 20%;
+
+}
+
+#team-navigation{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 80%;	
+}
+
+#join-requests-container{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 25%;
+	height: 80%;	
+	font-size: 1em;
+	color: #fae455;
+}
+
+#show-requests{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.6);
+	border: 2px solid #fae455;
+	border-radius: 10px;
+	height: 80%;
+	width: 80%;
+
+}
+
+#show-requests:hover{
+	color: red;
+	border: 2px solid red;
+	cursor: pointer;
+}
+
+
+
+#join-leave-buttons-container{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 50%;
+	height: 80%;
+	font-size: 1em;
+	color: black;
+	font-weight: bold;
+}
+
+#start-attack-container{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 25%;
+	height: 80%;	
+	font-size: 1em;
+	color: #fae455;
+}
+
+#team-attack-button{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.6);
+	border: 2px solid #fae455;
+	border-radius: 10px;
+	height: 80%;
+	width: 80%;
+}
+
+
+#team-attack-button:hover{
+	color: red;
+	border: 2px solid red;
+	cursor: pointer;	
+}
+
+#error-field{
+	height: 20%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: red;
+	visibility: hidden;
+	font-size: 1.1em;
+}
+
+.team-join-leave-button{
+	background: url("{% static 'images/button-back.png' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 10px;
+}
+
+.team-join-leave-button:hover{
+	padding: 10px;
+	background: url("{% static 'images/button-back-red.png' %}");	
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	color: #fae455;
+	cursor: pointer;
+}
+
+
+.team-member-container{
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	/*height: 100%;*/
+	height: 55px;
+	font-size: 1.2em;
+
+}
+
+.team-member-detail-content{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	width: 80%;
+	height: 100%;
+}
+
+.team-member-detail-content:hover{
+	cursor: pointer;
+	background-color: rgba(165, 169, 174, 0.6);
+	border-radius: 20px;
+}
+
+.team-member-role-main-container{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20%;
+	height: 100%;
+}
+
+
+.current-pending-requests-container{
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	/*height: 100%;*/
+	min-height: 60px;
+}
+
+
+.current-pending-requests-container:hover{
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.team-member-container-profile-image{
+	width: 14%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-right: 4%;
+}
+
+.current-pending-requests-profile-image{
+	width: 14%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-right: 4%;
+}
+
+.team-member-container-member-name{
+	width: 72%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.current-pending-requests-member-name{
+	width: 56%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;	
+}
+
+.team-member-role-icon-container{
+	width: 14%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+
+.current-pending-requests-add-user-to-team-container{
+	width: 14%;
+	display: flex;
+	justify-content: center;
+	align-items: center;	
+}
+
+.current-pending-requests-add-user-to-team-container:hover{
+	background-color: rgba(50, 186, 124, 0.6);
+	border-radius: 20px;
+}
+
+.current-pending-requests-remove-user{
+	width: 14%;
+	display: flex;
+	justify-content: center;
+	align-items: center;		
+}
+
+.current-pending-requests-remove-user:hover{
+	background-color: rgba(255, 0, 0, 0.6);
+	border-radius: 20px;
+}
+
+
+
+.profile-image-add-user{
+	max-width: 60%;
+	max-height: 60%;
+}
+
+
+#team-description-title-content {
+    margin:auto;
+    margin-top: -3vh;
+    margin-bottom: 2vh;
+    text-align: center;
+    padding:5px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+#team-description-title{
+	font-weight: bold;
+	font-size: 1.2em;
+	background-image: url("{% static 'images/button-back.png' %}");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	margin: 0 auto;
+	width: 50%;
+
+	height: auto;
+	color: black;
+}
+
+
+
+#team-description-textarea {
+	width: 100%;
+	height: 100%;
+	resize: none;
+	margin: 2px;
+	border: none;
+	outline: none;
+	background: none;
+	color: #fae455;
+	font-family: 'Kanit-Light';
+	font-size: 1.2em;
+	white-space: pre-wrap;
+
+
+}
+
+#team-description-textarea::placeholder {
+	color: #fae455;
+	font-style: italic;
+
+}
+
+.profile-image-delete-user-icon{
+	visibility: hidden;
+	width: 2em;
+	height: 2em;
+	border-radius: 50%;
+}
+
+
+.profile-image-delete-user-icon:hover{
+	cursor: pointer;
+	scale: 1.1;
+}
+
+#attack-enemy-team-icon-container{
+	display: none;
+	align-items: center;
+	justify-content: center;
+}
+
+.enemy-team-attack-image{
+	max-width: 60%;
+	max-height: 60%;
+	border-radius: 50%;
+	padding: 0.4em;
+	border: 4px solid #fae455;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0,0,0, 0.6);
+}
+
+.enemy-team-attack-image:hover{
+	background-color: rgba(0,0,0, 0.8);
+	border: 4px solid red;
+	cursor: pointer;
+}
+
+.owner-image{
+	max-height: 80%;
+	max-width: 80%;
+}
+
+</style>
+
+
+
+<div id="team-content-page">
+	<div id="team-header">
+		<div id="team-title-left">
+			<div id="main-page-button">
+				<img src="{% static 'images/previous-button.png' %}" alt="Vissza" class="go-to-main-page" onmouseover="changeColor(this)" onmouseout="resetColor(this)">
+			</div>
+		</div>
+		<div id="team-title-center">
+			<div id="team-name-title">
+				<h1>{{team.name}}</h1>
+			</div>
+		</div>
+		<div id="team-title-right">	
+		</div>
+
+	</div>
+	<div id="team-body">
+		<!-- CHAT RÉSZ -->
+		{% if is_own_team %}
+			<div id="team-messages">
+				<div id="team-messages-cover">
+					<span id="loading-message"></span>	
+				</div>
+
+
+				<!-- eköré a div köré lehetne tenni 1 divet aminek paddingot allitunk-->
+				<div id="team-chat-container"> <!-- public chatnel ez a chat-containernek felel meg -->
+				
+					<div class="chat-messages" id="chat_messages_id">
+						
+					</div>
+
+
+					<div class="send-new-message-container">
+						<textarea class="send-new-message-textarea" id="send-new-message-textarea-id"></textarea>
+						<div id="send-new-message-button">
+							<img src="{% static 'images/send-message-icon-grey.png' %}" alt="küldés">
+						</div>
+					</div>
+					
+					<div id="error-message-div">
+						<!-- Hibaüzenetek chatelés közben -->
+						<span id="error-message-text">Hiba!</span>
+
+					</div>	
+
+
+				</div>
+
+
+			</div>
+		{% endif %}
+		<div id="body-details">
+			<div id="body-details-title">
+				<div id="team-description-title-content">
+					<h4 id="team-description-title">Leírás</h4>
+				</div>
+					<div id="description-text">
+						<textarea id="team-description-textarea" maxlength="100"></textarea>
+					</div>	
+
+			</div>
+			<div id="members-container">
+				{% for team_member in team_members %}
+					<div class="team-member-container">
+						<div class="team-member-detail-content" onclick="selectUser('{{team_member.member.id}}')">
+							<div class="team-member-container-profile-image">
+								<img class="profile-image" src="{{team_member.member_profile_image}}" alt="profilkep">
+							</div>
+							<div class="team-member-container-member-name">
+								{{team_member.member.username}} 							
+							</div>
+						</div>
+						<div class="team-member-role-main-container">
+							<div class="team-member-role-icon-container"> 
+								{% if team_member.is_team_owner %}
+									<img class="profile-image-owner-icon" src="{% static 'images/crown-team.png' %}" alt="korona">
+								{% else %}
+									<img class="profile-image-delete-user-icon" src="{% static 'images/trash-bin.png' %}" alt="kuka" onclick="fireUser('{{team_member.member.id}}')">
+
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+			<div id="pending-requests-container">
+				<div id="pending-requests">
+					{% if not pending_requests %}
+						<span>Jelenleg nincs függőben lévő kérelem</span>
+					{% endif %}
+					{% for pending_request in pending_requests %}
+						<div class="current-pending-requests-container">
+							<div class="current-pending-requests-profile-image" onclick="selectUser('{{pending_request.user_id}}')">
+								<img class="profile-image" src="{{pending_request.profile_image}}" alt="profilkep">
+							</div>
+							<div class="current-pending-requests-member-name" onclick="selectUser('{{pending_request.user_id}}')">
+								{{pending_request.user}} 							
+							</div>
+							<div class="current-pending-requests-add-user-to-team-container" onclick="addUserToTeam('{{pending_request.user_id}}', '{{team.id}}')">
+								<img class="profile-image-add-user" src="{% static 'images/checked_team.png' %}" alt="hozzaad">
+							</div>
+							<div class="current-pending-requests-remove-user" onclick="deleteRequest('{{pending_request.user_id}}', '{{team.id}}')">
+								<img class="profile-image-add-user" src="{% static 'images/cancel.png' %}" alt="eltavolit">
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div id="join-or-leave-section">
+				<div id="team-navigation">
+					
+					<div id="join-requests-container">
+						{% if is_team_owner_description %}
+							<div id="show-requests">
+								<img class="owner-image" src="{% static 'images/add-user.png' %}" alt="kerelmek">
+							</div>
+						{% endif %}
+					</div>
+					<div id="join-leave-buttons-container">
+						{% if is_own_team %}
+							<div id="leave-team-button" class="team-join-leave-button" onclick="leaveTeam('{{user_id}}')">Csapat elhagyása</div>
+						{% else %}
+							<div id="join-team-button" class="team-join-leave-button" onclick="sendJoinRequest('{{user_id}}', '{{team.id}}')">Csatlakozás</div>
+
+						{% endif %}
+
+					</div>
+
+					<div id="start-attack-container">
+						{% if is_team_owner_description %}
+							<div id="team-attack-button">
+								<img class="owner-image" src="{% static 'images/swords-team.png' %}" alt="tamadas">
+							</div>
+						{% endif %}
+					</div>
+					
+				</div>
+				<div id="error-field">
+					error
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="team-footer">
+		<div id="attack-enemy-team-icon-container">
+			<img class="enemy-team-attack-image" src="{% static 'images/swords-team.png' %}" alt="tamadas">
+		</div>
+	</div>
+	<div class="loader-container">
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	var isPendingMembers = false
+	$("#show-requests").on("click", function(){
+		audio.currentTime = 0
+		audio.play()
+		if(!isPendingMembers){
+			$("#members-container").css("display", "none")
+			$("#pending-requests-container").css("display", "flex")
+			$("#show-requests").html('<img class="owner-image" src="{% static "images/back-button.png" %}" alt="vissza">')
+		}
+		else{
+			$("#members-container").css("display", "block")
+			$("#pending-requests-container").css("display", "none")
+			$("#error-field").css("visibility", "hidden	")
+			$("#show-requests").html('<img class="owner-image" src="{% static "images/add-user.png" %}" alt="kerelmek">')
+		}
+		
+		isPendingMembers = !isPendingMembers
+	})
+
+
+	// 5mp-nként nézi, jött e új csatlakozási kérelem
+	setInterval(function(){
+		refresh_page_part("#pending-requests")
+	}, 5000)
+
+
+	function addUserToTeam(userID, teamID){
+		audio.currentTime = 0
+		audio.play()
+		info_packet = {
+			"user_id": userID,	
+			"team_id": teamID,
+		}
+		
+		$.ajax({
+			dataType: "json",
+			url: "{% url 'team:accept_user_join' %}",
+			data: info_packet,
+			success: function(data) {
+				console.log('SUCCESS')
+				if(data.is_joined == "not_joined"){
+					var divError = document.getElementById("error-field")
+					divError.innerHTML = "Ez a kérelem már nem érvényes!"
+					divError.style.visibility = "visible"
+				}
+
+			},
+			error: function(data) {
+				console.log('ERROR')
+			},
+		}) 
+
+
+
+
+		refresh_page_part("#pending-requests")
+
+		refresh_page_part("#members-container")
+	}
+
+
+	function deleteRequest(userID, teamID){
+		audio.currentTime = 0
+		audio.play()
+
+		info_packet = {
+			"user_id": userID,	
+			"team_id": teamID,
+		}
+
+		$.ajax({
+			dataType: "json",
+			url: "{% url 'team:decline_user_join' %}",
+			data: info_packet,
+			success: function(data) {
+				console.log('SUCCESS')
+
+
+			},
+			error: function(data) {
+				console.log('ERROR')
+			},
+		}) 
+
+
+
+
+		refresh_page_part("#pending-requests")
+
+
+
+
+	}
+
+
+
+	function refresh_page_part(pagePart){
+
+		
+		$.get(window.location.href,{},function(response){
+			var new_version = $('<div></div>').append(response);
+			var new_result = new_version.find(pagePart);
+			if(new_result.length){
+				$(pagePart).html( new_result.html() );
+
+				// hogy ne tunjon el a kuka refreshkor
+				{% if is_team_owner_description %}
+					$(".profile-image-delete-user-icon").css("visibility", "visible")
+				{% endif %}
+
+				console.log('update requests');
+			}
+			else{
+				console.log('something wrong');
+			}
+		});
+
+	}
+
+
+
+
+
+
+	var fadeOutLoaderScreen = null
+
+	$(window).on("load", function(){
+		$("#loading-message").html("Csapat üzeneteinek betöltése...")
+		// alapból a websocket kapcsolat létrehozása utána fade outolja ki, de ha valami hiba lenne, akkor 
+		// 2600ms utan mindenkepp 
+		
+		fadeOutLoaderScreen = setTimeout(function(){
+			$("#team-messages-cover").fadeOut("slow")
+			$("#loading-message").html("")
+		}, 2600)
+
+		// csapathoz csatlakozásnál reloadoljuk a page-t: ilyenkor nem akarjuk hogy a fadeout effect megjelenjen megint
+		// ezzel a funkcionalitassal meg tudjuk allapitani hogy az oldal most tölt be, vagy pedig a program által
+		// lett reloadolva
+		var reloading = sessionStorage.getItem("reloading");
+		if (reloading){
+			$(".loader-container").css("display", "none")
+			sessionStorage.removeItem("reloading");
+			console.log("it was a reload")
+		}
+		else{
+			$(".loader-container").fadeOut("slow")
+		}		
+
+		{% if is_team_owner_description %}
+			$(".profile-image-delete-user-icon").css("visibility", "visible")
+		{% endif %}
+
+		// csapat támadás ikon: csak az ellenfél csapat tulajdonosainak látható
+
+		{% if has_team_and_owner_of_team %}
+			//console.log("tamadhatja")
+			$("#attack-enemy-team-icon-container").css("display", "flex")
+		{% endif %}
+
+	})
+
+
+	// átirányítjuk a csapat kereső oldalra, onnan fog tudni támadást indítani
+	$("#start-attack-container").on("click", function () {
+		audio.play()
+		setTimeout(function(){
+			try {
+				var url = "{% url 'search' %}?csapat=1"
+				var win = window.location.replace(url)
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+
+		}, 200)
+		$(".loader-container").fadeIn("fast")
+	})
+
+
+	// a tényleges harc indítása a másik csapat ellen
+	$("#attack-enemy-team-icon-container").on("click", function(){
+		audio.play()
+
+		info_packet = {
+			"attacker_team_id": "{{attacker_team.id}}",	
+			"defender_team_id": "{{team.id}}",
+		}
+		
+		$.ajax({
+			dataType: "json",
+			url: "{% url 'game:set_team_arena_sessions' %}",
+			data: info_packet,
+			success: function(data) {
+				if(data.error_in_teams == 0){
+					setTimeout(function(){
+						try {
+							var url = "{% url 'game:team_arena' %}"
+							var win = window.location.replace(url)
+							win.focus()
+						}
+						catch(error){
+							console.log(error)
+						}
+
+					}, 200)
+					
+					$(".loader-container").fadeIn("fast")
+				}
+				else if(data.error_in_teams == 1){
+					console.log("Hiba a harc indításakor: a csapat nem található")
+				}
+
+
+			},
+			error: function(data) {
+				console.log("ERROR")
+			},
+		}) 
+
+
+
+
+	})
+
+
+	/* CSAPAT LEÍRÁS KEZELÉSE */
+
+	// csak a csapat tulajdonos tudja módosítani a leírást
+	{% if not is_team_owner_description %}
+		$("#team-description-textarea").prop("disabled", true)
+	{% endif %}
+
+	// ha a leírás üres, akkor egy placeholdert jelenítünk meg
+	// amúgy a rendes leírást
+	if (`{{team.description}}` == ""){
+		$("#team-description-textarea").attr("placeholder", "Nincs megjeleníthető leírás.")
+	}
+	else{
+		// `` kell a többsoros string miatt
+		var encodedDescription = $("<p/>").html(`{{team.description}}`).text(); // &gt-t kapnank ha a user > hasznalja meg hasonlokat, ezt csereljük ki
+		$("#team-description-textarea").val(encodedDescription)
+	}
+
+
+
+	
+	// a textareabol kilépést követően mentjük a leírást
+	$("#team-description-textarea").focusout(function(){
+		var textAreaContent = $("#team-description-textarea").val()
+
+		info_packet = {
+			"user_id": "{{user_id}}",	
+			"description": textAreaContent,
+		}
+		
+		$.ajax({
+			dataType: "json",
+			url: "{% url 'team:save_team_description' %}",
+			data: info_packet,
+			success: function(data) {
+				console.log('SUCCESS - ' + data.message)
+
+			},
+			error: function(data) {
+				console.log('ERROR')
+			},
+		}) 
+	})
+
+
+
+
+
+
+
+
+
+	/* --------------- */
+
+
+
+
+
+
+	const audio = new Audio()
+	audio.src = "{% static 'audios/button_click.mp3' %}"
+
+	function changeColor(imageElement){
+		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}")
+	}
+
+	function resetColor(imageElement){
+		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}")
+	}
+
+
+	$(".go-to-main-page").click(function(){
+    	audio.play()
+
+    	setTimeout(function(){
+	    	try {
+
+				var url = "{% url 'home_page' %}"
+				var win = window.location.replace(url) 
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+
+    	}, 200)
+    	$(".loader-container").fadeIn("fast")
+	})
+
+
+
+	function sendJoinRequest(userId, teamId){
+		audio.play()
+		console.log("send join request to team...")
+
+		//audio hallatszodjon
+		setTimeout(function(){
+			if ('{{has_team}}' == 'True'){
+				//console.log("amíg csapatod van nem csatlakozhatsz")
+				var divError = document.getElementById("error-field")
+				divError.innerHTML = "Nem csatlakozhatsz amíg másik csapat tagja vagy"
+				divError.style.visibility = "visible"
+			}
+			else{
+				console.log("SEND TEAM JOIN REQUEST")
+				payload = {
+					"user_id": userId,
+					"team_id": teamId,
+				}
+				$.ajax({
+					dataType: "json",
+					url: "{% url 'team:send_join_request' %}",
+					data: payload,
+					success: function(response) {
+						handleResponseMessage(response)
+
+					},
+					error: function(response) {
+						console.log('error')
+					},
+				})
+			}
+		},100)
+
+
+
+	}
+
+	function handleResponseMessage(response){
+		if(response.request_state == "created"){
+			var divError = document.getElementById("error-field")
+			divError.innerHTML = "Jelentkezés sikeresen elküldve!"
+			divError.style.visibility = "visible"
+			divError.style.color = "green"
+		}
+		else if(response.request_state == "exists"){
+			var divError = document.getElementById("error-field")
+			divError.innerHTML = "Már elküldted a jelentkezésed!"
+			divError.style.visibility = "visible"
+			divError.style.color = "red"
+		}
+
+		//sessionStorage.setItem("reloading", "true");
+		//location.reload()
+	}
+
+
+
+
+	function leaveTeam(userId){
+		audio.play()
+		console.log('leaving team...')
+
+		setTimeout(function(){
+			payload = {
+				"csrfmiddlewaretoken": "{{csrf_token}}",
+				"user_id": userId,
+			}
+			$.ajax({
+				type: "POST",
+				dataType: "json",
+				url: "{% url 'team:leave_team' %}",
+				data: payload,
+				timeout: 5000,
+				success: function(response){
+					console.log('success')
+					if (response.team_is_deleted)
+						location.href = "{% url 'team:user_team_view' %}"
+					else{
+
+						sessionStorage.setItem("reloading", "true");
+						location.reload()
+						//location.href = "{% url 'team:user_team_view' %}"
+					}
+				},	
+				error: function(response){
+					console.log('error at ajax team_page')
+				},
+
+			})
+		}, 100)
+
+	}
+
+
+
+	function fireUser(userID){
+		console.log(userID)
+		{% if is_team_owner_description %}
+			
+			audio.play()
+
+			info_packet = {
+				"user_id": userID,
+			}
+			$.ajax({
+				dataType: "json",
+				url: "{% url 'team:fire_team_mate' %}",
+				data: info_packet,
+				success: function(response){
+					console.log("success")
+					refresh_page_part("#members-container")
+
+				},	
+				error: function(response){
+					console.log("error at fireuser")
+				},
+
+			})
+
+
+		{% endif %}
+	}
+
+
+
+// CHAT RÉSZ ----------------------------------
+
+	var teamSocket = null;
+	var roomId = null; // team_id
+
+	onStart()
+
+	function onStart(){
+		console.log("room_id : {{team.id}}")}
+		roomId = {{team.id}}
+		setupWebsocket(roomId)
+
+	function closeWebsocket(){
+		if(teamSocket != null){
+			teamSocket.close()
+			teamSocket = null
+			clearChatMessage()
+			setPageNumber("1")
+			disableChatMessageScrollListener()
+		}
+	}
+
+
+	function setupWebsocket(room_id){
+		console.log('open WebSocket ' + room_id)
+
+		roomId = room_id
+
+		closeWebsocket()
+		// WEBSOCKET BEÁLLÍTÁS FOLYAMATA KEZDETE //
+
+		var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+
+		if ("{{ debug_mode }}")
+			var ws_path = ws_scheme + "://" + window.location.host + "/csapat/" + roomId + "/"; // fejlesztéshez
+		else
+			var ws_path = ws_scheme + "://" + window.location.host + ":8001/csapat/" + roomId + "/"; // élesben
+
+		// websocket beállítás
+		teamSocket = new WebSocket(ws_path)
+
+		// websocket megnyitása
+		teamSocket.onopen = function(event) {
+			console.log("Connection successfully created");
+
+			clearTimeout(fadeOutLoaderScreen) // tesztek alapján az se baj ha nem clear-eli
+			setTimeout(function(){
+
+				$("#loading-message").html("")
+				$("#team-messages-cover").fadeOut("slow")
+
+				}, 400)
+
+		};
+
+		// felhasználó beléptetése az adott szobába miután a socket kapcsolat létrejött
+		teamSocket.addEventListener("open", function(event) {
+			if ("{{request.user.is_authenticated}}"){
+				teamSocket.send(JSON.stringify({
+					"command": "join",
+					"room_id": roomId,
+				}))
+			}
+		})
+
+		// bejövő üzeneket kezelése a consumertől
+		teamSocket.onmessage = function(event) {
+			console.log("Data received from the server: ", event.data);
+			var data = JSON.parse(event.data)
+
+
+			// üzenet típus ellenőrzése
+
+			if (data.error){ // az error a consumerstől jön ha üres az üzenet
+				console.log(data.message)
+				{% if is_own_team %}
+					showEmptyMessageError(data.message)
+				{% endif %}
+			}
+
+			if (data.join){
+				console.log(data.username, " joined the room")
+				getTeamMessages()
+				enableChatMessageScrollListener()
+
+			}
+
+			if (data.leave){
+				console.log(data.username, " leaved the room")
+			}
+
+			if (data.message_type == 0){
+				appendChatMessage(data, false, true)
+			}
+			else if (data.message_type == 3 || data.message_type == 4){
+				//showUserIsOnline(data)
+				console.log('join.chat or leave.chat')
+			}
+
+			if (data.message_packet){
+				handleSendPreviousMessagesPayload(data.messages, data.load_page_number)
+			}
+		};
+
+
+		// hibaüzenetek kiírása
+		teamSocket.onerror = function(event) {
+			console.log("Error: ", event.message);
+		};
+
+
+		// websocket bezárása
+		teamSocket.onclose = function(event) {
+			if (event.wasClean){
+				console.log("Connection closed");
+			}
+			else {
+				console.log("Connection died.");
+			}
+		};
+	}
+
+	function showEmptyMessageError(message){
+
+		var errorMessageText = document.getElementById("error-message-text").innerHTML = message
+		$("#error-message-text").css("visibility", "visible")
+		setTimeout(function(){
+			$("#error-message-text").css("visibility", "hidden")
+		},1500)
+
+
+
+	}
+
+
+	// ÜZENET KÜLDÉS KEZDETE //
+
+	{% if is_own_team%} // ha nem a csapatat nezi ez a resz nem tud mukodni mivel nincs mit beallitani
+
+	document.getElementById("send-new-message-textarea-id").focus();
+
+	document.getElementById("send-new-message-textarea-id").onkeyup = function(event) {
+		if (event.keyCode == 13 && event.shiftKey){
+			// új sor, küldés nélkül, textarea automatikusan kezeli
+		}
+		else if (event.keyCode == 13 && !event.shiftKey){
+			document.getElementById("send-new-message-button").click();
+		}
+	}
+
+
+	document.getElementById("send-new-message-button").onclick = function(event) {
+		var rawInputMessage = document.getElementById("send-new-message-textarea-id"); 	// html formátum
+		var message = rawInputMessage.value;										// a bevitt szöveg
+
+		// üzenet küldése a consumernek, receive_json hívódik meg a consumerben
+		// https://www.w3schools.com/js/tryit.asp?filename=tryjson_stringify
+		teamSocket.send(JSON.stringify({
+			"command": "send",
+			"message": message,
+			"room_id": roomId,
+		}))
+		rawInputMessage.value = "";
+	}
+	{% endif %}
+	// <<<-------------------------------------------------->>> //
+	// <<<-------------------------------------------------->>> //
+
+
+
+
+	function clearChatMessage(){
+		document.getElementById("chat_messages_id").innerHTML = ""
+	}
+
+
+	// CHAT ÜZENETEK BETÖLTÉSE KEZDETE //
+	
+	var teamChatPageNumber = 1;
+
+	function setPageNumber(pageNumber, loadedAllMessages){ // loadedAllMessages igaz, hogyha betöltötte az összes üzenetet és már nincs mit lekérdezni
+		if (loadedAllMessages){
+			teamChatPageNumber = -1
+		}
+		else {
+			teamChatPageNumber = pageNumber
+		}
+
+		//document.getElementById("id_page_number").innerHTML = teamChatPageNumber
+		console.log(teamChatPageNumber)
+	}
+
+
+	function getTeamMessages(){
+		let pageNumber = teamChatPageNumber
+		if (pageNumber != -1){
+			setPageNumber(-1, false) // a lekérdezés és betöltés folyamatban van
+			teamSocket.send(JSON.stringify({
+				"command": "get_team_messages",
+				"room_id": roomId,
+				"page_number": pageNumber
+			}))
+		}
+	}
+
+
+	// send_previous_messages_payload kezelése(load_messages publicban)
+	function handleSendPreviousMessagesPayload(messages, loadPageNumber) {
+		if(messages != null && messages != "undefined" && messages != "None"){
+			setPageNumber(loadPageNumber, false)
+			messages.forEach(function(message){ //foreach, minden iterationben meghivodik ez a fgv
+				appendChatMessage(message, true, false) // tartsa a pozicíót, nem új üzenet
+			})
+		}
+		else{
+			setPageNumber(-1, true)
+		}
+	}
+
+
+	function chatMessageScrollListener(e) {
+		var chatMessage = document.getElementById("chat_messages_id")
+		if ((Math.abs(chatMessage.scrollTop) + 2) >= (chatMessage.scrollHeight - chatMessage.offsetHeight)) {
+			getTeamMessages()
+		}
+	}
+
+	function enableChatMessageScrollListener(){
+		document.getElementById("chat_messages_id").addEventListener("scroll", chatMessageScrollListener);
+	}
+	
+	function disableChatMessageScrollListener(){
+		document.getElementById("chat_messages_id").removeEventListener("scroll", chatMessageScrollListener)
+	}
+
+
+
+
+	// <<<-------------------------------------------------->>> //
+	// <<<-------------------------------------------------->>> //
+
+
+// CHAT ÜZENETEK MEGJELENÍTÉSE KEZDETE // 
+	var currentUserID = "{{account.id}}"
+
+	function appendChatMessage(data, maintainPosition, isNewMessage){
+		userId = data["user_id"]
+		usernameReceived = data["username"]
+		message_type = data["message_type"]
+		message_id = data["message_id"]
+		message = data["message"]
+		profile_image = data["profile_image"]
+		sendingTime = data["sending_time"]
+		var messageReceived = message + "\n";
+		var username = usernameReceived; 
+
+		createChatMessageElement(userId, username, message_id, messageReceived, profile_image, sendingTime, maintainPosition, isNewMessage);
+	}
+
+
+
+	function createChatMessageElement(userId, username, message_id, message, profile_image, sendingTime, maintainPosition, isNewMessage){
+
+		var chatMessage = document.getElementById("chat_messages_id");
+
+
+		// egy adott chat üzenet, amelyben minden benne van: profilkép, üzenet stb.
+		var newChatMessage = document.createElement("div")
+		newChatMessage.style.display = "flex"
+		newChatMessage.style.flexDirection = "column"
+		newChatMessage.style.width = "100%"
+		newChatMessage.classList.add("new-chat-message-container")
+
+
+		// a felhasználó neve
+		var newChatMessageTop = document.createElement("div")
+		newChatMessageTop.style.flex = "1"
+		newChatMessageTop.style.display = "flex"
+		newChatMessageTop.style.flexDirection = "row"
+		newChatMessageTop.classList.add("new-chat-message-top")
+
+
+		// a felhasználó profilképe és az üzenet
+		var newChatMessageBody = document.createElement("div")
+		newChatMessageBody.style.flex = "1"
+		newChatMessageBody.style.display = "flex"
+		newChatMessageBody.style.flexDirection = "row"
+		newChatMessageBody.classList.add("new-chat-message-body")
+
+
+		// placeholder esetleges további bővítésekhez
+		var newChatMessageBottom = document.createElement("div")
+		newChatMessageBottom.style.flex = "1"
+		newChatMessageBottom.classList.add("new-chat-message-bottom")
+
+
+		// TOP 
+
+		// ez csak placeholder
+		var usernameFieldLeft = document.createElement("div") 
+		usernameFieldLeft.style.display = "flex"
+		usernameFieldLeft.style.width = "5%"
+
+
+		// tényleges felhasználónév
+		var usernameFieldRight = document.createElement("p")
+		usernameFieldRight.classList.add("username-field-right")
+		usernameFieldRight.innerHTML = username
+		usernameFieldRight.addEventListener("click", function(event){
+			selectUser(userId)
+		})
+
+		if (userId == currentUserID){
+			usernameFieldRight.style.justifyContent = "end"
+			usernameFieldRight.style.visibility = "hidden"
+		}
+
+
+
+		newChatMessageTop.appendChild(usernameFieldLeft)
+		newChatMessageTop.appendChild(usernameFieldRight)
+
+		// BODY 
+
+		// profilkép 
+		var newChatMessageBodyProfilePicture = document.createElement("div")
+		newChatMessageBodyProfilePicture.style.display = "flex"
+		newChatMessageBodyProfilePicture.style.justifyContent = "center"
+		//newChatMessageBodyProfilePicture.style.alignItems = "center"
+		newChatMessageBodyProfilePicture.style.marginTop = "auto"
+		newChatMessageBodyProfilePicture.style.width = "5%"
+		newChatMessageBodyProfilePicture.style.zIndex = "2"
+
+		var newChatMessageBodyProfilePictureImg = document.createElement("img")
+		newChatMessageBodyProfilePictureImg.classList.add("profile-image")
+		newChatMessageBodyProfilePictureImg.src = "{% static 'images/blank_profile_image.png' %}"
+		newChatMessageBodyProfilePictureImg.addEventListener("click", function(event) {
+			selectUser(userId)
+		})
+
+		var profileImageID = "profileImage " + message_id 
+		newChatMessageBodyProfilePictureImg.id = profileImageID
+
+		newChatMessageBodyProfilePicture.appendChild(newChatMessageBodyProfilePictureImg)
+
+		// üzenet
+		var messageFieldDiv = document.createElement("div")
+		messageFieldDiv.classList.add("message-text")
+
+		var messageField = document.createElement("p")
+
+		messageField.style.backgroundColor = "#aecaf2"
+		messageField.style.color = "black"
+		messageField.style.borderRadius = "20px"
+		messageField.style.padding = "10px"
+		messageField.style.maxWidth = "75%"	
+
+		// sortörések kezelése
+		var messageLines = message.split("\n")
+		var chatTextString = ""
+		for (var i=0; i < messageLines.length; i++){
+			if(messageLines[i] != ""){
+				chatTextString += messageLines[i] + "<br>"
+			}
+		}
+
+		messageField.innerHTML = chatTextString
+
+
+		var tooltipSpan = document.createElement("span")
+		tooltipSpan.innerHTML = sendingTime
+		tooltipSpan.classList.add("tooltip-span")
+
+		if (userId == currentUserID){
+			messageFieldDiv.appendChild(tooltipSpan)
+			messageFieldDiv.appendChild(messageField)
+
+		}
+		else{
+			messageFieldDiv.appendChild(messageField)
+			messageFieldDiv.appendChild(tooltipSpan)
+		}
+
+		if (userId == currentUserID){
+			messageFieldDiv.style.justifyContent = "end"
+			messageField.style.backgroundColor = "#e3cc4a"
+			messageField.style.color = "black"
+			//messageField.style.backgroundImage = "linear-gradient(#011b29, #080907)"
+			messageField.style.fontWeight = "bold"
+			newChatMessageBody.appendChild(messageFieldDiv)		
+			newChatMessageBody.appendChild(newChatMessageBodyProfilePicture)
+		}
+		else{
+			newChatMessageBody.appendChild(newChatMessageBodyProfilePicture)
+			newChatMessageBody.appendChild(messageFieldDiv)
+		}
+		// BOTTOM
+
+		var bottomField = document.createElement("p")
+		bottomField.style.flex = "1"
+		bottomField.style.width = "100%"
+		bottomField.style.visibility = "hidden"
+		bottomField.style.fontSize = "0.2em"
+		bottomField.innerHTML = "Láthatatlan szöveg - esetleges bővítéshez: pl. ki látta stb."
+
+		newChatMessageBottom.appendChild(bottomField)
+
+
+
+
+
+		// az elkészült top-body-bottom div-ek hozzáadása a fő tárolóhoz
+		newChatMessage.appendChild(newChatMessageTop)
+		newChatMessage.appendChild(newChatMessageBody)
+		newChatMessage.appendChild(newChatMessageBottom)
+
+
+		if(isNewMessage){
+			chatMessage.insertBefore(newChatMessage, chatMessage.firstChild)
+		}
+		else {
+			chatMessage.appendChild(newChatMessage)
+		}
+
+		if(!maintainPosition){
+			chatMessage.scrollTop = chatMessage.scrollHeight
+		}
+
+		loadProfilePicture(profile_image, profileImageID) // profile_image az input
+
+	}
+
+	function selectUser(userId){
+		var url = "{% url 'profile' user_id=7347328438423 %}".replace("7347328438423", userId);
+		var win = window.open(url, "_self")
+		win.focus()
+	}
+
+	// <<<-------------------------------------------------->>> //
+	// <<<-------------------------------------------------->>> //
+
+
+
+	// ALAPÉRTELMEZETT ÉS AZ IGAZI PROFILKÉP BETÖLTÉSE ASZINKRON MÓDON //
+
+	function setProfilePicture(imageSource, elementId) {
+		// beállítja az igazi profilképet
+		let image = document.getElementById(elementId)
+		image.src = imageSource
+	}
+
+
+	function loadProfilePicture(imageSource, profileImageId){
+		// profilkép betöltését indítja el
+		var profileImageLoader = new Image()
+		profileImageLoader.src = imageSource
+
+		if (!profileImageLoader.complete){
+			profileImageLoader.onload = function(){
+				// beállítja az alapértelmezett profilképet
+				setProfilePicture(profileImageLoader.src, profileImageId)
+				profileImageLoader.onload = function(){
+					// pass
+				}
+			}
+		}
+		else{
+			setProfilePicture(profileImageLoader.src, profileImageId)
+			profileImageLoader.onload = function() {
+				// pass
+			}
+			}
+		}
+	
+	// <<<-------------------------------------------------->>> //
+	// <<<-------------------------------------------------->>> //
+
+</script>
+
+
+{% endblock %}

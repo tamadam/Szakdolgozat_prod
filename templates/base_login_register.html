@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<!-- AJAXHOZ KELL JQUERY IMPORT -->
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+	<!-- JQUERY UI slide effecthez -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	
+	<!-- disable favicon.ico error -->
+	<link rel="shortcut icon" href="#">
+
+	<link rel="icon" href="{% static 'images/title-icon.png' %}" type="image/x-icon">
+
+	<!-- Az oldal title-je jön ide -->
+	{% block header %}
+
+	{% endblock %}
+
+	<style>
+		/* a main CSS fájl, az összes közös dolog benne van */
+		{% include 'css/base_login_register.css' %}
+	</style>
+	<script>
+		/* a main JS fájl, az összes közös dolog benne van */
+		{% include 'js/base_login_register.js' %}
+	</script>
+</head>
+<body>
+	{% block content %}
+
+	{% endblock %}
+</body>
+</html>
