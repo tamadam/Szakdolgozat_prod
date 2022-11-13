@@ -6,9 +6,7 @@
 		<title>A Szerepjáték - Bejelentkezés</title>
 	{% endblock%}
 
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400&display=swap" rel="stylesheet">
+
 </head>
 
 {% block content%}
@@ -41,7 +39,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-	font-family: 'Kanit', sans-serif;
 
     font-size: 1.2em;
 }
@@ -190,8 +187,7 @@
 
 
 input {
-
-    font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
     font-size: 1em;
     color: black;
     text-align: center;
@@ -223,7 +219,7 @@ input[type=submit] {
 	width: 60%;
 	border: none;
 	color: black;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1em;
 	font-weight: bold;
 
@@ -247,7 +243,7 @@ input[type=submit]:hover {
 
 
 input[type=submit]:active {
-	background: url("{% static 'images/button-back-onclick.png' %}");
+	/*background: url("{% static 'images/button-back-onclick.png' %}");*/
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -270,7 +266,8 @@ input[type=text]:focus, input[type=password]:focus {
 
 #error-messages {
 	color: #e31612;
-	font-family: "Kanit-Bold";
+	font-family: 'Kanit', sans-serif;
+	font-weight: bold;
 	font-size: 0.9em;
 	display: block;
 	vertical-align: middle;
