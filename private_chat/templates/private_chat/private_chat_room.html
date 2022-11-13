@@ -7,23 +7,6 @@
 
 
 <style type="text/css">
-@font-face {
-	font-family: 'Kanit-Regular';
-	src: local('Kanit-Regular'),
-	url("{% static 'fonts/Kanit-Regular.ttf' %}");
-}
-
-@font-face {
-	font-family: 'Kanit-Bold';
-	src: local('Kanit-Bold'),
-	url("{% static 'fonts/Kanit-Bold.ttf' %}");
-}
-
-@font-face {
-	font-family: 'Kanit-Light';
-	src: local('Kanit-Light'),
-	url("{% static 'fonts/Kanit-Light.ttf' %}");
-}
 
 
 #username-recent-message{
@@ -88,13 +71,13 @@
 	flex-direction: column;
 	align-items: center;
 
-	background: url("{% static 'images/pen1.jpg' %}");	
+	background: none;	
 
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-color: white;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;r";
 	font-size: 1.2em;
 	max-width: 1900px;
 }
@@ -254,7 +237,7 @@
 	outline: none;
 	padding: 0.2em;
 	font-size: 1em;
-	font-family: "Kanit-Light";
+	font-family: 'Kanit', sans-serif;
 	border: 4px solid transparent;
 }
 
@@ -331,7 +314,7 @@
 }
 
 .earlier-message-body-message{
-	font-family: "Kanit-Light";
+	font-family: 'Kanit', sans-serif;
 }
 
 
@@ -423,7 +406,7 @@
 
 
 .go-to-main-page:active {
-	content:url("{% static 'images/previous-button-purple.png' %}");
+	/*content:url("{% static 'images/previous-button-purple.png' %}");*/
 }
 
 
@@ -437,7 +420,7 @@
 	align-items: center;
 	z-index: 10;
 	color: white;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.4em;
 
 }
@@ -450,7 +433,7 @@
 	height: 100%;
 	visibility: hidden;
 	color: red;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.4em;
 	background-color: rgba(0, 0, 0, 0.8);
 	user-select: none;
@@ -575,6 +558,15 @@
 
 <script type="text/javascript">
 
+	// production
+	$("#private-chat-page").css("background-image", "url('{% static 'images/pen1.jpg' %}')".replace(/&amp;/g, "&"));
+
+
+
+
+
+	//
+
 
 	function changeBackgroundPrivateMessage(element, isNewMessage){
 		if (isNewMessage){
@@ -620,14 +612,14 @@
 
 
 	const audio = new Audio()
-	audio.src = "{% static 'audios/button_click.mp3' %}"
+	audio.src = "{% static 'audios/button_click.mp3' %}".replace(/&amp;/g, "&")
 
 	function changeColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}".replace(/&amp;/g, "&"))
 	}
 
 	function resetColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}".replace(/&amp;/g, "&"))
 	}
 
 
@@ -1144,7 +1136,7 @@
 
 		var newChatMessageBodyProfilePictureImg = document.createElement("img")
 		newChatMessageBodyProfilePictureImg.classList.add("profile-image")
-		newChatMessageBodyProfilePictureImg.src = "{% static 'images/blank_profile_image.png' %}"
+		newChatMessageBodyProfilePictureImg.src = "{% static 'images/blank_profile_image.png' %}".replace(/&amp;/g, "&")
 		newChatMessageBodyProfilePictureImg.addEventListener("click", function(event) {
 			selectUser(userId)
 		})
