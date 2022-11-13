@@ -5,23 +5,6 @@
 {% block content %}
 
 <style>
-@font-face {
-	font-family: 'Kanit-Regular';
-	src: local('Kanit-Regular'),
-	url("{% static 'fonts/Kanit-Regular.ttf' %}");
-}
-
-@font-face {
-	font-family: 'Kanit-Bold';
-	src: local('Kanit-Bold'),
-	url("{% static 'fonts/Kanit-Bold.ttf' %}");
-}
-
-@font-face {
-	font-family: 'Kanit-Light';
-	src: local('Kanit-Light'),
-	url("{% static 'fonts/Kanit-Light.ttf' %}");
-}
 
 
 #third-game-content{
@@ -32,12 +15,12 @@
 	width: 100%;
 	height: 100%;
 	background-color: lightblue;
-	background: url("{% static 'images/naturebomb.jpg' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
 	user-select: none;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	overflow: hidden;
 	width: 1900px;
 }
@@ -137,7 +120,7 @@
 	height: 100%;
 	background-color: rgba(255, 255, 255, 0.6);
 	cursor: pointer;
-	font-family: "Kanit-Bold";
+	font-family: 'Kanit', sans-serif;
 
 }
 
@@ -166,7 +149,7 @@
 	align-items: center;
 	justify-content: center;
 	text-align: center;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.4em;
 	color: #fae455;
 
@@ -212,7 +195,7 @@
 
 
 .go-to-main-page:active {
-	content:url("{% static 'images/previous-button-purple.png' %}");
+	/*content:url("{% static 'images/previous-button-purple.png' %}");*/
 }
 
 .loader-container {
@@ -227,13 +210,13 @@
 	align-items: center;
 	z-index: 10;
 	color: white;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.4em;
 
 }
 
 #timer-container{
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.4em;
 	display: flex;
 	flex-direction: column;
@@ -263,7 +246,7 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.4em;
 	color: #fae455;
 }
@@ -280,7 +263,7 @@
 	align-items: center;
 	z-index: 9;
 	color: white;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.2em;
 
 }
@@ -295,7 +278,7 @@
 	background-color: rgba(0, 0, 0, 0.9);
 	border-radius: 20px;
 	color: white;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.2em;
 	padding: 0.4em;
 
@@ -363,7 +346,7 @@
 	align-items: center;
 	justify-content: center;
 	background-color: white;
-	background: url("{% static 'images/button-back.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -373,7 +356,7 @@
 
 
 #result-button:hover{
-	background: url("{% static 'images/button-back-red.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -547,6 +530,21 @@
 
 <script>
 
+	// production
+	$("#third-game-content").css("background-image", "url('{% static 'images/naturebomb.jpg' %}')".replace(/&amp;/g, "&"));
+
+
+	$("#result-button").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
+
+	$("#result-button").hover(function() {
+	    $("#result-button").css("background-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
+	  },
+	  function() {
+	    $("#result-button").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+	  }
+	)
+
+	//
 
 
 	$(window).on("load", function(){
@@ -577,20 +575,20 @@
 
 
 	const audio = new Audio()
-	audio.src = "{% static 'audios/button_click.mp3' %}"
+	audio.src = "{% static 'audios/button_click.mp3' %}".replace(/&amp;/g, "&")
 
 	const clickFieldBombGame = new Audio()
-	clickFieldBombGame.src = "{% static 'audios/clickfieldbomb.mp3' %}"
+	clickFieldBombGame.src = "{% static 'audios/clickfieldbomb.mp3' %}".replace(/&amp;/g, "&")
 
 
 
 
 	function changeRestartColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/reload-arrow-red.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/reload-arrow-red.png' %}".replace(/&amp;/g, "&"))
 	}
 
 	function resetRestartColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/reload-arrow.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/reload-arrow.png' %}".replace(/&amp;/g, "&"))
 	}
 
 	$("#reload-arrow-button").on("click", function(){
@@ -603,11 +601,11 @@
 
 
 	function changeColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}".replace(/&amp;/g, "&"))
 	}
 
 	function resetColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}".replace(/&amp;/g, "&"))
 	}
 
 
@@ -738,7 +736,7 @@
 				clickFieldBombGame.play()
 				element.classList.add("field-clicked-flag")
 				var imageElement = document.createElement("img")
-				imageElement.src = "{% static 'images/mineswepper-images/bomb-flag.png' %}"
+				imageElement.src = "{% static 'images/mineswepper-images/bomb-flag.png' %}".replace(/&amp;/g, "&")
 				imageElement.id = "field-image"
 
 				element.appendChild(imageElement)
@@ -887,12 +885,12 @@
 
 					if($(fieldPiece).children("img").length){
 						$(fieldPiece).children("img").remove()
-						imageElement.src = "{% static 'images/mineswepper-images/bomb-found.png' %}"
+						imageElement.src = "{% static 'images/mineswepper-images/bomb-found.png' %}".replace(/&amp;/g, "&")
 						imageElement.id = "field-image"
 						foundBombsCount++
 					}
 					else{
-						imageElement.src = "{% static 'images/mineswepper-images/bomb.png' %}"
+						imageElement.src = "{% static 'images/mineswepper-images/bomb.png' %}".replace(/&amp;/g, "&")
 						imageElement.id = "field-image"
 					}
 
