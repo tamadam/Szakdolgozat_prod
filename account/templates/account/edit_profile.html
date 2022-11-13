@@ -5,28 +5,11 @@
 {% block content %}
 
 <style>
-@font-face {
-	font-family: 'Kanit-Regular';
-	src: local('Kanit-Regular'),
-	url("{% static 'fonts/Kanit-Regular.ttf' %}");
-}
-
-@font-face {
-	font-family: 'Kanit-Bold';
-	src: local('Kanit-Bold'),
-	url("{% static 'fonts/Kanit-Bold.ttf' %}");
-}
-
-@font-face {
-	font-family: 'Kanit-Light';
-	src: local('Kanit-Light'),
-	url("{% static 'fonts/Kanit-Light.ttf' %}");
-}
 
 #edit-profile-page{
 	width: 100%;
 	height: 100%;
-	background: url("{% static 'images/character-background.jpg' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -35,7 +18,7 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.4em;
 	width: 1900px;
 	user-select: none;
@@ -89,7 +72,7 @@
 }
 
 #edit-profile-title-main-text{
-	background: url("{% static 'images/button-back.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -105,7 +88,7 @@
 
 
 .go-to-main-page:active {
-	content:url("{% static 'images/previous-button-purple.png' %}");
+	/*content:url("{% static 'images/previous-button-purple.png' %}");*/
 }
 
 
@@ -179,7 +162,8 @@
 .label-value{
 	width: 40%;
 	text-align: center;
-	font-family: "Kanit-Bold";
+	font-family: 'Kanit', sans-serif;
+	font-weight: bold;
 	color: #ffe550;
 	text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black; 
 
@@ -198,7 +182,7 @@
 	align-items: center;
 	justify-content: center;
 	color: white;
-	font-family: "Kanit-Light";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.2em;
 }
 
@@ -237,7 +221,7 @@
 	align-items: center;
 	z-index: 10;
 	color: white;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.8vh;
 
 }
@@ -251,7 +235,7 @@ input[type="text"], input[type="email"], input[type="password"] {
 	border: 4px solid transparent;
 	outline: none;
 	text-align: center;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1em;
 	background-color: rgba(217, 172, 195, 0.8);
 
@@ -276,16 +260,16 @@ input:focus::placeholder{
 	padding: 10px;
 	width: 20%;
 	border: none;
-	background: url("{% static 'images/button-back.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1em;
 }
 
 #save-edit-profile:hover{
-	background: url("{% static 'images/button-back-red.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -498,6 +482,24 @@ input:checked + .slider:before {
 
 
 <script>
+	// production
+
+	$("#edit-profile-page").css("background-image", "url('{% static 'images/character-background.jpg' %}')".replace(/&amp;/g, "&"));
+	$("#edit-profile-title-main-text").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+
+	$("#save-edit-profile").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
+
+	$("#save-edit-profile").hover(function() {
+	    $("#save-edit-profile").css("background-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
+	  },
+	  function() {
+	    $("#save-edit-profile").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+	  }
+	)
+
+	//
+
+
 	$(window).on("load", function(){
 
 	})
@@ -525,14 +527,14 @@ input:checked + .slider:before {
 
 
 	const audio = new Audio()
-	audio.src = "{% static 'audios/button_click.mp3' %}"
+	audio.src = "{% static 'audios/button_click.mp3' %}".replace(/&amp;/g, "&")
 
 	function changeColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}").replace(/&amp;/g, "&")
 	}
 
 	function resetColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}").replace(/&amp;/g, "&")
 	}
 
 
