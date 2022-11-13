@@ -530,11 +530,11 @@ input:checked + .slider:before {
 	audio.src = "{% static 'audios/button_click.mp3' %}".replace(/&amp;/g, "&")
 
 	function changeColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}").replace(/&amp;/g, "&")
+		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}".replace(/&amp;/g, "&"))
 	}
 
 	function resetColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}").replace(/&amp;/g, "&")
+		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}".replace(/&amp;/g, "&"))
 	}
 
 
