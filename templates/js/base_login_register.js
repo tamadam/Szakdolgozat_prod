@@ -1,7 +1,7 @@
 {% load static %}
 
 const clickSound = new Audio()
-clickSound.src = "{% static 'audios/button_click.mp3' %}"
+clickSound.src = "{% static 'audios/button_click.mp3' %}".replace(/&amp;/g, "&")
 
 
 
