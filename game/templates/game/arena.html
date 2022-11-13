@@ -789,10 +789,10 @@ body {
 	$("#arena-content-page").css("background-image", "url('{% static 'images/arena-background.jpg' %}')".replace(/&amp;/g, "&"));
 
 	// #### keretek
-	$(".option-container #option-left").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
+	$("#option-left").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
 
-	$(".option-container #option-left" ).css("border-image-repeat", "stretch")
-	$(".option-container #option-left").css("border-image-slice", "30%")
+	$("#option-left" ).css("border-image-repeat", "stretch")
+	$("#option-left").css("border-image-slice", "30%")
 
 
 	$(".option-container #option-right").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
