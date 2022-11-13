@@ -899,7 +899,7 @@ body {
 	var outOfGoldSetter = false
 
 	$(window).on("load", function(){
-		$("#profile-container-left-profile-image").css("background-image", "url({{profile_image}}")
+		$("#profile-container-left-profile-image").css("background-image", "url({{profile_image}}".replace(/&amp;/g, "&"))
 
 		/* ---- PROGRESS BAR SETUP ---- */
 		var currentXP = "{{current_xp}}"
