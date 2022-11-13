@@ -26,7 +26,7 @@ from notification.consumers import NotificationConsumer
 # notification: bármelyik oldalon működhet ez a consumer, mivel nem adtunk meg külön path-t neki
 
 
-
+"""
 application = ProtocolTypeRouter({
 	'websocket': AllowedHostsOriginValidator(
 		AuthMiddlewareStack( 
@@ -37,5 +37,17 @@ application = ProtocolTypeRouter({
 				path('', NotificationConsumer), 
 				]) 
 			)
+		),
+	})
+
+"""
+application = ProtocolTypeRouter({
+	'websocket': AuthMiddlewareStack(
+			URLRouter([
+				path('kozosseg/<room_id>/', PublicChatRoomConsumer), # public_chat_page.html-el van kapcsolatban, a ws-es rész (mar magyarra volt forditva mikor ez a ketto meg nem)
+				path('uzenetek/<room_id>/', PrivateChatRoomConsumer), # private_chat_room.html-el van kapcsolatban -||-
+				path('csapat/<room_id>/', TeamConsumer), #individual_team.html -||-
+				path('', NotificationConsumer), 
+				]) 
 		),
 	})
