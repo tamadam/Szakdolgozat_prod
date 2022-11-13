@@ -224,4 +224,4 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 
-BASE_URL = "http://164.92.174.189"
+BASE_URL = "https://tamadam.xyz"
