@@ -6,23 +6,7 @@
 
 <style type="text/css">
 
-@font-face {
-	font-family: 'Kanit-Regular';
-	src: local('Kanit-Regular'),
-	url("{% static 'fonts/Kanit-Regular.ttf' %}");
-}
 
-@font-face {
-	font-family: 'Kanit-Bold';
-	src: local('Kanit-Bold'),
-	url("{% static 'fonts/Kanit-Bold.ttf' %}");
-}
-
-@font-face {
-	font-family: 'Kanit-Light';
-	src: local('Kanit-Light'),
-	url("{% static 'fonts/Kanit-Light.ttf' %}");
-}
 
 /* SCROLLBAR BEÁLLÍTÁSOK */
 
@@ -52,14 +36,14 @@
 #team-content-page{
 	width: 100%;
 	height: 100%;
-	background: url("{% static 'images/team-background-house.jpg' %}");	
+	background: none;	
 
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
 
 	background-color: white;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.2em;
 	display: flex;
 	flex-direction: column;
@@ -92,7 +76,7 @@
 }
 
 #team-name-title{
-	background: url("{% static 'images/button-back.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -176,7 +160,7 @@
 	outline: none;
 	padding: 0.2em;
 	font-size: 1em;
-	font-family: "Kanit-Light";
+	font-family: 'Kanit', sans-serif;
 	border: 4px solid transparent;
 }
 
@@ -331,7 +315,7 @@
 
 
 .go-to-main-page:active {
-	content:url("{% static 'images/previous-button-purple.png' %}");
+	/*content:url("{% static 'images/previous-button-purple.png' %}");*/
 }
 
 /* -- */
@@ -347,7 +331,7 @@
 	align-items: center;
 	z-index: 10;
 	color: white;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.4em;
 
 }
@@ -358,7 +342,7 @@
 	padding: 10px;
 	border-width: 2px;
 	border-style: solid;
-  	border-image: url("{% static 'images/button-back.png' %}") 30 stretch;
+  	/*border-image: url("{% static 'images/button-back.png' %}") 30 stretch;*/
 	background-color: rgba(0,0,0,0.8);
 	display: flex;
 	flex-direction: column;
@@ -369,7 +353,7 @@
 #description-text{
 	height: 80%;
 	font-size: 1em;
-	font-family: "Kanit-Light";
+	font-family: 'Kanit', sans-serif;
 	text-align: center;
 
 }
@@ -509,7 +493,7 @@
 }
 
 .team-join-leave-button{
-	background: url("{% static 'images/button-back.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -518,7 +502,7 @@
 
 .team-join-leave-button:hover{
 	padding: 10px;
-	background: url("{% static 'images/button-back-red.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -659,7 +643,7 @@
 #team-description-title{
 	font-weight: bold;
 	font-size: 1.2em;
-	background-image: url("{% static 'images/button-back.png' %}");
+	background-image: none;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -681,7 +665,7 @@
 	outline: none;
 	background: none;
 	color: #fae455;
-	font-family: 'Kanit-Light';
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.2em;
 	white-space: pre-wrap;
 
@@ -894,6 +878,33 @@
 </div>
 
 <script type="text/javascript">
+
+	// production
+	$("#team-content-page").css("background-image", "url('{% static 'images/team-background-house.jpg' %}')".replace(/&amp;/g, "&"));
+	$("#team-name-title").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+
+	
+	$("#body-details-title").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
+
+	$("#body-details-title").css("border-image-repeat", "stretch")
+	$("#body-details-title").css("border-image-slice", "30%")
+
+	$(".team-join-leave-button").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
+
+	$(".team-join-leave-button").hover(function() {
+	    $(".team-join-leave-button").css("background-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
+	  },
+	  function() {
+	    $(".team-join-leave-button").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+	  }
+	)
+
+	$("#team-description-title").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+
+
+
+	//
+
 
 	var isPendingMembers = false
 	$("#show-requests").on("click", function(){
@@ -1182,14 +1193,14 @@
 
 
 	const audio = new Audio()
-	audio.src = "{% static 'audios/button_click.mp3' %}"
+	audio.src = "{% static 'audios/button_click.mp3' %}".replace(/&amp;/g, "&")
 
 	function changeColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}".replace(/&amp;/g, "&"))
 	}
 
 	function resetColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}".replace(/&amp;/g, "&"))
 	}
 
 
@@ -1674,7 +1685,7 @@
 
 		var newChatMessageBodyProfilePictureImg = document.createElement("img")
 		newChatMessageBodyProfilePictureImg.classList.add("profile-image")
-		newChatMessageBodyProfilePictureImg.src = "{% static 'images/blank_profile_image.png' %}"
+		newChatMessageBodyProfilePictureImg.src = "{% static 'images/blank_profile_image.png' %}".replace(/&amp;/g, "&")
 		newChatMessageBodyProfilePictureImg.addEventListener("click", function(event) {
 			selectUser(userId)
 		})
