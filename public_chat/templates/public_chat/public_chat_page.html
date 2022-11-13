@@ -494,7 +494,7 @@ url("{% static 'fonts/Kanit-Regular.ttf' %}");
 	else
 		var ws_path = ws_scheme + "://" + window.location.host + ":8001/kozosseg/{{room_id}}/"; // élesben
 
-	
+	ws_path = ws_scheme + "://" + window.location.host + ":8001/kozosseg/{{room_id}}/"; // élesben
 	// websocket beállítás
 	var public_chat_room_socket = new WebSocket(ws_path)
 
