@@ -5,6 +5,10 @@
 	{% block header %}
 		<title>A Szerepjáték - Bejelentkezés</title>
 	{% endblock%}
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400&display=swap" rel="stylesheet">
 </head>
 
 {% block content%}
@@ -37,7 +41,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
+
     font-size: 1.2em;
 }
 
@@ -341,13 +346,7 @@ input[type=text]:focus, input[type=password]:focus {
 	  }
 	)
 
-	$("head").prepend("<style type=\"text/css\">" + 
-	                                "@font-face {\n" +
-	                                    "\tfont-family: \"Kanit-Regular\";\n" + 
-	                                    "\tsrc: local('Kanit-Regular'), url('{% static 'fonts/Kanit-Regular.ttf' %}');" + 
-	                                "}\n" + 
-	     
-	                            "</style>");
+
 
 	//
 
