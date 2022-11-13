@@ -795,24 +795,24 @@ body {
 	$("#option-left").css("border-image-slice", "30%")
 
 
-	$(".option-container #option-right").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
+	$("#option-right").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
 
-	$(".option-container #option-right" ).css("border-image-repeat", "stretch")
-	$(".option-container #option-right").css("border-image-slice", "30%")
+	$("#option-right" ).css("border-image-repeat", "stretch")
+	$("#option-right").css("border-image-slice", "30%")
 
-	$(".option-container #option-left").hover(function() {
-	    $(".option-container #option-left").css("border-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
+	$("#option-left").hover(function() {
+	    $("#option-left").css("border-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
 	  },
 	  function() {
-	    $(".option-container #option-left").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+	    $("#option-left").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
 	  }
 	)
 
-	$(".option-container #option-right").hover(function() {
-	    $(".option-container #option-right").css("border-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
+	$("#option-right").hover(function() {
+	    $("#option-right").css("border-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
 	  },
 	  function() {
-	    $(".option-container #option-right").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+	    $("#option-right").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
 	  }
 	)
 
