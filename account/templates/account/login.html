@@ -325,9 +325,9 @@ input[type=text]:focus, input[type=password]:focus {
 
 <script>
 	// production
-	$("#moving-background-container").css("background-image", "url('{% static 'images/login-background-village.jpg' %}')").replace(/&amp;/g, "&");
+	$("#moving-background-container").css("background-image", "url('{% static 'images/login-background-village.jpg' %}')".replace(/&amp;/g, "&"));
 
-	$("#login-form-and-error-container").css("border-image", "url('{% static 'images/goldborder.png' %}')").replace(/&amp;/g, "&")
+	$("#login-form-and-error-container").css("border-image", "url('{% static 'images/goldborder.png' %}')".replace(/&amp;/g, "&"))
 	//
 
 	$(window).on("load", function(){
