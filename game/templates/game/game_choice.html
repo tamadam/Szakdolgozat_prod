@@ -4,23 +4,6 @@
 
 {% block content %}
 <style>
-@font-face {
-	font-family: 'Kanit-Regular';
-	src: local('Kanit-Regular'),
-	url("{% static 'fonts/Kanit-Regular.ttf' %}");
-}
-
-@font-face {
-	font-family: 'Kanit-Bold';
-	src: local('Kanit-Bold'),
-	url("{% static 'fonts/Kanit-Bold.ttf' %}");
-}
-
-@font-face {
-	font-family: 'Kanit-Light';
-	src: local('Kanit-Light'),
-	url("{% static 'fonts/Kanit-Light.ttf' %}");
-}
 
 #game-hub-content{
 	display: flex;
@@ -30,11 +13,11 @@
 	width: 100%;
 	height: 100%;
 	background-color: white;
-	background: url("{% static 'images/gates.jpg' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.2em;
 	user-select: none;
 	max-width: 1900px;
@@ -131,7 +114,7 @@
 
 
 .game-title{
-	background: url("{% static 'images/button-back.png' %}");	
+	background: none;	
 	background-position: center;
 	background-size: cover;
 	width: 40%;
@@ -140,7 +123,7 @@
 	border-radius: 14px;
 	font-size: 1.2em;
 	padding: 0.1em;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	cursor: pointer;
 
 }
@@ -243,17 +226,17 @@
 	width: 60%;
 	height: 66%;
 	background-color: white;
-	background: url("{% static 'images/button-back.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.2em;
 }
 
 .submit-button:hover{
 	cursor: pointer;
-	background: url("{% static 'images/button-back-red.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -297,7 +280,7 @@
 	align-items: center;
 	z-index: 10;
 	color: white;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.4em;
 
 }
@@ -314,7 +297,7 @@
 	align-items: center;
 	justify-content: center;
 	text-align: center;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.2em;
 	color: #fae455;
 
@@ -349,7 +332,7 @@
 
 
 .go-to-main-page:active {
-	content:url("{% static 'images/previous-button-purple.png' %}");
+	/*content:url("{% static 'images/previous-button-purple.png' %}");*/
 }
 
 
@@ -452,6 +435,26 @@
 
 
 <script>
+
+	// production
+	$("#game-hub-content").css("background-image", "url('{% static 'images/gates.jpg' %}')".replace(/&amp;/g, "&"));
+	$(".game-title").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+
+
+	$(".submit-button").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
+
+	$(".submit-button").hover(function() {
+	    $(".submit-button").css("background-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
+	  },
+	  function() {
+	    $(".submit-button").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+	  }
+	)
+
+
+	//
+
+
 	$(window).on("load", function(){
 		$(".loader-container").fadeOut("slow")
 
@@ -459,16 +462,16 @@
 	})
 
 	const audio = new Audio()
-	audio.src = "{% static 'audios/button_click.mp3' %}"
+	audio.src = "{% static 'audios/button_click.mp3' %}".replace(/&amp;/g, "&")
 	const onHover = new Audio()
-	onHover.src = "{% static 'audios/hover2.mp3' %}"
+	onHover.src = "{% static 'audios/hover2.mp3' %}".replace(/&amp;/g, "&")
 
 	function changeColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}".replace(/&amp;/g, "&"))
 	}
 
 	function resetColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}".replace(/&amp;/g, "&"))
 	}
 
 
@@ -928,7 +931,7 @@
 
 
 		if(itemNumber == 1){
-			$("#game-title-first-game").css("background-image", "url('{% static 'images/button-back-red.png' %}')") 
+			$("#game-title-first-game").css("background-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&")) 
 			$("#game-title-first-game").css("color", "#fae455")
 			$("#game-picture-first-game").css("box-shadow", "rgba(210, 0, 30, 0.25) 0px 14px 28px, rgba(210, 0, 30, 0.22) 0px 10px 10px")
 			
@@ -943,7 +946,7 @@
 			$("#detail-2-first-game").css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}, 400)
 		}
 		else if(itemNumber == 2){
-			$("#game-title-second-game").css("background-image", "url('{% static 'images/button-back-red.png' %}')")
+			$("#game-title-second-game").css("background-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
 			$("#game-title-second-game").css("color", "#fae455")
 			$("#game-picture-second-game").css("box-shadow", "rgba(210, 0, 30, 0.25) 0px 14px 28px, rgba(210, 0, 30, 0.22) 0px 10px 10px")
 			
@@ -957,7 +960,7 @@
 
 		}
 		else{
-			$("#game-title-third-game").css("background-image", "url('{% static 'images/button-back-red.png' %}')")
+			$("#game-title-third-game").css("background-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
 			$("#game-title-third-game").css("color", "#fae455")
 			$("#game-picture-third-game").css("box-shadow", "rgba(210, 0, 30, 0.25) 0px 14px 28px, rgba(210, 0, 30, 0.22) 0px 10px 10px")
 			
@@ -982,31 +985,31 @@
 
 	function setColorFromGreen(itemNumber){
 		if(itemNumber == 1){
-			$("#game-title-second-game").css("background-image", "url('{% static 'images/button-back.png' %}')")
+			$("#game-title-second-game").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
 			$("#game-picture-second-game").css("box-shadow", "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px")
 			
 			$("#game-picture-second-game").css("border", "4px solid #c3ad1f")
-			$("#game-title-third-game").css("background-image", "url('{% static 'images/button-back.png' %}')")
+			$("#game-title-third-game").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
 			$("#game-picture-third-game").css("box-shadow", "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px")
 			
 			$("#game-picture-third-game").css("border", "4px solid #c3ad1f")
 		}
 		else if(itemNumber == 2){
-			$("#game-title-first-game").css("background-image", "url('{% static 'images/button-back.png' %}')")
+			$("#game-title-first-game").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
 			$("#game-picture-first-game").css("box-shadow", "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px")
 			
 			$("#game-picture-first-game").css("border", "4px solid #c3ad1f")
-			$("#game-title-third-game").css("background-image", "url('{% static 'images/button-back.png' %}')")
+			$("#game-title-third-game").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
 			$("#game-picture-third-game").css("box-shadow", "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px")
 			
 			$("#game-picture-third-game").css("border", "4px solid #c3ad1f")
 		}
 		else{
-			$("#game-title-first-game").css("background-image", "url('{% static 'images/button-back.png' %}')")
+			$("#game-title-first-game").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
 			$("#game-picture-first-game").css("box-shadow", "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px")
 			
 			$("#game-picture-first-game").css("border", "4px solid #c3ad1f")
-			$("#game-title-second-game").css("background-image", "url('{% static 'images/button-back.png' %}')")
+			$("#game-title-second-game").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
 			$("#game-picture-second-game").css("box-shadow", "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px")
 			
 			$("#game-picture-second-game").css("border", "4px solid #c3ad1f")
