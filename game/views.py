@@ -466,7 +466,7 @@ def decide_winner(attacker, defender):
 
 
 	did_attacker_win = False
-
+	print("did_attacker_win")
 	
 	#kiszámoljuk hány % eséllyel sebez többet 
 	if attacker_luck_value > defender_luck_value:
