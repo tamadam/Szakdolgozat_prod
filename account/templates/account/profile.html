@@ -10,27 +10,8 @@
 
 <style>
 
-@font-face {
-	font-family: 'Kanit-Regular';
-	src: local('Kanit-Regular'),
-	url("{% static 'fonts/Kanit-Regular.ttf' %}");
-}
-
-@font-face {
-	font-family: 'Kanit-Bold';
-	src: local('Kanit-Bold'),
-	url("{% static 'fonts/Kanit-Bold.ttf' %}");
-}
-
-@font-face {
-	font-family: 'Kanit-Light';
-	src: local('Kanit-Light'),
-	url("{% static 'fonts/Kanit-Light.ttf' %}");
-}
-
-
 body {
-	font-family: 'Kanit-Regular';
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.4em;
 }
 
@@ -51,7 +32,7 @@ body {
 #profile-content-page{
 	width: 100%;
 	height: 100%;
-	background: url("{% static 'images/character-background.jpg' %}");	
+	background: none;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -95,11 +76,11 @@ body {
 }
 
 #profile-title-center span {
-	font-family: 'Kanit-Regular';
+	font-family: 'Kanit', sans-serif;
 	font-size: 2.4em;
 	color: black;
 	background-color: white;
-	background: url("{% static 'images/button-back.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -143,7 +124,7 @@ body {
 
 
 .go-to-main-page:active {
-	content:url("{% static 'images/previous-button-purple.png' %}");
+	/*content:url("{% static 'images/previous-button-purple.png' %}");*/
 }
 
 
@@ -164,7 +145,7 @@ body {
 	display: flex;
 	border: 10px solid transparent;
 
-  	border-image: url("{% static 'images/button-back.png' %}") 30 stretch;
+  	/*border-image: url("{% static 'images/button-back.png' %}") 30 stretch;*/
 }
 
 #profile-container-left{
@@ -174,7 +155,7 @@ body {
 	flex-direction: column;
 	border-width: 0 5px 0 0;
 	border-style: solid;
-  	border-image: url("{% static 'images/button-back.png' %}") 30 stretch;
+  	/*border-image: url("{% static 'images/button-back.png' %}") 30 stretch;*/
 
 }
 
@@ -228,7 +209,7 @@ body {
 	flex-wrap: wrap;
 	border-width: 4.4px 0 0 0;
 	border-style: solid;
-  	border-image: url("{% static 'images/button-back.png' %}") 30 stretch;
+  	/*border-image: url("{% static 'images/button-back.png' %}") 30 stretch;*/
 
 }
 
@@ -241,7 +222,7 @@ body {
 	padding: 0 2% 0 2%;
 
 	background-color: lightgrey;
-	background: url("{% static 'images/grey-sand.jpg' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -299,7 +280,7 @@ body {
 
 	border-width: 0 0 4px 0;
 	border-style: solid;
-  	border-image: url("{% static 'images/button-back.png' %}") 30 stretch;
+  	/*border-image: url("{% static 'images/button-back.png' %}") 30 stretch;*/
 	background-color: rgba(0,0,0,0.8);
 }
 
@@ -313,7 +294,7 @@ body {
 
 	border-width: 0 0 4px 0;
 	border-style: solid;
-  	border-image: url("{% static 'images/button-back.png' %}") 30 stretch;
+  	/*border-image: url("{% static 'images/button-back.png' %}") 30 stretch;*/
 
   	display: flex;
   	flex-direction: row;
@@ -333,7 +314,7 @@ body {
 
 #show-team-container{
 	padding: 10px;
-	background: url("{% static 'images/button-back.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -342,7 +323,7 @@ body {
 
 #show-team-container:hover{
 	padding: 10px;
-	background: url("{% static 'images/button-back-red.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -354,7 +335,7 @@ body {
 
 #team-icon {
 	flex: 1;
-	background: url("{% static 'images/team-icon.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -563,7 +544,7 @@ body {
 
 
 	color: #fae455;
-	font-family: 'Kanit-Light';
+	font-family: 'Kanit', sans-serif;
 	font-size: 1em;
 
 	white-space: pre-wrap;
@@ -614,27 +595,27 @@ body {
 }
 
 #stat1-content{
-	background-image: url("{% static 'images/stat1.png' %}");
+	background-image: none;
 	background-position: center;
 	background-size: cover;
 }
 
 #stat2-content{
-	background-image: url("{% static 'images/stat2.png' %}");
+	background-image: none;
 	background-position: center;
 	background-size: cover;
 }
 
 
 #stat3-content{
-	background-image: url("{% static 'images/stat3.png' %}");
+	background-image: none;
 	background-position: center;
 	background-size: cover;
 }
 
 
 #stat4-content{
-	background-image: url("{% static 'images/stat1.png' %}");
+	background-image: none;
 	background-position: center;
 	background-size: cover;
 }
@@ -855,8 +836,66 @@ body {
 
 
 <script>
+	//production
+	$("#profile-content-page").css("background-image", "url('{% static 'images/character-background.jpg' %}')".replace(/&amp;/g, "&"));
+	$("#profile-title-center span").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+
+	$("#profile-container").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
+
+	$("#profile-container").css("border-image-repeat", "stretch")
+	$("#profile-container").css("border-image-slice", "30%")
+
+	$("#profile-container-left").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
+
+	$("#profile-container-left").css("border-image-repeat", "stretch")
+	$("#profile-container-left").css("border-image-slice", "30%")
+
+	$("#profile-container-left-attributes").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
+
+	$("#profile-container-left-attributes").css("border-image-repeat", "stretch")
+	$("#profile-container-left-attributes").css("border-image-slice", "30%")
+
+	$("#profile-container-left-attributes .character-info-item").css("background-image", "url('{% static 'images/grey-sand.jpg' %}')".replace(/&amp;/g, "&"));
+
+
+	$("#profile-container-right-description").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
+
+	$("#profile-container-right-description").css("border-image-repeat", "stretch")
+	$("#profile-container-right-description").css("border-image-slice", "30%")
+
+
+	$("#profile-container-right-team").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
+
+	$("#profile-container-right-team").css("border-image-repeat", "stretch")
+	$("#profile-container-right-team").css("border-image-slice", "30%")
+
+
+	$("#show-team-container").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+
+	$("#show-team-container").hover(function() {
+	    $("#show-team-container").css("background-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
+	  },
+	  function() {
+	    $("#show-team-container").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+	  }
+	)
+
+	$("#team-icon").css("background-image", "url('{% static 'images/team-icon.png' %}')".replace(/&amp;/g, "&"));
+
+	$("#stat1-content").css("background-image", "url('{% static 'images/stat1.png' %}')".replace(/&amp;/g, "&"));
+	$("#stat2-content").css("background-image", "url('{% static 'images/stat2.png' %}')".replace(/&amp;/g, "&"));
+	$("#stat3-content").css("background-image", "url('{% static 'images/stat3.png' %}')".replace(/&amp;/g, "&"));
+	$("#stat4-content").css("background-image", "url('{% static 'images/stat1.png' %}')".replace(/&amp;/g, "&"));
+
+
+
+
+
+
+//
+
 	const audio = new Audio()
-	audio.src = "{% static 'audios/button_click.mp3' %}"
+	audio.src = "{% static 'audios/button_click.mp3' %}".replace(/&amp;/g, "&")
 	var outOfGoldSetter = false
 
 	$(window).on("load", function(){
@@ -915,14 +954,14 @@ body {
 
 
 	$("#buttons-first-container").on("mouseover", function(){
-		$("#buttons-first-container img").attr("src","{% static 'images/profile-edit-icon-hover.png' %}");
+		$("#buttons-first-container img").attr("src","{% static 'images/profile-edit-icon-hover.png' %}".replace(/&amp;/g, "&"));
 		$("#buttons-first-container").css("color","#f70044");
 		$("#buttons-first-container").css("cursor", "pointer")
 	})
 
 
 	$("#buttons-first-container").on("mouseout", function(){
-		$("#buttons-first-container img").attr("src","{% static 'images/profile-edit-icon.png' %}");
+		$("#buttons-first-container img").attr("src","{% static 'images/profile-edit-icon.png' %}".replace(/&amp;/g, "&"));
 		$("#buttons-first-container").css("color","#fae455");
 	})
 
@@ -1026,23 +1065,23 @@ body {
 
 
 	function changeColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}".replace(/&amp;/g, "&"))
 	}
 
 	function resetColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}".replace(/&amp;/g, "&"))
 	}
 
 
 	function changeColorAdd(imageElement){
 		if(!outOfGoldSetter){
-			imageElement.setAttribute("src", "{% static 'images/add-button-hover.png' %}")
+			imageElement.setAttribute("src", "{% static 'images/add-button-hover.png' %}".replace(/&amp;/g, "&"))
 		}
 	}
 
 	function resetColorAdd(imageElement){
 		if(!outOfGoldSetter){
-			imageElement.setAttribute("src", "{% static 'images/add-button.png' %}")
+			imageElement.setAttribute("src", "{% static 'images/add-button.png' %}".replace(/&amp;/g, "&"))
 		}
 	}
 
@@ -1117,7 +1156,7 @@ body {
 
 	function setOutOfGoldState(){
 		outOfGoldSetter = true
-		$(".increase-attribute-button").attr("src", "{% static 'images/add-button-inactive.png' %}")
+		$(".increase-attribute-button").attr("src", "{% static 'images/add-button-inactive.png' %}".replace(/&amp;/g, "&"))
 		$(".increase-attribute-button").removeClass("increase-attribute-button")
 	}
 
