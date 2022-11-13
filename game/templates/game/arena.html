@@ -788,11 +788,16 @@ body {
 	//production
 	$("#arena-content-page").css("background-image", "url('{% static 'images/arena-background.jpg' %}')".replace(/&amp;/g, "&"));
 
-	$(".option-container").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
+	$(".option-container #option-left").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
 
-	$(".option-container").css("border-image-repeat", "stretch")
-	$(".option-container").css("border-image-slice", "30%")
+	$(".option-container #option-left" ).css("border-image-repeat", "stretch")
+	$(".option-container #option-left").css("border-image-slice", "30%")
 
+
+	$(".option-container #option-right").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
+
+	$(".option-container #option-right" ).css("border-image-repeat", "stretch")
+	$(".option-container #option-right").css("border-image-slice", "30%")
 
 	$(".option-container #option-left").hover(function() {
 	    $(".option-container #option-left").css("border-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
