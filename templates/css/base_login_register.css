@@ -1,9 +1,11 @@
 {% load static %}
+/*
 @font-face {
 	font-family: 'Kanit-Regular';
 	src: local('Kanit-Regular'),
 	url("{% static 'fonts/Kanit-Regular.ttf' %}");
 }
+*/
 
 @font-face {
 	font-family: 'Kanit-Bold';

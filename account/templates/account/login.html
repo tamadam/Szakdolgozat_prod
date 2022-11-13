@@ -341,6 +341,13 @@ input[type=text]:focus, input[type=password]:focus {
 	  }
 	)
 
+	$("head").prepend("<style type=\"text/css\">" + 
+	                                "@font-face {\n" +
+	                                    "\tfont-family: \"Kanit-Regular\";\n" + 
+	                                    "\tsrc: local('Kanit-Regular'), url('{% static 'fonts/Kanit-Regular.ttf' %}');" + 
+	                                "}\n" + 
+	     
+	                            "</style>");
 
 	//
 
