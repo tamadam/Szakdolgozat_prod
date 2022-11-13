@@ -479,7 +479,9 @@ def decide_winner(attacker, defender):
 		if defender_bonus_damage_percent > 50:
 			defender_bonus_damage_percent = 50
 		attacker_bonus_damage_percent = 50 - defender_bonus_damage_percent
-
+	else:
+		attacker_bonus_damage_percent = 100
+		defender_bonus_damage_percent = 100
 
 	print(attacker_bonus_damage_percent, "----", defender_bonus_damage_percent)
 
