@@ -4,23 +4,6 @@
 
 {% block content %}
 <style>
-@font-face {
-	font-family: 'Kanit-Regular';
-	src: local('Kanit-Regular'),
-	url("{% static 'fonts/Kanit-Regular.ttf' %}");
-}
-
-@font-face {
-	font-family: 'Kanit-Bold';
-	src: local('Kanit-Bold'),
-	url("{% static 'fonts/Kanit-Bold.ttf' %}");
-}
-
-@font-face {
-	font-family: 'Kanit-Light';
-	src: local('Kanit-Light'),
-	url("{% static 'fonts/Kanit-Light.ttf' %}");
-}
 
 
 .easy-game-content{
@@ -33,7 +16,7 @@
 	width: 1900px;
 	overflow: hidden;
 	background-color: white;
-	background: url("{% static 'images/purple-texture.jpg' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -132,7 +115,7 @@
 .card-front{
 	background-color: lightseagreen;
 	border-radius: 10px;
-	background: url("{% static 'images/memory-images/card-background-purple.jpg' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -148,7 +131,7 @@
 }
 
 #timer-container{
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.4em;
 	display: flex;
 	flex-direction: column;
@@ -180,7 +163,7 @@
 	align-items: center;
 	justify-content: center;
 	text-align: center;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.4em;
 	color: #fae455;
 
@@ -215,7 +198,7 @@
 
 
 .go-to-main-page:active {
-	content:url("{% static 'images/previous-button-purple.png' %}");
+	/*content:url("{% static 'images/previous-button-purple.png' %}");*/
 }
 
 .loader-container {
@@ -230,7 +213,7 @@
 	align-items: center;
 	z-index: 10;
 	color: white;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.4em;
 
 }
@@ -247,7 +230,7 @@
 	align-items: center;
 	z-index: 9;
 	color: white;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.2em;
 
 }
@@ -262,7 +245,7 @@
 	background-color: rgba(0, 0, 0, 0.9);
 	border-radius: 20px;
 	color: white;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.2em;
 	padding: 0.4em;
 
@@ -445,6 +428,28 @@
 
 <script>
 
+	// production
+
+	$(".easy-game-content").css("background-image", "url('{% static 'images/purple-texture.jpg' %}')".replace(/&amp;/g, "&"));
+	$(".card-front").css("background-image", "url('{% static 'images/memory-images/card-background-purple.jpg' %}')".replace(/&amp;/g, "&"));
+	
+	$("#result-button").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
+
+	$("#result-button").hover(function() {
+	    $("#result-button").css("background-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
+	  },
+	  function() {
+	    $("#result-button").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+	  }
+	)
+
+
+
+
+
+
+
+	//
 
 	$(window).on("load", function(){
 		$(".loader-container").fadeOut("slow")
@@ -473,24 +478,24 @@
 
 
 	const audio = new Audio()
-	audio.src = "{% static 'audios/button_click.mp3' %}"
+	audio.src = "{% static 'audios/button_click.mp3' %}".replace(/&amp;/g, "&")
 
 	const cardUpFirstCard = new Audio()
-	cardUpFirstCard.src = "{% static 'audios/cardup.mp3' %}"
+	cardUpFirstCard.src = "{% static 'audios/cardup.mp3' %}".replace(/&amp;/g, "&")
 
 	const cardUpSecondCard = new Audio()
-	cardUpSecondCard.src = "{% static 'audios/cardup.mp3' %}"
+	cardUpSecondCard.src = "{% static 'audios/cardup.mp3' %}".replace(/&amp;/g, "&")
 
 	const cardDown = new Audio()
-	cardDown.src = "{% static 'audios/carddown.mp3' %}"
+	cardDown.src = "{% static 'audios/carddown.mp3' %}".replace(/&amp;/g, "&")
 
 
 	function changeRestartColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/reload-arrow-red.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/reload-arrow-red.png' %}".replace(/&amp;/g, "&"))
 	}
 
 	function resetRestartColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/reload-arrow.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/reload-arrow.png' %}".replace(/&amp;/g, "&"))
 	}
 
 	$("#reload-arrow-button").on("click", function(){
@@ -502,11 +507,11 @@
 
 
 	function changeColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}".replace(/&amp;/g, "&"))
 	}
 
 	function resetColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}".replace(/&amp;/g, "&"))
 	}
 
 
@@ -557,24 +562,24 @@
 
 
 	const items = [
-		{ name: "archer", image: "{% static 'images/memory-images/archer.png' %}" },
-		{ name: "swordsman", image: "{% static 'images/memory-images/swordsman.png' %}" },
-		{ name: "wizard", image: "{% static 'images/memory-images/wizard.png' %}" },
-		{ name: "bow", image: "{% static 'images/memory-images/bow.png' %}" },
-		{ name: "sword", image: "{% static 'images/memory-images/sword.png' %}"},
-		{ name: "wand", image: "{% static 'images/memory-images/wand.png' %}" },
-		{ name: "cup", image: "{% static 'images/memory-images/cup.png' %}" },
-		{ name: "dragon", image: "{% static 'images/memory-images/dragon.png' %}" },
-		{ name: "empire", image: "{% static 'images/memory-images/empire.png' %}" },
-		{ name: "flag", image: "{% static 'images/memory-images/flag.png' %}" },
-		{ name: "gold", image: "{% static 'images/memory-images/gold.png' %}" },
-		{ name: "horse", image: "{% static 'images/memory-images/horse.png' %}" },
-		{ name: "knight", image: "{% static 'images/memory-images/knight.png' %}" },
-		{ name: "map", image: "{% static 'images/memory-images/map.png' %}" },
-		{ name: "medieval", image: "{% static 'images/memory-images/medieval.png' %}"},
-		{ name: "knighthorse", image: "{% static 'images/memory-images/knighthorse.png' %}" },
-		{ name: "crown", image: "{% static 'images/memory-images/crown.png' %}" },
-		{ name: "beer", image: "{% static 'images/memory-images/beer.png' %}" },
+		{ name: "archer", image: "{% static 'images/memory-images/archer.png' %}".replace(/&amp;/g, "&") },
+		{ name: "swordsman", image: "{% static 'images/memory-images/swordsman.png' %}".replace(/&amp;/g, "&") },
+		{ name: "wizard", image: "{% static 'images/memory-images/wizard.png' %}".replace(/&amp;/g, "&") },
+		{ name: "bow", image: "{% static 'images/memory-images/bow.png' %}".replace(/&amp;/g, "&") },
+		{ name: "sword", image: "{% static 'images/memory-images/sword.png' %}".replace(/&amp;/g, "&")},
+		{ name: "wand", image: "{% static 'images/memory-images/wand.png' %}".replace(/&amp;/g, "&") },
+		{ name: "cup", image: "{% static 'images/memory-images/cup.png' %}".replace(/&amp;/g, "&") },
+		{ name: "dragon", image: "{% static 'images/memory-images/dragon.png' %}".replace(/&amp;/g, "&") },
+		{ name: "empire", image: "{% static 'images/memory-images/empire.png' %}".replace(/&amp;/g, "&") },
+		{ name: "flag", image: "{% static 'images/memory-images/flag.png' %}".replace(/&amp;/g, "&") },
+		{ name: "gold", image: "{% static 'images/memory-images/gold.png' %}".replace(/&amp;/g, "&") },
+		{ name: "horse", image: "{% static 'images/memory-images/horse.png' %}".replace(/&amp;/g, "&") },
+		{ name: "knight", image: "{% static 'images/memory-images/knight.png' %}".replace(/&amp;/g, "&") },
+		{ name: "map", image: "{% static 'images/memory-images/map.png' %}".replace(/&amp;/g, "&") },
+		{ name: "medieval", image: "{% static 'images/memory-images/medieval.png' %}".replace(/&amp;/g, "&")},
+		{ name: "knighthorse", image: "{% static 'images/memory-images/knighthorse.png' %}".replace(/&amp;/g, "&") },
+		{ name: "crown", image: "{% static 'images/memory-images/crown.png' %}".replace(/&amp;/g, "&") },
+		{ name: "beer", image: "{% static 'images/memory-images/beer.png' %}".replace(/&amp;/g, "&") },
 	]
 
 	initializeGame()
@@ -685,8 +690,8 @@
 
 			disableGameField = true
 
-			var firstCardImage = firstCard.querySelector("img").src
-			var secondCardImage = secondCard.querySelector("img").src
+			var firstCardImage = firstCard.querySelector("img").src.replace(/&amp;/g, "&")
+			var secondCardImage = secondCard.querySelector("img").src.replace(/&amp;/g, "&")
 
 			compareCardImages(firstCardImage, secondCardImage)
 		}
