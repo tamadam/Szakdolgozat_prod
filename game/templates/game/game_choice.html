@@ -1019,22 +1019,47 @@
 
 
 	function startFirstGame(gameFieldSize){
-		var url = "{% url 'game:easy_game' %}?jatek_tabla_meret=" + gameFieldSize 
-		var win = window.location.replace(url) 
-		win.focus()
+		setTimeout(function(){
+	    	try {
+				var url = "{% url 'game:easy_game' %}?jatek_tabla_meret=" + gameFieldSize 
+				var win = window.location.replace(url) 
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+
+		}, 200)
 	}
 
 	function startSecondGame(gameFieldSize){
-		var url = "{% url 'game:medium_game' %}?jatek_tabla_meret=" + gameFieldSize 
-		var win = window.location.replace(url) 
-		win.focus()
+		setTimeout(function(){
+	    	try {
+				var url = "{% url 'game:medium_game' %}?jatek_tabla_meret=" + gameFieldSize 
+				var win = window.location.replace(url) 
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+
+		}, 200)
 	}
 
 	function startThirdGame(numberOfBombs){
-		var url = "{% url 'game:hard_game' %}?bombak_szama=" + numberOfBombs 
-		var win = window.location.replace(url) 
-		win.focus()	
+		setTimeout(function(){
+	    	try {
+				var url = "{% url 'game:hard_game' %}?bombak_szama=" + numberOfBombs 
+				var win = window.location.replace(url) 
+				win.focus()	
+			}
+			catch(error){
+				console.log(error)
+			}
+
+		}, 200)
 	}
+
 </script>
 
 
