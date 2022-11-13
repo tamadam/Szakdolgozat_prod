@@ -825,30 +825,30 @@ input[type=submit]:active {
 
 	function changeColor(imageElement, direction){
 		if (direction == "left"){
-			imageElement.setAttribute("src", "{% static 'images/stone-arrow-red-left.png' %}")
+			imageElement.setAttribute("src", "{% static 'images/stone-arrow-red-left.png' %}".replace(/&amp;/g, "&"))
 		}
 		else if (direction == "right"){
-			imageElement.setAttribute("src", "{% static 'images/stone-arrow-red-right.png' %}")
+			imageElement.setAttribute("src", "{% static 'images/stone-arrow-red-right.png' %}".replace(/&amp;/g, "&"))
 		}
 	}
 
 	function resetColor(imageElement, direction){
 		if (direction == "left"){
-			imageElement.setAttribute("src", "{% static 'images/stone-arrow-yellow-left.png' %}")
+			imageElement.setAttribute("src", "{% static 'images/stone-arrow-yellow-left.png' %}".replace(/&amp;/g, "&"))
 		}
 		else if (direction == "right"){
-			imageElement.setAttribute("src", "{% static 'images/stone-arrow-yellow-right.png' %}")
+			imageElement.setAttribute("src", "{% static 'images/stone-arrow-yellow-right.png' %}".replace(/&amp;/g, "&"))
 		}
 
 	}
 
 
 	function changePreviousButtonColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}".replace(/&amp;/g, "&"))
 	}
 
 	function resetPreviousButtonColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}".replace(/&amp;/g, "&"))
 	}
 
 
@@ -1011,7 +1011,7 @@ input[type=submit]:active {
 
 
 
-    		choosenCharacterBackground.style.backgroundImage  = "url('{% static 'images/swordsman.png' %}')"
+    		choosenCharacterBackground.style.backgroundImage  = "url('{% static 'images/swordsman.png' %}')".replace(/&amp;/g, "&")
 
 
     	}
@@ -1019,20 +1019,20 @@ input[type=submit]:active {
     		selector.value="mage";
     		choosenCharacterName.innerHTML = "Mágus"
 
-    		choosenCharacterBackground.style.backgroundImage  = "url('{% static 'images/wizard.png' %}')"
+    		choosenCharacterBackground.style.backgroundImage  = "url('{% static 'images/wizard.png' %}')".replace(/&amp;/g, "&")
     	}
     	else if(currentCharacterType == 2){
     		selector.value="scout";
     		choosenCharacterName.innerHTML = "Íjász"
 
-    		choosenCharacterBackground.style.backgroundImage  = "url('{% static 'images/archer.png' %}')"
+    		choosenCharacterBackground.style.backgroundImage  = "url('{% static 'images/archer.png' %}')".replace(/&amp;/g, "&")
     	}
     	else{
     		//bármilyen hiba esetén warrior lesz
     		selector.value="warrior"
     		choosenCharacterName.innerHTML = "Harcos"
 
-    		choosenCharacterBackground.style.backgroundImage  = "url('{% static 'images/swordsman.png' %}')"
+    		choosenCharacterBackground.style.backgroundImage  = "url('{% static 'images/swordsman.png' %}')".replace(/&amp;/g, "&")
     	}
 
 
