@@ -509,7 +509,7 @@
 						<div id="recent-users-list"> <!-- refresh me id -->
 							{% for message_and_user in messages_and_users %}
 								{% if message_and_user.has_new_messages %}
-									<div class="earlier-message" onclick="selectUserChatRoom('{{message_and_user.other_user.id}}')" style="background-color: #afafaf; font-family: 'Kanit-Bold'; color: #1743ff" onmouseover="changeBackgroundPrivateMessage(this, true)" onmouseout="resetBackgroundPrivateMessage(this, true)">
+									<div class="earlier-message" onclick="selectUserChatRoom('{{message_and_user.other_user.id}}')" style="background-color: #afafaf; font-family: 'Kanit'; color: #1743ff" onmouseover="changeBackgroundPrivateMessage(this, true)" onmouseout="resetBackgroundPrivateMessage(this, true)">
 										<div class="earlier-message-profile-image">
 											<img class="profile-image" src="{{message_and_user.profile_image}}" >	
 										</div>
