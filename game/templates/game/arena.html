@@ -814,9 +814,13 @@ body {
 
 	$("#option-right").hover(function() {
 	    $("#option-right").css("border-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
+		$("#option-right" ).css("border-image-repeat", "stretch")
+		$("#option-right").css("border-image-slice", "30%")
 	  },
 	  function() {
 	    $("#option-right").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+	    $("#option-right" ).css("border-image-repeat", "stretch")
+		$("#option-right").css("border-image-slice", "30%")
 	  }
 	)
 
