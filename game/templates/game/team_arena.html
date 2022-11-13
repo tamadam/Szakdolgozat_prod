@@ -4,28 +4,10 @@
 
 {% block content %}
 <style>
-@font-face {
-	font-family: 'Kanit-Regular';
-	src: local('Kanit-Regular'),
-	url("{% static 'fonts/Kanit-Regular.ttf' %}");
-}
-
-@font-face {
-	font-family: 'Kanit-Bold';
-	src: local('Kanit-Bold'),
-	url("{% static 'fonts/Kanit-Bold.ttf' %}");
-}
-
-@font-face {
-	font-family: 'Kanit-Light';
-	src: local('Kanit-Light'),
-	url("{% static 'fonts/Kanit-Light.ttf' %}");
-}
-
 
 #team-arena-content{
 	background-color: white;
-	background: url("{% static 'images/battlefield.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -35,7 +17,7 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.3em;
 	max-width: 1900px;
 	user-select: none;
@@ -132,7 +114,7 @@
 	justify-content: center;
 	width: 50%;
 	height: 100%;
-	background: url("{% static 'images/keret2.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: 50% 86%;
@@ -228,7 +210,7 @@
 	justify-content: center;
 	width: 50%;
 	height: 100%;
-	background: url("{% static 'images/keret1.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: 50% 100%;
@@ -265,7 +247,7 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 	border: 12px solid transparent;
-	border-image: url("{% static 'images/goldborder.png' %}") 10% round;
+	/*border-image: url("{% static 'images/goldborder.png' %}") 10% round;*/
 	transition: box-shadow 0.4s;
 }
 
@@ -344,7 +326,7 @@
 
 
 .go-to-main-page:active {
-	content:url("{% static 'images/previous-button-purple.png' %}");
+	/*content:url("{% static 'images/previous-button-purple.png' %}");*/
 }
 
 /* --- */
@@ -362,7 +344,7 @@
 	align-items: center;
 	z-index: 10;
 	color: white;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.4em;
 
 }
@@ -406,7 +388,7 @@
 	align-items: center;
 	z-index: 9;
 	color: white;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.2em;
 
 }
@@ -422,7 +404,7 @@
 	background-color: rgba(0, 0, 0, 0.9);
 	border-radius: 20px;
 	color: white;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 0.8em;
 	padding: 0.4em;
 
@@ -493,7 +475,7 @@
 	align-items: center;
 	justify-content: center;
 	background-color: white;
-	background: url("{% static 'images/button-back.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -503,7 +485,7 @@
 
 
 #result-button:hover{
-	background: url("{% static 'images/button-back-red.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -715,23 +697,51 @@
 </div>
 <script>
 
+	// production
+	$("#team-arena-content").css("background-image", "url('{% static 'images/battlefield.png' %}')".replace(/&amp;/g, "&"));
+
+	$(".team-footer-character-name").css("background-image", "url('{% static 'images/keret2.png' %}')".replace(/&amp;/g, "&"));
+	$(".team-header-team-name").css("background-image", "url('{% static 'images/keret1.png' %}')".replace(/&amp;/g, "&"));
+
+	$(".character-container").css("border-image", "url('{% static 'images/goldborder.png' %}')".replace(/&amp;/g, "&"))
+
+	$(".character-container").css("border-image-repeat", "round")
+	$(".character-container").css("border-image-slice", "10%")
+
+
+	$("#result-button").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
+
+	$("#result-button").hover(function() {
+	    $("#result-button").css("background-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
+	  },
+	  function() {
+	    $("#result-button").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+	  }
+	)
+
+
+
+
+	//
+
+
 	const audio = new Audio()
-	audio.src = "{% static 'audios/button_click.mp3' %}"
+	audio.src = "{% static 'audios/button_click.mp3' %}".replace(/&amp;/g, "&")
 
 	const attackerSound = new Audio()
-	attackerSound.src = "{% static 'audios/fight1.mp3' %}"
+	attackerSound.src = "{% static 'audios/fight1.mp3' %}".replace(/&amp;/g, "&")
 
 	const defenderSound = new Audio()
-	defenderSound.src = "{% static 'audios/fight1.mp3' %}"
+	defenderSound.src = "{% static 'audios/fight1.mp3' %}".replace(/&amp;/g, "&")
 
 
 
 	function changeColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}".replace(/&amp;/g, "&"))
 	}
 
 	function resetColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}".replace(/&amp;/g, "&"))
 	}
 
 
@@ -849,8 +859,8 @@
 			attackerUsernames.push("{{single_round.attacker.username}}")
 			defenderUsernames.push("{{single_round.defender.username}}")
 
-			attackerProfileImages.push("{{single_round.attacker.profile_image}}")
-			defenderProfileImages.push("{{single_round.defender.profile_image}}")
+			attackerProfileImages.push("{{single_round.attacker.profile_image}}".replace(/&amp;/g, "&"))
+			defenderProfileImages.push("{{single_round.defender.profile_image}}".replace(/&amp;/g, "&"))
 			//console.log("{{single_round.attacker.profile_image}}")
 
 
@@ -1000,7 +1010,7 @@
 	function setLeftCharacterSide(isSkip){
 		if(!isSkip){
 			$("#left-character-name").html(attackerUsernames[attackerUsernamesCounter])
-			$("#left-character-container").css("background-image", "url(" + attackerProfileImages[attackerProfileImagesCounter] + ")" );
+			$("#left-character-container").css("background-image", "url(" + attackerProfileImages[attackerProfileImagesCounter] + ")".replace(/&amp;/g, "&") );
 			$("#player1-strength").html(attackerAttributes[attackerAttributesCounter].strength)
 			$("#player1-skill").html(attackerAttributes[attackerAttributesCounter].skill)
 			$("#player1-intelligence").html(attackerAttributes[attackerAttributesCounter].intelligence)
@@ -1008,26 +1018,26 @@
 			$("#player1-fortune").html(attackerAttributes[attackerAttributesCounter].fortune)
 
 			if (attackerAttributes[attackerAttributesCounter].character_type == "warrior") {
-				$("#player1-character-type").attr("src", "{% static 'images/swordsman.png' %}")
-				$("#left-tool-image").attr("src", "{% static 'images/sword-2.png' %}")
-				attackerSound.src = "{% static 'audios/warrior-attack.mp3' %}"
+				$("#player1-character-type").attr("src", "{% static 'images/swordsman.png' %}".replace(/&amp;/g, "&"))
+				$("#left-tool-image").attr("src", "{% static 'images/sword-2.png' %}".replace(/&amp;/g, "&"))
+				attackerSound.src = "{% static 'audios/warrior-attack.mp3' %}".replace(/&amp;/g, "&")
 			}
 			else if(attackerAttributes[attackerAttributesCounter].character_type == "mage"){
-				$("#player1-character-type").attr("src", "{% static 'images/wizard.png' %}")
-				$("#left-tool-image").attr("src", "{% static 'images/wand-2.png' %}")
-				attackerSound.src = "{% static 'audios/mage-attack.mp3' %}"
+				$("#player1-character-type").attr("src", "{% static 'images/wizard.png' %}".replace(/&amp;/g, "&"))
+				$("#left-tool-image").attr("src", "{% static 'images/wand-2.png' %}".replace(/&amp;/g, "&"))
+				attackerSound.src = "{% static 'audios/mage-attack.mp3' %}".replace(/&amp;/g, "&")
 
 			}
 			else if(attackerAttributes[attackerAttributesCounter].character_type == "scout"){
-				$("#player1-character-type").attr("src", "{% static 'images/archer.png' %}")
-				$("#left-tool-image").attr("src", "{% static 'images/bow-2.png' %}")
-				attackerSound.src = "{% static 'audios/scout-attack.mp3' %}"
+				$("#player1-character-type").attr("src", "{% static 'images/archer.png' %}".replace(/&amp;/g, "&"))
+				$("#left-tool-image").attr("src", "{% static 'images/bow-2.png' %}".replace(/&amp;/g, "&"))
+				attackerSound.src = "{% static 'audios/scout-attack.mp3' %}".replace(/&amp;/g, "&")
 
 			}
 			else{
-				$("#player1-character-type").attr("src", "{% static 'images/swordsman.png' %}")
-				$("#left-tool-image").attr("src", "{% static 'images/sword-2.png' %}")
-				attackerSound.src = "{% static 'audios/warrior-attack.mp3' %}"
+				$("#player1-character-type").attr("src", "{% static 'images/swordsman.png' %}".replace(/&amp;/g, "&"))
+				$("#left-tool-image").attr("src", "{% static 'images/sword-2.png' %}".replace(/&amp;/g, "&"))
+				attackerSound.src = "{% static 'audios/warrior-attack.mp3' %}".replace(/&amp;/g, "&")
 			}
 		}
 		else{
@@ -1042,7 +1052,7 @@
 
 
 			$("#left-character-name").html(lastAttackerUsername)
-			$("#left-character-container").css("background-image", "url(" + lastAttackerProfileImage + ")" );
+			$("#left-character-container").css("background-image", "url(" + lastAttackerProfileImage + ")".replace(/&amp;/g, "&") );
 			$("#player1-strength").html(lastAttackerAttributes.strength)
 			$("#player1-skill").html(lastAttackerAttributes.skill)
 			$("#player1-intelligence").html(lastAttackerAttributes.intelligence)
@@ -1050,16 +1060,16 @@
 			$("#player1-fortune").html(lastAttackerAttributes.fortune)
 
 			if (lastAttackerAttributes.character_type == "warrior") {
-				$("#player1-character-type").attr("src", "{% static 'images/swordsman.png' %}")
+				$("#player1-character-type").attr("src", "{% static 'images/swordsman.png' %}".replace(/&amp;/g, "&"))
 			}
 			else if(lastAttackerAttributes.character_type == "mage"){
-				$("#player1-character-type").attr("src", "{% static 'images/wizard.png' %}")
+				$("#player1-character-type").attr("src", "{% static 'images/wizard.png' %}".replace(/&amp;/g, "&"))
 			}
 			else if(lastAttackerAttributes.character_type == "scout"){
-				$("#player1-character-type").attr("src", "{% static 'images/archer.png' %}")
+				$("#player1-character-type").attr("src", "{% static 'images/archer.png' %}".replace(/&amp;/g, "&"))
 			}
 			else{
-				$("#player1-character-type").attr("src", "{% static 'images/swordsman.png' %}")
+				$("#player1-character-type").attr("src", "{% static 'images/swordsman.png' %}".replace(/&amp;/g, "&"))
 			}
 
 		}
@@ -1069,7 +1079,7 @@
 	function setRightCharacterSide(isSkip){
 		if(!isSkip){
 			$("#right-character-name").html(defenderUsernames[defenderUsernamesCounter])
-			$("#right-character-container").css("background-image", "url(" + defenderProfileImages[defenderProfileImagesCounter] + ")" );
+			$("#right-character-container").css("background-image", "url(" + defenderProfileImages[defenderProfileImagesCounter] + ")".replace(/&amp;/g, "&") );
 			$("#player2-strength").html(defenderAttributes[defenderAttributesCounter].strength)
 			$("#player2-skill").html(defenderAttributes[defenderAttributesCounter].skill)
 			$("#player2-intelligence").html(defenderAttributes[defenderAttributesCounter].intelligence)
@@ -1077,25 +1087,25 @@
 			$("#player2-fortune").html(defenderAttributes[defenderAttributesCounter].fortune)
 
 			if (defenderAttributes[defenderAttributesCounter].character_type == "warrior") {
-				$("#player2-character-type").attr("src", "{% static 'images/swordsman.png' %}")
-				$("#right-tool-image").attr("src", "{% static 'images/sword-2.png' %}")
-				defenderSound.src = "{% static 'audios/warrior-attack.mp3' %}"
+				$("#player2-character-type").attr("src", "{% static 'images/swordsman.png' %}".replace(/&amp;/g, "&"))
+				$("#right-tool-image").attr("src", "{% static 'images/sword-2.png' %}".replace(/&amp;/g, "&"))
+				defenderSound.src = "{% static 'audios/warrior-attack.mp3' %}".replace(/&amp;/g, "&")
 
 			}
 			else if(defenderAttributes[defenderAttributesCounter].character_type == "mage"){
-				$("#player2-character-type").attr("src", "{% static 'images/wizard.png' %}")
-				$("#right-tool-image").attr("src", "{% static 'images/wand-2.png' %}")
-				defenderSound.src = "{% static 'audios/mage-attack.mp3' %}"
+				$("#player2-character-type").attr("src", "{% static 'images/wizard.png' %}".replace(/&amp;/g, "&"))
+				$("#right-tool-image").attr("src", "{% static 'images/wand-2.png' %}".replace(/&amp;/g, "&"))
+				defenderSound.src = "{% static 'audios/mage-attack.mp3' %}".replace(/&amp;/g, "&")
 			}
 			else if(defenderAttributes[defenderAttributesCounter].character_type == "scout"){
-				$("#player2-character-type").attr("src", "{% static 'images/archer.png' %}")
-				$("#right-tool-image").attr("src", "{% static 'images/bow-2.png' %}")
-				defenderSound.src = "{% static 'audios/scout-attack.mp3' %}"
+				$("#player2-character-type").attr("src", "{% static 'images/archer.png' %}".replace(/&amp;/g, "&"))
+				$("#right-tool-image").attr("src", "{% static 'images/bow-2.png' %}".replace(/&amp;/g, "&"))
+				defenderSound.src = "{% static 'audios/scout-attack.mp3' %}".replace(/&amp;/g, "&")
 			}
 			else{
-				$("#player2-character-type").attr("src", "{% static 'images/swordsman.png' %}")
-				$("#right-tool-image").attr("src", "{% static 'images/sword-2.png' %}")
-				defenderSound.src = "{% static 'audios/warrior-attack.mp3' %}"
+				$("#player2-character-type").attr("src", "{% static 'images/swordsman.png' %}".replace(/&amp;/g, "&"))
+				$("#right-tool-image").attr("src", "{% static 'images/sword-2.png' %}".replace(/&amp;/g, "&"))
+				defenderSound.src = "{% static 'audios/warrior-attack.mp3' %}".replace(/&amp;/g, "&")
 			}
 		}
 		else{
@@ -1110,7 +1120,7 @@
 
 
 			$("#right-character-name").html(lastDefenderUsername)
-			$("#right-character-container").css("background-image", "url(" + lastDefenderProfileImage + ")" );
+			$("#right-character-container").css("background-image", "url(" + lastDefenderProfileImage + ")".replace(/&amp;/g, "&") );
 			$("#player2-strength").html(lastDefenderAttributes.strength)
 			$("#player2-skill").html(lastDefenderAttributes.skill)
 			$("#player2-intelligence").html(lastDefenderAttributes.intelligence)
@@ -1118,16 +1128,16 @@
 			$("#player2-fortune").html(lastDefenderAttributes.fortune)
 
 			if (lastDefenderAttributes.character_type == "warrior") {
-				$("#player2-character-type").attr("src", "{% static 'images/swordsman.png' %}")
+				$("#player2-character-type").attr("src", "{% static 'images/swordsman.png' %}".replace(/&amp;/g, "&"))
 			}
 			else if(lastDefenderAttributes.character_type == "mage"){
-				$("#player2-character-type").attr("src", "{% static 'images/wizard.png' %}")
+				$("#player2-character-type").attr("src", "{% static 'images/wizard.png' %}".replace(/&amp;/g, "&"))
 			}
 			else if(lastDefenderAttributes.character_type == "scout"){
-				$("#player2-character-type").attr("src", "{% static 'images/archer.png' %}")
+				$("#player2-character-type").attr("src", "{% static 'images/archer.png' %}".replace(/&amp;/g, "&"))
 			}
 			else{
-				$("#player2-character-type").attr("src", "{% static 'images/swordsman.png' %}")
+				$("#player2-character-type").attr("src", "{% static 'images/swordsman.png' %}".replace(/&amp;/g, "&"))
 			}
 
 		}
