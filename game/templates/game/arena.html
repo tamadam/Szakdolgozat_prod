@@ -794,11 +794,19 @@ body {
 	$(".option-container").css("border-image-slice", "30%")
 
 
-	$(".option-container").hover(function() {
-	    $(".option-container").css("border-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
+	$(".option-container option-left").hover(function() {
+	    $(".option-container option-left").css("border-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
 	  },
 	  function() {
-	    $(".option-container").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+	    $(".option-container option-left").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+	  }
+	)
+
+	$(".option-container option-right").hover(function() {
+	    $(".option-container option-right").css("border-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
+	  },
+	  function() {
+	    $(".option-container option-right").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
 	  }
 	)
 
@@ -853,11 +861,11 @@ body {
 
 
 	function changeColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}").replace(/&amp;/g, "&")
+		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}".replace(/&amp;/g, "&"))
 	}
 
 	function resetColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}").replace(/&amp;/g, "&")
+		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}".replace(/&amp;/g, "&"))
 	}
 
 
