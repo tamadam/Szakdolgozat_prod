@@ -209,7 +209,7 @@ input[type=text], input[type=password] {
 
 
 input[type=submit] {
-	background: url("{% static 'images/button-back.png' %}");
+	background: none;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -228,7 +228,7 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-	background: url("{% static 'images/button-back-red.png' %}");
+	background: none;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -328,10 +328,21 @@ input[type=text]:focus, input[type=password]:focus {
 	$("#moving-background-container").css("background-image", "url('{% static 'images/login-background-village.jpg' %}')".replace(/&amp;/g, "&"));
 
 	$("#login-form-and-error-container").css("border-image", "url('{% static 'images/goldborder.png' %}')".replace(/&amp;/g, "&"))
-	//
+
 	$("#login-form-and-error-container").css("border-image-repeat", "round")
 	$("#login-form-and-error-container").css("border-image-slice", "20%")
+	$(":submit").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
 
+	$(":submit").hover(function() {
+	    $(":submit").css("background-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
+	  },
+	  function() {
+	    $(":submit").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+	  }
+	)
+
+
+	//
 
 	$(window).on("load", function(){
 		$(".loader-container").fadeOut("slow")
