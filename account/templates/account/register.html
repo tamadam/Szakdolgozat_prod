@@ -511,6 +511,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
 
 
 input[type=submit] {
+	background: none;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -528,6 +529,7 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
+	background: none;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -781,6 +783,8 @@ input[type=submit]:active {
 
 	$("#data-bottom-right").css("border-image-repeat", "stretch")
 	$("#data-bottom-right").css("border-image-slice", "30%")
+
+	$(":submit").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
 
 	$(":submit").hover(function() {
 	    $(":submit").css("background-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
