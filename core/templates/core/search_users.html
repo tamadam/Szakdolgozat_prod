@@ -4,25 +4,6 @@
 
 <style type="text/css">
 
-@font-face {
-font-family: 'Kanit-Regular';
-src: local('Kanit-Regular'),
-url("{% static 'fonts/Kanit-Regular.ttf' %}");
-}
-
-@font-face {
-	font-family: 'Kanit-Bold';
-	src: local('Kanit-Bold'),
-	url("{% static 'fonts/Kanit-Bold.ttf' %}");
-}
-
-@font-face {
-	font-family: 'Kanit-Light';
-	src: local('Kanit-Light'),
-	url("{% static 'fonts/Kanit-Light.ttf' %}");
-}
-
-
 /* SCROLLBAR BEÁLLÍTÁSOK */
 
 /* width */
@@ -67,7 +48,7 @@ url("{% static 'fonts/Kanit-Regular.ttf' %}");
 
 
 #display-search-users-page{
-	background: url("{% static 'images/hall-background.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -86,7 +67,7 @@ url("{% static 'fonts/Kanit-Regular.ttf' %}");
 	width: 100%;
 	display: flex;
 	flex-direction: row;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.4em;
 }
 
@@ -123,7 +104,7 @@ url("{% static 'fonts/Kanit-Regular.ttf' %}");
 }
 
 #search-users-title-name{
-	background: url("{% static 'images/button-back.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -162,7 +143,7 @@ url("{% static 'fonts/Kanit-Regular.ttf' %}");
 
 
 .go-to-main-page:active {
-	content:url("{% static 'images/previous-button-purple.png' %}");
+	/*content:url("{% static 'images/previous-button-purple.png' %}");*/
 }
 
 #users-teams-main-container{
@@ -188,7 +169,7 @@ url("{% static 'fonts/Kanit-Regular.ttf' %}");
 	padding: 1em;
 	box-shadow: rgba(0, 0, 0, 0.9) 0px 22px 70px 4px;
 	font-size: 1.2em;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 
 }
 
@@ -262,7 +243,8 @@ input:checked + .slider:before {
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	font-family: "Kanit-Bold";
+	font-family: 'Kanit', sans-serif;
+	font-weight: bold;
 	font-size: 1.2em;
 	color: white;
 	margin-bottom: 2%;
@@ -295,7 +277,7 @@ input:checked + .slider:before {
 	padding: 1em;
 	box-shadow: rgba(0, 0, 0, 0.9) 0px 22px 70px 4px;
 	font-size: 1.2em;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 }
 
 #teams-header{
@@ -306,7 +288,8 @@ input:checked + .slider:before {
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	font-family: "Kanit-Bold";
+	font-family: 'Kanit', sans-serif;
+	font-weight: bold;
 	font-size: 1.2em;
 	color: white;
 	margin-bottom: 2%;
@@ -616,14 +599,14 @@ input:checked + .slider:before {
 	align-items: center;
 	z-index: 10;
 	color: white;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.8vh;
 
 }
 
 
 #search-input{
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.2em;
 	padding: 0.4em;
 	width: 20%;
@@ -639,7 +622,7 @@ input:checked + .slider:before {
 
 ::placeholder{
 	color: white;
-	font-family: "Kanit-Light";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.2em;
 
 }
@@ -724,6 +707,17 @@ input:checked + .slider:before {
 
 
 <script type="text/javascript">
+
+	// production
+	$("#display-search-users-page").css("background-image", "url('{% static 'images/hall-background.png' %}')".replace(/&amp;/g, "&"));
+	$("#search-users-title-name").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+
+
+
+
+	//
+
+
 
 	$("#search-input").on("input", function(){
 		getValueFromSearchInput()
@@ -854,16 +848,16 @@ input:checked + .slider:before {
 
 		var characterTypeFieldImg = document.createElement("img")
 		if (characterType == "warrior"){
-			characterTypeFieldImg.src = "{% static 'images/swordsman.png' %}"
+			characterTypeFieldImg.src = "{% static 'images/swordsman.png' %}".replace(/&amp;/g, "&")
 		}
 		else if (characterType == "mage"){
-			characterTypeFieldImg.src = "{% static 'images/wizard.png' %}"
+			characterTypeFieldImg.src = "{% static 'images/wizard.png' %}".replace(/&amp;/g, "&")
 		}
 		else if(characterType == "scout"){
-			characterTypeFieldImg.src = "{% static 'images/archer.png' %}"
+			characterTypeFieldImg.src = "{% static 'images/archer.png' %}".replace(/&amp;/g, "&")
 		}
 		else{
-			characterTypeFieldImg.src = "{% static 'images/swordsman.png' %}"
+			characterTypeFieldImg.src = "{% static 'images/swordsman.png' %}".replace(/&amp;/g, "&")
 		}
 
 		characterTypeFieldImg.classList.add("character-type-field-img")
@@ -946,7 +940,7 @@ input:checked + .slider:before {
 		teamLogo.classList.add("character-type-field-team")
 
 		var teamLogoImg = document.createElement("img")
-		teamLogoImg.src = "{% static 'images/team-icon.png' %}"
+		teamLogoImg.src = "{% static 'images/team-icon.png' %}".replace(/&amp;/g, "&")
 		teamLogoImg.classList.add("character-type-field-img-team")
 
 		teamLogo.appendChild(teamLogoImg)
@@ -1036,7 +1030,7 @@ input:checked + .slider:before {
 
 
 	const audio = new Audio()
-	audio.src = "{% static 'audios/button_click.mp3' %}"
+	audio.src = "{% static 'audios/button_click.mp3' %}".replace(/&amp;/g, "&")
 
 
 	var usersPageNumber = 1
@@ -1089,11 +1083,11 @@ input:checked + .slider:before {
 
 
 	function changeColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}".replace(/&amp;/g, "&"))
 	}
 
 	function resetColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}".replace(/&amp;/g, "&"))
 	}
 
 
@@ -1289,16 +1283,16 @@ input:checked + .slider:before {
 
 		var characterTypeFieldImg = document.createElement("img")
 		if (characterType == "warrior"){
-			characterTypeFieldImg.src = "{% static 'images/swordsman.png' %}"
+			characterTypeFieldImg.src = "{% static 'images/swordsman.png' %}".replace(/&amp;/g, "&")
 		}
 		else if (characterType == "mage"){
-			characterTypeFieldImg.src = "{% static 'images/wizard.png' %}"
+			characterTypeFieldImg.src = "{% static 'images/wizard.png' %}".replace(/&amp;/g, "&")
 		}
 		else if(characterType == "scout"){
-			characterTypeFieldImg.src = "{% static 'images/archer.png' %}"
+			characterTypeFieldImg.src = "{% static 'images/archer.png' %}".replace(/&amp;/g, "&")
 		}
 		else{
-			characterTypeFieldImg.src = "{% static 'images/swordsman.png' %}"
+			characterTypeFieldImg.src = "{% static 'images/swordsman.png' %}".replace(/&amp;/g, "&")
 		}
 
 		characterTypeFieldImg.classList.add("character-type-field-img")
@@ -1389,7 +1383,7 @@ input:checked + .slider:before {
 		teamLogo.classList.add("character-type-field-team")
 
 		var teamLogoImg = document.createElement("img")
-		teamLogoImg.src = "{% static 'images/team-icon.png' %}"
+		teamLogoImg.src = "{% static 'images/team-icon.png' %}".replace(/&amp;/g, "&")
 		teamLogoImg.classList.add("character-type-field-img-team")
 
 		teamLogo.appendChild(teamLogoImg)
