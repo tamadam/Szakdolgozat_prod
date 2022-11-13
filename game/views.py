@@ -15,8 +15,10 @@ from account.utils import EncodeAccountObject, EncodeCharacterObjectInDetail
 from django.shortcuts import redirect
 
 import random
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url='login')
 def game_choice_view(request):
 	context = {}
 
@@ -24,6 +26,7 @@ def game_choice_view(request):
 
 
 
+@login_required(login_url='login')
 def easy_game_view(request):
 	context = {}
 	correct_field_values = ['2','4', '5', '6']
@@ -67,6 +70,7 @@ def easy_game_view(request):
 	return render(request, 'game/easy_game.html', context)
 
 
+@login_required(login_url='login')
 def medium_game_view(request):
 	context = {}
 
@@ -111,6 +115,7 @@ def medium_game_view(request):
 
 
 
+@login_required(login_url='login')
 def hard_game_view(request):
 	context = {}
 
@@ -277,6 +282,7 @@ def check_profile_image(character):
 
 
 
+@login_required(login_url='login')
 def arena_view(request):
 	context = {}
 
@@ -698,6 +704,8 @@ def set_team_arena_sessions(request):
 
 
 # team arena 
+
+@login_required(login_url='login')
 def team_arena_view(request):
 	context = {}
 
