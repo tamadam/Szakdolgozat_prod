@@ -802,9 +802,13 @@ body {
 
 	$("#option-left").hover(function() {
 	    $("#option-left").css("border-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
+	    $("#option-left" ).css("border-image-repeat", "stretch")
+		$("#option-left").css("border-image-slice", "30%")
 	  },
 	  function() {
 	    $("#option-left").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+	    $("#option-left" ).css("border-image-repeat", "stretch")
+		$("#option-left").css("border-image-slice", "30%")
 	  }
 	)
 
