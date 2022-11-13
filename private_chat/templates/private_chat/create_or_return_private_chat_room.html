@@ -34,9 +34,17 @@
 
 
 	function onCreateOrGetPrivateChatRoomSuccess(privateChatRoomId){
-		var url = "{% url 'private_chat:private_chat_room' %}?szoba_id=" + privateChatRoomId //room_id: mivel a viewban is azt keressuk, ha ez mas lenne akkor a viewban is mas lenne atirhato
-		var win = window.location.replace(url) //open same page
-		win.focus()
+		setTimeout(function(){
+			try {
+				var url = "{% url 'private_chat:private_chat_room' %}?szoba_id=" + privateChatRoomId //room_id: mivel a viewban is azt keressuk, ha ez mas lenne akkor a viewban is mas lenne atirhato
+				var win = window.location.replace(url) //open same page
+				win.focus()
+			}
+			catch(error){
+				console.log(error)
+			}
+
+		}, 200)
 	}
 
 </script>
