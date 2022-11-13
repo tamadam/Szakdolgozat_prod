@@ -5,23 +5,6 @@
 {% block content %}
 
 <style>
-@font-face {
-	font-family: 'Kanit-Regular';
-	src: local('Kanit-Regular'),
-	url("{% static 'fonts/Kanit-Regular.ttf' %}");
-}
-
-@font-face {
-	font-family: 'Kanit-Bold';
-	src: local('Kanit-Bold'),
-	url("{% static 'fonts/Kanit-Bold.ttf' %}");
-}
-
-@font-face {
-	font-family: 'Kanit-Light';
-	src: local('Kanit-Light'),
-	url("{% static 'fonts/Kanit-Light.ttf' %}");
-}
 
 #second-game-content{
 	display: flex;
@@ -31,12 +14,12 @@
 	width: 100%;
 	height: 100%;
 	background-color: white;
-	background: url("{% static 'images/puzzle-background.jpg' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
 	user-select: none;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	max-width: 1900px;
 }
 
@@ -81,7 +64,7 @@
 	height: 50vh;
 	background-color: rgba(0, 0, 0, 0.88);
 	border: 6px solid transparent;
-  	border-image: url("{% static 'images/button-back.png' %}") 30 stretch;
+  	/*border-image: url("{% static 'images/button-back.png' %}") 30 stretch;*/
 	padding: 1em;
 }
 
@@ -144,7 +127,7 @@
 	align-items: center;
 	justify-content: center;
 	text-align: center;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.4em;
 	color: white;
 
@@ -190,7 +173,7 @@
 
 
 .go-to-main-page:active {
-	content:url("{% static 'images/previous-button-purple.png' %}");
+	/*content:url("{% static 'images/previous-button-purple.png' %}");*/
 }
 
 .loader-container {
@@ -205,7 +188,7 @@
 	align-items: center;
 	z-index: 10;
 	color: white;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.4em;
 
 }
@@ -224,7 +207,7 @@
 	align-items: center;
 	z-index: 9;
 	color: white;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.2em;
 
 }
@@ -239,7 +222,7 @@
 	background-color: rgba(0, 0, 0, 0.9);
 	border-radius: 20px;
 	color: white;
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.2em;
 	padding: 0.4em;
 
@@ -307,7 +290,7 @@
 	align-items: center;
 	justify-content: center;
 	background-color: white;
-	background: url("{% static 'images/button-back.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -317,7 +300,7 @@
 
 
 #result-button:hover{
-	background: url("{% static 'images/button-back-red.png' %}");	
+	background: none;	
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -326,7 +309,7 @@
 }
 
 #puzzle-timer-container{
-	font-family: "Kanit-Regular";
+	font-family: 'Kanit', sans-serif;
 	font-size: 1.4em;
 	display: flex;
 	flex-direction: column;
@@ -443,6 +426,32 @@
 
 <script>
 
+	// production
+
+	$("#second-game-content").css("background-image", "url('{% static 'images/puzzle-background.jpg' %}')".replace(/&amp;/g, "&"));
+	
+	$("#puzzle-container").css("border-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
+
+	$("#puzzle-container").css("border-image-repeat", "stretch")
+	$("#puzzle-container").css("border-image-slice", "30%")
+
+
+	$("#result-button").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"))
+
+	$("#result-button").hover(function() {
+	    $("#result-button").css("background-image", "url('{% static 'images/button-back-red.png' %}')".replace(/&amp;/g, "&"))
+	  },
+	  function() {
+	    $("#result-button").css("background-image", "url('{% static 'images/button-back.png' %}')".replace(/&amp;/g, "&"));
+	  }
+	)
+
+
+
+
+
+	//
+
 	$(window).on("load", function(){
 		$(".loader-container").fadeOut("slow")
 
@@ -470,20 +479,20 @@
 
 
 	const audio = new Audio()
-	audio.src = "{% static 'audios/button_click.mp3' %}"
+	audio.src = "{% static 'audios/button_click.mp3' %}".replace(/&amp;/g, "&")
 
 
 
 	const puzzleSwap = new Audio()
-	puzzleSwap.src = "{% static 'audios/puzzle-swap.mp3' %}"
+	puzzleSwap.src = "{% static 'audios/puzzle-swap.mp3' %}".replace(/&amp;/g, "&")
 
 
 	function changeRestartColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/reload-arrow-red.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/reload-arrow-red.png' %}".replace(/&amp;/g, "&"))
 	}
 
 	function resetRestartColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/reload-arrow.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/reload-arrow.png' %}".replace(/&amp;/g, "&"))
 	}
 
 	$("#reload-arrow-button").on("click", function(){
@@ -497,11 +506,11 @@
 
 
 	function changeColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button-red.png' %}".replace(/&amp;/g, "&"))
 	}
 
 	function resetColor(imageElement){
-		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}")
+		imageElement.setAttribute("src", "{% static 'images/previous-button.png' %}".replace(/&amp;/g, "&"))
 	}
 
 
@@ -529,68 +538,68 @@
 
 	// puzzle játék //
 	const images2x2 = [
-		{ name: "1", image: "{% static 'images/puzzle-images/2x2/1.jpg' %}" },
-		{ name: "2", image: "{% static 'images/puzzle-images/2x2/2.jpg' %}" },
-		{ name: "3", image: "{% static 'images/puzzle-images/2x2/3.jpg' %}" },
-		{ name: "4", image: "{% static 'images/puzzle-images/2x2/4.jpg' %}" },
+		{ name: "1", image: "{% static 'images/puzzle-images/2x2/1.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "2", image: "{% static 'images/puzzle-images/2x2/2.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "3", image: "{% static 'images/puzzle-images/2x2/3.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "4", image: "{% static 'images/puzzle-images/2x2/4.jpg' %}".replace(/&amp;/g, "&") },
 	]
 	const images3x3 = [
-		{ name: "1", image: "{% static 'images/puzzle-images/3x3/1.jpg' %}" },
-		{ name: "2", image: "{% static 'images/puzzle-images/3x3/2.jpg' %}" },
-		{ name: "3", image: "{% static 'images/puzzle-images/3x3/3.jpg' %}" },
-		{ name: "4", image: "{% static 'images/puzzle-images/3x3/4.jpg' %}" },
-		{ name: "5", image: "{% static 'images/puzzle-images/3x3/5.jpg' %}" },
-		{ name: "6", image: "{% static 'images/puzzle-images/3x3/6.jpg' %}" },
-		{ name: "7", image: "{% static 'images/puzzle-images/3x3/7.jpg' %}" },
-		{ name: "8", image: "{% static 'images/puzzle-images/3x3/8.jpg' %}" },
-		{ name: "9", image: "{% static 'images/puzzle-images/3x3/9.jpg' %}" },
+		{ name: "1", image: "{% static 'images/puzzle-images/3x3/1.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "2", image: "{% static 'images/puzzle-images/3x3/2.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "3", image: "{% static 'images/puzzle-images/3x3/3.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "4", image: "{% static 'images/puzzle-images/3x3/4.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "5", image: "{% static 'images/puzzle-images/3x3/5.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "6", image: "{% static 'images/puzzle-images/3x3/6.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "7", image: "{% static 'images/puzzle-images/3x3/7.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "8", image: "{% static 'images/puzzle-images/3x3/8.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "9", image: "{% static 'images/puzzle-images/3x3/9.jpg' %}".replace(/&amp;/g, "&") },
 	]
 
 	const images4x4 = [
-		{ name: "1", image: "{% static 'images/puzzle-images/4x4/1.jpg' %}" },
-		{ name: "2", image: "{% static 'images/puzzle-images/4x4/2.jpg' %}" },
-		{ name: "3", image: "{% static 'images/puzzle-images/4x4/3.jpg' %}" },
-		{ name: "4", image: "{% static 'images/puzzle-images/4x4/4.jpg' %}" },
-		{ name: "5", image: "{% static 'images/puzzle-images/4x4/5.jpg' %}" },
-		{ name: "6", image: "{% static 'images/puzzle-images/4x4/6.jpg' %}" },
-		{ name: "7", image: "{% static 'images/puzzle-images/4x4/7.jpg' %}" },
-		{ name: "8", image: "{% static 'images/puzzle-images/4x4/8.jpg' %}" },
-		{ name: "9", image: "{% static 'images/puzzle-images/4x4/9.jpg' %}" },
-		{ name: "10", image: "{% static 'images/puzzle-images/4x4/10.jpg' %}" },
-		{ name: "11", image: "{% static 'images/puzzle-images/4x4/11.jpg' %}" },
-		{ name: "12", image: "{% static 'images/puzzle-images/4x4/12.jpg' %}" },
-		{ name: "13", image: "{% static 'images/puzzle-images/4x4/13.jpg' %}" },
-		{ name: "14", image: "{% static 'images/puzzle-images/4x4/14.jpg' %}" },
-		{ name: "15", image: "{% static 'images/puzzle-images/4x4/15.jpg' %}" },
-		{ name: "16", image: "{% static 'images/puzzle-images/4x4/16.jpg' %}" },
+		{ name: "1", image: "{% static 'images/puzzle-images/4x4/1.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "2", image: "{% static 'images/puzzle-images/4x4/2.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "3", image: "{% static 'images/puzzle-images/4x4/3.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "4", image: "{% static 'images/puzzle-images/4x4/4.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "5", image: "{% static 'images/puzzle-images/4x4/5.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "6", image: "{% static 'images/puzzle-images/4x4/6.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "7", image: "{% static 'images/puzzle-images/4x4/7.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "8", image: "{% static 'images/puzzle-images/4x4/8.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "9", image: "{% static 'images/puzzle-images/4x4/9.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "10", image: "{% static 'images/puzzle-images/4x4/10.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "11", image: "{% static 'images/puzzle-images/4x4/11.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "12", image: "{% static 'images/puzzle-images/4x4/12.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "13", image: "{% static 'images/puzzle-images/4x4/13.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "14", image: "{% static 'images/puzzle-images/4x4/14.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "15", image: "{% static 'images/puzzle-images/4x4/15.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "16", image: "{% static 'images/puzzle-images/4x4/16.jpg' %}".replace(/&amp;/g, "&") },
 	]
 
 	const images5x5 = [
-		{ name: "1", image: "{% static 'images/puzzle-images/5x5/1.jpg' %}" },
-		{ name: "2", image: "{% static 'images/puzzle-images/5x5/2.jpg' %}" },
-		{ name: "3", image: "{% static 'images/puzzle-images/5x5/3.jpg' %}" },
-		{ name: "4", image: "{% static 'images/puzzle-images/5x5/4.jpg' %}" },
-		{ name: "5", image: "{% static 'images/puzzle-images/5x5/5.jpg' %}" },
-		{ name: "6", image: "{% static 'images/puzzle-images/5x5/6.jpg' %}" },
-		{ name: "7", image: "{% static 'images/puzzle-images/5x5/7.jpg' %}" },
-		{ name: "8", image: "{% static 'images/puzzle-images/5x5/8.jpg' %}" },
-		{ name: "9", image: "{% static 'images/puzzle-images/5x5/9.jpg' %}" },
-		{ name: "10", image: "{% static 'images/puzzle-images/5x5/10.jpg' %}" },
-		{ name: "11", image: "{% static 'images/puzzle-images/5x5/11.jpg' %}" },
-		{ name: "12", image: "{% static 'images/puzzle-images/5x5/12.jpg' %}" },
-		{ name: "13", image: "{% static 'images/puzzle-images/5x5/13.jpg' %}" },
-		{ name: "14", image: "{% static 'images/puzzle-images/5x5/14.jpg' %}" },
-		{ name: "15", image: "{% static 'images/puzzle-images/5x5/15.jpg' %}" },
-		{ name: "16", image: "{% static 'images/puzzle-images/5x5/16.jpg' %}" },
-		{ name: "17", image: "{% static 'images/puzzle-images/5x5/17.jpg' %}" },
-		{ name: "18", image: "{% static 'images/puzzle-images/5x5/18.jpg' %}" },
-		{ name: "19", image: "{% static 'images/puzzle-images/5x5/19.jpg' %}" },
-		{ name: "20", image: "{% static 'images/puzzle-images/5x5/20.jpg' %}" },
-		{ name: "21", image: "{% static 'images/puzzle-images/5x5/21.jpg' %}" },
-		{ name: "22", image: "{% static 'images/puzzle-images/5x5/22.jpg' %}" },
-		{ name: "23", image: "{% static 'images/puzzle-images/5x5/23.jpg' %}" },
-		{ name: "24", image: "{% static 'images/puzzle-images/5x5/24.jpg' %}" },
-		{ name: "25", image: "{% static 'images/puzzle-images/5x5/25.jpg' %}" },
+		{ name: "1", image: "{% static 'images/puzzle-images/5x5/1.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "2", image: "{% static 'images/puzzle-images/5x5/2.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "3", image: "{% static 'images/puzzle-images/5x5/3.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "4", image: "{% static 'images/puzzle-images/5x5/4.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "5", image: "{% static 'images/puzzle-images/5x5/5.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "6", image: "{% static 'images/puzzle-images/5x5/6.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "7", image: "{% static 'images/puzzle-images/5x5/7.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "8", image: "{% static 'images/puzzle-images/5x5/8.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "9", image: "{% static 'images/puzzle-images/5x5/9.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "10", image: "{% static 'images/puzzle-images/5x5/10.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "11", image: "{% static 'images/puzzle-images/5x5/11.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "12", image: "{% static 'images/puzzle-images/5x5/12.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "13", image: "{% static 'images/puzzle-images/5x5/13.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "14", image: "{% static 'images/puzzle-images/5x5/14.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "15", image: "{% static 'images/puzzle-images/5x5/15.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "16", image: "{% static 'images/puzzle-images/5x5/16.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "17", image: "{% static 'images/puzzle-images/5x5/17.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "18", image: "{% static 'images/puzzle-images/5x5/18.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "19", image: "{% static 'images/puzzle-images/5x5/19.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "20", image: "{% static 'images/puzzle-images/5x5/20.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "21", image: "{% static 'images/puzzle-images/5x5/21.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "22", image: "{% static 'images/puzzle-images/5x5/22.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "23", image: "{% static 'images/puzzle-images/5x5/23.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "24", image: "{% static 'images/puzzle-images/5x5/24.jpg' %}".replace(/&amp;/g, "&") },
+		{ name: "25", image: "{% static 'images/puzzle-images/5x5/25.jpg' %}".replace(/&amp;/g, "&") },
 	]
 
 	var initialValue = null
