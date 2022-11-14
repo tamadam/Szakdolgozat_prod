@@ -395,6 +395,10 @@ input[type=text]:focus, input[type=password]:focus {
 		    isMobile = true;
 			$("#login-page-content").empty()
 			$("#login-page-content").append("<p>Az oldal nem használható erről az eszközről!</p>")
+			$("#login-page-content p").css("color", "red")
+			$("#login-page-content p").css("padding", "1em")
+			$("#login-page-content p").css("font-size", "2vmax")
+			$("#login-page-content p").css("background-color", "rgba(0, 0, 0, 0.8)")
 		}
 
 
