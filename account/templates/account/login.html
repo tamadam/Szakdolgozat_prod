@@ -348,6 +348,7 @@ input[type=text]:focus, input[type=password]:focus {
 	//
 
 	$(window).on("load", function(){
+		checkMobileDevice()
 		$(".loader-container").fadeOut("slow")
 	})
 
@@ -380,6 +381,9 @@ input[type=text]:focus, input[type=password]:focus {
 
 	    return true; // false hogyha cancel form
 	})
+
+
+	
 
 	function checkMobileDevice(){
 
